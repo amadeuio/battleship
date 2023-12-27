@@ -1,7 +1,8 @@
-import "./style.css";
-import sayHello from "./module.ts";
+import "./styles/reset.css";
+import "./styles/style.css";
+import sayHello from "./modules/module.ts";
 
-sayHello();
+console.log(sayHello());
 
 /* import viteLogo from "/vite.svg"; */
 /* import typescriptLogo from "./typescript.svg"; */
