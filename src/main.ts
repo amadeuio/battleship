@@ -1,6 +1,6 @@
 import "./styles/reset.css";
 import "./styles/style.css";
-import sayHello from "./modules/module.ts";
+import sayHello from "./modules/ship.ts";
 
 console.log(sayHello());
 
