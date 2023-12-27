@@ -6,7 +6,7 @@ class Ship {
   constructor(size: number, hits: number) {
     this.size = size;
     this.hits = hits;
-    this.sunk = this.isSunk();
+    this.sunk = this.size === this.hits;
   }
 
   hit(): void {
