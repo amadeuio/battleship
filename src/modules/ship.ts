@@ -1,21 +1,38 @@
 class Ship {
+  name: string;
   size: number;
-  hits: number;
-  sunk: boolean;
+  orientation: "horizontal" | "vertical";
+  position: number;
+  isSunk: boolean;
 
-  constructor(size: number, hits: number) {
+  constructor(
+    name: string,
+    size: number,
+    orientation: "horizontal" | "vertical",
+    position: number
+  ) {
+    this.name = name;
     this.size = size;
-    this.hits = hits;
-    this.sunk = this.size === this.hits;
-  }
-
-  hit(): void {
-    this.hits = this.hits + 1;
-  }
-
-  isSunk(): boolean {
-    return this.size === this.hits;
+    this.orientation = orientation;
+    this.position = position;
+    this.isSunk = false;
   }
 }
 
-export default Ship;
+// Example instances
+
+const carrier: Ship = new Ship("Carrier", 5, "horizontal", 12);
+const battleship: Ship = new Ship("Battleship", 4, "vertical", 8);
+const cruiser: Ship = new Ship("Cruiser", 3, "horizontal", 15);
+const submarine: Ship = new Ship("Submarine", 3, "vertical", 3);
+const destroyer: Ship = new Ship("Destroyer", 2, "horizontal", 10);
+
+// Example object
+
+const example = {
+  name: "Carrier",
+  size: 5,
+  orientation: "horizontal",
+  position: 12,
+  isSunk: false,
+};
