@@ -19,6 +19,13 @@ class Ship {
     this.hits = 0;
     this.isSunk = false;
   }
+
+  hit() {
+    this.hits++;
+    if (this.hits === this.size) {
+      this.isSunk = true;
+    }
+  }
 }
 
 // Example instances
