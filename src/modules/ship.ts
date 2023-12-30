@@ -3,6 +3,7 @@ class Ship {
   size: number;
   orientation: "horizontal" | "vertical";
   position: number;
+  hits: number;
   isSunk: boolean;
 
   constructor(
@@ -15,6 +16,7 @@ class Ship {
     this.size = size;
     this.orientation = orientation;
     this.position = position;
+    this.hits = 0;
     this.isSunk = false;
   }
 }
@@ -34,5 +36,6 @@ const example = {
   size: 5,
   orientation: "horizontal",
   position: 12,
+  hits: 0,
   isSunk: false,
 };
