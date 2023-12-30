@@ -4,7 +4,7 @@ class Ship {
   orientation: "horizontal" | "vertical";
   position: number;
   hits: number;
-  isSunk: boolean;
+  sunk: boolean;
 
   constructor(
     name: string,
@@ -17,14 +17,18 @@ class Ship {
     this.orientation = orientation;
     this.position = position;
     this.hits = 0;
-    this.isSunk = false;
+    this.sunk = false;
   }
 
-  hit() {
+  hit(): void {
     this.hits++;
     if (this.hits === this.size) {
-      this.isSunk = true;
+      this.sunk = true;
     }
+  }
+
+  isSunk(): boolean {
+    return this.hits === this.size;
   }
 }
 
@@ -44,5 +48,5 @@ const example = {
   orientation: "horizontal",
   position: 12,
   hits: 0,
-  isSunk: false,
+  sunk: false,
 };
