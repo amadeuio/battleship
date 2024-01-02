@@ -1,0 +1,181 @@
+class Gameboard {
+board: object[][];
+ships: object[];
+
+constructor(board: object[][], ships: object[]) {
+this.board = board;
+this.ships = ships;
+}
+
+addShip(ship: object) {
+// Add ship to list
+this.ships.push(ship);
+
+    // Add ship to board
+    ship.coords.forEach(coord => {
+      // whateaver
+    });
+
+}
+
+createAttack(coords: number[]) {
+// Add attack to board
+this.board // blah blah
+
+    // Add attack to ship
+    if coords in this.ships.coords
+      this.ships[4].hit()
+
+}
+}
+
+// create gameboard
+const myGameboard = new Gameboard();
+
+// create ships
+const carrier: Ship = new Ship("Carrier", [[1, 2], [1, 3], [1, 4]]);
+const battleship: Ship = new Ship("Battleship", [[3, 3], [4, 3], [5, 3], [6, 3]]);
+
+myGameboard.addShip(carrier);
+myGameboard.addShip(battleship);
+// etc ..
+
+myGameboard.createAttack([1, 2]);
+// etc ..
+
+// at this point the gameboard should be properly updated with all the data
+// at this point, the ships list in gameboard should be updated with the new hits
+
+const gameboard = {
+board: [
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: "Carrier", hit: false },
+{ ship: "Carrier", hit: false },
+{ ship: "Carrier", hit: false },
+{ ship: "Carrier", hit: false },
+{ ship: "Carrier", hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+[
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+{ ship: null, hit: false },
+],
+],
+ships: [
+{
+name: "Carrier",
+size: 5,
+orientation: "horizontal",
+position: 12,
+isSunk: false,
+},
+],
+};
