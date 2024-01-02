@@ -1,52 +1,64 @@
+enum Name {
+  Carrier = "Carrier",
+  Battleship = "Battleship",
+  Cruiser = "Cruiser",
+  Submarine = "Submarine",
+  Destroyer = "Destroyer",
+}
+
+enum Orientation {
+  Horizontal = "Horizontal",
+  Vertical = "Vertical",
+}
+
 class Ship {
-  name: string;
-  size: number;
-  orientation: "horizontal" | "vertical";
+  name: Name;
+  length: number;
   position: number;
+  orientation: Orientation;
   hits: number;
   sunk: boolean;
 
-  constructor(
-    name: string,
-    size: number,
-    orientation: "horizontal" | "vertical",
-    position: number
-  ) {
+  static lengths: { [key in Name]: number } = {
+    Carrier: 5,
+    Battleship: 4,
+    Cruiser: 3,
+    Submarine: 3,
+    Destroyer: 2,
+  };
+
+  constructor(name: Name, position: number, orientation: Orientation) {
     this.name = name;
-    this.size = size;
-    this.orientation = orientation;
+    this.length = Ship.lengths[name];
     this.position = position;
+    this.orientation = orientation;
     this.hits = 0;
     this.sunk = false;
   }
 
   hit(): void {
-    this.hits++;
-    if (this.hits === this.size) {
+    this.hits += 1;
+    if (this.hits === this.length) {
       this.sunk = true;
     }
   }
 
   isSunk(): boolean {
-    return this.hits === this.size;
+    return this.sunk;
   }
 }
 
-// Example instances
+// Example usage
 
-const carrier: Ship = new Ship("Carrier", 5, "horizontal", 12);
-const battleship: Ship = new Ship("Battleship", 4, "vertical", 8);
-const cruiser: Ship = new Ship("Cruiser", 3, "horizontal", 15);
-const submarine: Ship = new Ship("Submarine", 3, "vertical", 3);
-const destroyer: Ship = new Ship("Destroyer", 2, "horizontal", 10);
+const myShip = new Ship(Name.Cruiser, 12, Orientation.Horizontal);
 
 // Example object
 
-const example = {
+const myShipObj = {
   name: "Carrier",
-  size: 5,
-  orientation: "horizontal",
+  length: 5,
   position: 12,
+  orientation: "Horizontal",
   hits: 0,
   sunk: false,
 };
