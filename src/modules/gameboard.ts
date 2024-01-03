@@ -95,4 +95,4 @@ myGameboard.createAttack([4, 0]);
 myGameboard.createAttack([3, 3]);
 
 console.log(myGameboard.board[3][3]);
-console.log(myGameboard.ships);
+console.log(myGameboard.ships[0]);

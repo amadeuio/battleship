@@ -46,6 +46,23 @@ export class Ship {
   isSunk(): boolean {
     return this.sunk;
   }
+
+  calcCoordinates(): [number, number][] {
+    const coordinates: [number, number][] = [];
+    let [x, y] = this.position;
+
+    for (let i = 0; i < this.length; i++) {
+      coordinates.push([x, y]);
+
+      if (this.orientation === Orientation.Horizontal) {
+        x += 1;
+      } else {
+        y += 1;
+      }
+    }
+
+    return coordinates;
+  }
 }
 
 // Example usage
