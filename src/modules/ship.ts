@@ -14,7 +14,7 @@ export enum Orientation {
 export class Ship {
   name: Name;
   length: number;
-  position: number;
+  position: [number, number]; // Position expressed as [x, y] array
   orientation: Orientation;
   hits: number;
   sunk: boolean;
@@ -27,7 +27,7 @@ export class Ship {
     Destroyer: 2,
   };
 
-  constructor(name: Name, position: number, orientation: Orientation) {
+  constructor(name: Name, position: [number, number], orientation: Orientation) {
     this.name = name;
     this.length = Ship.lengths[name];
     this.position = position;
@@ -50,7 +50,7 @@ export class Ship {
 
 // Example usage
 
-// const myShip = new Ship(Name.Cruiser, 12, Orientation.Horizontal);
+// const myShip = new Ship(Name.Cruiser, [12, 3], Orientation.Horizontal);
 
 // Example object
 
@@ -58,7 +58,7 @@ export class Ship {
 const myShipObj = {
   name: "Carrier",
   length: 5,
-  position: 12,
+  position: [12, 3],
   orientation: "Horizontal",
   hits: 0,
   sunk: false,
