@@ -10,6 +10,7 @@ class Gameboard {
   ships: Ship[];
 
   constructor() {
+    // Construct 10x10 array of arrays with { ship: null, hit: false } cells
     this.board = Array.from({ length: 10 }, () =>
       Array.from({ length: 10 }, () => ({ ship: null, hit: false }))
     );
