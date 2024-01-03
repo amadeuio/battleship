@@ -10,11 +10,9 @@ class Gameboard {
   ships: Ship[];
 
   constructor() {
-    // Construct 10x10 array of arrays with { ship: null, hit: false } cells
     this.board = Array.from({ length: 10 }, () =>
       Array.from({ length: 10 }, () => ({ ship: null, hit: false }))
     );
-
     this.ships = [];
   }
 
@@ -29,40 +27,16 @@ class Gameboard {
     this.ships.push(ship);
 
     // Add ship to board
-    const { name, length, position, orientation } = ship;
-    const [startingRow, startingCol] = position;
-
-    if (orientation === Orientation.Vertical) {
-      for (let i = 0; i < length; i++) {
-        this.board[startingRow + i][startingCol].ship = name;
-      }
-    } else {
-      for (let i = 0; i < length; i++) {
-        this.board[startingRow][startingCol + i].ship = name;
-      }
-    }
+    ship.calcCoordinates().forEach(([row, col]) => {
+      this.board[row][col].ship = ship.name;
+    });
   }
 
   private checkForOverlap(newShip: Ship): boolean {
     // Check if the new ship overlaps with any existing ships
-    const { position, length, orientation } = newShip;
-    const [startingRow, startingCol] = position;
-
-    if (orientation === Orientation.Vertical) {
-      for (let i = 0; i < length; i++) {
-        if (this.board[startingRow + i][startingCol].ship !== null) {
-          return true; // Overlaps with an existing ship
-        }
-      }
-    } else {
-      for (let i = 0; i < length; i++) {
-        if (this.board[startingRow][startingCol + i].ship !== null) {
-          return true; // Overlaps with an existing ship
-        }
-      }
-    }
-
-    return false; // No overlap with existing ships
+    return newShip.calcCoordinates().some(([row, col]) => {
+      return this.board[row][col].ship !== null;
+    });
   }
 
   createAttack(position: [number, number]): void {
@@ -95,4 +69,4 @@ myGameboard.createAttack([4, 0]);
 myGameboard.createAttack([3, 3]);
 
 console.log(myGameboard.board[3][3]);
-console.log(myGameboard.ships[0]);
+console.log(myGameboard.ships);
