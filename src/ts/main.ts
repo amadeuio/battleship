@@ -1,19 +1,28 @@
-// import "../styles/reset.css";
-// import "../styles/style.css";
+import "../styles/reset.css";
+import "../styles/style.css";
 
 import { Name, Orientation, Ship } from "./modules/ship";
-import { Gameboard } from "./modules/gameboard";
+import { Gameboard, Cell } from "./modules/gameboard";
 
-// Example usage
+// Create data
 const myGameboard = new Gameboard();
-
-// Add ships
-myGameboard.placeShip(new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal));
+myGameboard.placeShip(new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal));
 myGameboard.placeShip(new Ship(Name.Carrier, [3, 3], Orientation.Vertical));
+myGameboard.placeShip(new Ship(Name.Battleship, [0, 2], Orientation.Vertical));
+myGameboard.placeShip(new Ship(Name.Cruiser, [7, 9], Orientation.Horizontal));
 
-// Create attacks
 myGameboard.createAttack([4, 0]);
 myGameboard.createAttack([3, 3]);
 
-console.log(myGameboard.board[3][3]);
-console.log(myGameboard.ships);
+// Get the grid container
+const gameboard = document.querySelector(".gameboard") as HTMLElement;
+
+// Create HTML grid with ship names
+const allCells: Cell[] = ([] as Cell[]).concat(...myGameboard.board);
+allCells.forEach((cellData, index) => {
+  const cell: HTMLDivElement = document.createElement("div");
+  cell.className = "cell";
+  cell.id = "cell" + index;
+  cell.textContent = cellData.ship;
+  gameboard.appendChild(cell);
+});

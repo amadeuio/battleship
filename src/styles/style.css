@@ -1,7 +1,22 @@
 body {
-  background-color: red;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
-.hello {
-  color: yellowgreen;
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 2px;
+}
+
+.cell {
+  background-color: #3498db;
+  border: 1px solid #2c3e50;
+  padding: 10px;
+  text-align: center;
 }
