@@ -1,11 +1,11 @@
 import { Name, Orientation, Ship } from "./ship";
 
-interface Cell {
+export interface Cell {
   ship: Name | null;
   hit: boolean;
 }
 
-class Gameboard {
+export class Gameboard {
   board: Cell[][];
   ships: Ship[];
 
