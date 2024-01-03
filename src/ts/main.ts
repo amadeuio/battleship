@@ -23,6 +23,8 @@ allCells.forEach((cellData, index) => {
   const cell: HTMLDivElement = document.createElement("div");
   cell.className = "cell";
   cell.id = "cell" + index;
-  cell.textContent = cellData.ship;
+  if (cellData.ship) {
+    cell.textContent = cellData.ship?.slice(0, 2);
+  }
   gameboard.appendChild(cell);
 });
