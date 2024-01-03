@@ -14,7 +14,7 @@ export enum Orientation {
 export class Ship {
   name: Name;
   length: number;
-  position: [number, number]; // Position expressed as [x, y] array
+  position: [number, number]; 
   orientation: Orientation;
   hits: number;
   sunk: boolean;
