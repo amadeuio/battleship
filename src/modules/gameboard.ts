@@ -68,6 +68,12 @@ class Gameboard {
   createAttack(position: [number, number]): void {
     const [startingRow, startingCol] = position;
 
+    // Check if the cell has already been hit
+    if (this.board[startingRow][startingCol].hit) {
+      console.error("Duplicate attack. This cell has already been hit.");
+      return;
+    }
+
     // Add attack to board
     this.board[startingRow][startingCol].hit = true;
 
