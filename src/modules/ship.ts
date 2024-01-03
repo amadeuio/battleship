@@ -1,4 +1,4 @@
-enum Name {
+export enum Name {
   Carrier = "Carrier",
   Battleship = "Battleship",
   Cruiser = "Cruiser",
@@ -6,12 +6,12 @@ enum Name {
   Destroyer = "Destroyer",
 }
 
-enum Orientation {
+export enum Orientation {
   Horizontal = "Horizontal",
   Vertical = "Vertical",
 }
 
-class Ship {
+export class Ship {
   name: Name;
   length: number;
   position: number;
@@ -50,10 +50,11 @@ class Ship {
 
 // Example usage
 
-const myShip = new Ship(Name.Cruiser, 12, Orientation.Horizontal);
+// const myShip = new Ship(Name.Cruiser, 12, Orientation.Horizontal);
 
 // Example object
 
+/* 
 const myShipObj = {
   name: "Carrier",
   length: 5,
@@ -62,3 +63,4 @@ const myShipObj = {
   hits: 0,
   sunk: false,
 };
+*/
