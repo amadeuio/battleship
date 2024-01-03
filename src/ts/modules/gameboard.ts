@@ -1,4 +1,4 @@
-import { Name, Orientation, Ship } from "./ship";
+import { Name, Ship } from "./ship";
 
 export interface Cell {
   ship: Name | null;
@@ -57,17 +57,3 @@ export class Gameboard {
     this.ships.find((ship) => ship.name === attackedShip)?.hit();
   }
 }
-
-// Example usage
-const myGameboard = new Gameboard();
-
-// Add ships
-myGameboard.placeShip(new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal));
-myGameboard.placeShip(new Ship(Name.Carrier, [3, 3], Orientation.Vertical));
-
-// Create attacks
-myGameboard.createAttack([4, 0]);
-myGameboard.createAttack([3, 3]);
-
-console.log(myGameboard.board[3][3]);
-console.log(myGameboard.ships);

@@ -64,20 +64,3 @@ export class Ship {
     return coordinates;
   }
 }
-
-// Example usage
-
-// const myShip = new Ship(Name.Cruiser, [12, 3], Orientation.Horizontal);
-
-// Example object
-
-/* 
-const myShipObj = {
-  name: "Carrier",
-  length: 5,
-  position: [12, 3],
-  orientation: "Horizontal",
-  hits: 0,
-  sunk: false,
-};
-*/
