@@ -1,25 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-blue: #007bff;
+  --light-blue: #4da6ff;
+  --dark-blue: #0056b3;
+  --accent-blue: #0054a7;
+  --background-blue: #5985b4;
+}
+
 body {
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0;
+  background-color: var(--background-blue);
 }
 
 .gameboard {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  gap: 2px;
+  border-left: 1px solid var(--accent-blue);
+  border-top: 1px solid var(--accent-blue);
+  height: 500px;
+  width: 500px;
 }
 
 .cell {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #3498db;
-  border: 1px solid #2c3e50;
+  border-right: 1px solid var(--accent-blue);
+  border-bottom: 1px solid var(--accent-blue);
   padding: 15px;
   aspect-ratio: 1 / 1;
+}
+
+.ship {
+  border: 1px solid rgb(45, 45, 45);
+  background-color: rgb(45, 45, 45);
 }

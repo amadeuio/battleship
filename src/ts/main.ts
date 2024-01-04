@@ -24,7 +24,7 @@ allCells.forEach((cellData, index) => {
   cell.className = "cell";
   cell.id = "cell" + index;
   if (cellData.ship) {
-    cell.textContent = cellData.ship?.slice(0, 2);
+    cell.classList.add("ship");
   }
   gameboard.appendChild(cell);
 });
