@@ -16,15 +16,25 @@ myGameboard.createAttack([3, 3]);
 
 // Get the grid container
 const gameboard = document.querySelector(".gameboard") as HTMLElement;
-
-// Create HTML grid with ship names
 const allCells: Cell[] = ([] as Cell[]).concat(...myGameboard.board);
+
 allCells.forEach((cellData, index) => {
   const cell: HTMLDivElement = document.createElement("div");
   cell.className = "cell";
   cell.id = "cell" + index;
   if (cellData.ship) {
     cell.classList.add("ship");
+    // Add drag-and-drop event listeners
+    cell.setAttribute("draggable", "true");
+
+    cell.addEventListener("dragstart", (event: DragEvent) => {
+      event.dataTransfer?.setData("text/plain", index.toString());
+      cell.classList.add("dragging");
+    });
+
+    cell.addEventListener("dragend", () => {
+      cell.classList.remove("dragging");
+    });
   }
   gameboard.appendChild(cell);
 });
