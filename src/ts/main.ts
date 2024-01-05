@@ -117,6 +117,53 @@ createBoard(gameboard1);
 // Render ships
 myGameboard.ships.forEach((ship) => renderShip(ship, gameboard1));
 
+// Drag & Drop
+document.addEventListener("dragstart", (event: DragEvent) => {
+  // Get the dragged ship
+  const draggedShip = (event.target as HTMLElement).className;
+  if (event.dataTransfer) {
+    event.dataTransfer.setData("text/plain", draggedShip);
+  }
+});
+
+document.addEventListener("dragover", (event: DragEvent) => {
+  event.preventDefault();
+});
+
+document.addEventListener("drop", (event: DragEvent) => {
+  event.preventDefault();
+
+  // Get the ship that has been dropped
+  if (event.dataTransfer) {
+    const droppedClass = event.dataTransfer.getData("text/plain");
+    const droppedShip = myGameboard.ships.find((ship) => ship.name === droppedClass);
+
+    if (droppedShip) {
+      // Find the position in which the ship has been dropped
+      const dropCell = (event.target as HTMLElement).closest(".grid-item");
+
+      if (dropCell) {
+        const [x, y] = JSON.parse(dropCell.id);
+
+        // Update ship object's position
+        droppedShip.position = [x, y];
+
+        // Render updated ship
+        renderShip(droppedShip, gameboard1); // Assuming gridContainer is declared somewhere
+      }
+    }
+  }
+});
+
+// Example usage:
+// const ship: Ship = {
+//   name: "ship1",
+//   position: [2, 3],
+//   orientation: "Horizontal",
+//   length: 3,
+// };
+// ships.push(ship);
+
 /* 
 const allCells: Cell[] = ([] as Cell[]).concat(...myGameboard.board);
 
