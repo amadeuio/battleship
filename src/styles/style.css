@@ -9,37 +9,43 @@
   --accent-blue: #0054a7;
   --background-blue: #5985b4;
 }
+* {
+  box-sizing: content-box;
+}
+
+html {
+  height: 100%;
+}
 
 body {
-  margin: 0;
+  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: var(--background-blue);
+  justify-content: center;
 }
 
 .gameboard {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
-  border-left: 1px solid var(--accent-blue);
-  border-top: 1px solid var(--accent-blue);
+  grid-template-columns: repeat(10, 1fr); /* Adjust the number of columns as needed */
+  position: relative;
+  border: 1px solid black;
   height: 500px;
-  width: 500px;
-}
-
-.cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid var(--accent-blue);
-  border-bottom: 1px solid var(--accent-blue);
-  padding: 15px;
   aspect-ratio: 1 / 1;
 }
 
-.ship {
-  border: 1px solid rgb(45, 45, 45);
-  background-color: rgb(45, 45, 45);
+.grid-item {
+  border: 1px solid black;
+}
+
+.Destroyer,
+.Battleship,
+.Submarine,
+.Carrier,
+.Cruiser {
+  z-index: 1;
+  position: absolute;
+  background-image: url("./sprite.png");
+  background-size: contain;
+  background-position: center;
+  cursor: grab;
 }
