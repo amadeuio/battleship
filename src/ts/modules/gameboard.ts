@@ -19,6 +19,7 @@ export class Gameboard {
 
   placeShip(ship: Ship): void {
     // Check for overlap with existing ships
+    // IDEA: Instead of throwing an error, put ship in the closest available position
     if (this.checkForOverlap(ship)) {
       console.error("Cannot place ship. Overlaps with an existing ship.");
       return;
