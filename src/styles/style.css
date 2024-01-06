@@ -1,16 +1,9 @@
-* {
-  box-sizing: border-box;
-}
-
 :root {
   --primary-blue: #007bff;
   --light-blue: #4da6ff;
   --dark-blue: #0056b3;
   --accent-blue: #0054a7;
   --background-blue: #5985b4;
-}
-* {
-  box-sizing: content-box;
 }
 
 html {
@@ -26,7 +19,7 @@ body {
 
 .gameboard {
   display: grid;
-  grid-template-columns: repeat(10, 1fr); /* Adjust the number of columns as needed */
+  grid-template-columns: repeat(10, 1fr);
   position: relative;
   border: 1px solid black;
   height: 500px;
@@ -35,7 +28,7 @@ body {
 
 .grid-item {
   border: 1px solid black;
-  z-index: 2;
+  /* z-index: 2; this causes problems with drag & drop functionality */
   display: flex;
   justify-content: center;
   align-items: center;
