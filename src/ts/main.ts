@@ -102,6 +102,7 @@ const ships: any = [
 // Program starts
 
 // Create data
+
 const myGameboard = new Gameboard();
 myGameboard.placeShip(new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal));
 myGameboard.placeShip(new Ship(Name.Carrier, [3, 3], Orientation.Vertical));
@@ -111,13 +112,16 @@ myGameboard.createAttack([4, 0]);
 myGameboard.createAttack([3, 3]);
 
 // Create board
+
 const gameboard1 = document.querySelector(".gameboard") as HTMLElement;
 createBoard(gameboard1);
 
 // Render ships
+
 myGameboard.ships.forEach((ship) => renderShip(ship, gameboard1));
 
-// Drag & Drop
+// Drag & Drop functionality
+
 document.addEventListener("dragstart", (event: DragEvent) => {
   // Get the dragged ship
   const draggedShip = (event.target as HTMLElement).className;
@@ -130,6 +134,9 @@ document.addEventListener("dragover", (event: DragEvent) => {
   event.preventDefault();
 });
 
+// Find the ship and coordinates in which it has been droped
+// Update the object
+// Render the new ship object
 document.addEventListener("drop", (event: DragEvent) => {
   event.preventDefault();
 
@@ -149,7 +156,7 @@ document.addEventListener("drop", (event: DragEvent) => {
         droppedShip.position = [x, y];
 
         // Render updated ship
-        renderShip(droppedShip, gameboard1); // Assuming gridContainer is declared somewhere
+        renderShip(droppedShip, gameboard1);
       }
     }
   }

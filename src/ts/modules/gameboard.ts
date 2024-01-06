@@ -41,6 +41,25 @@ export class Gameboard {
     });
   }
 
+  removeShip(ship: Ship): void {
+    // Find the index of the ship in the ships array
+    const shipIndex = this.ships.findIndex((s) => s === ship);
+
+    // If the ship is not found, log an error and return
+    if (shipIndex === -1) {
+      console.error("Ship not found. Cannot remove.");
+      return;
+    }
+
+    // Remove ship from the ships array
+    this.ships.splice(shipIndex, 1);
+
+    // Remove ship from the board
+    ship.calcCoordinates().forEach(([row, col]) => {
+      this.board[row][col].ship = null;
+    });
+  }
+
   createAttack(position: [number, number]): void {
     const [startingRow, startingCol] = position;
 
