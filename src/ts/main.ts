@@ -60,29 +60,29 @@ function renderShip(ship: Ship, gameboard: HTMLElement) {
 
 // Create data
 
-const myGameboard = new Gameboard();
+const playerGameboardObj = new Gameboard();
 
 const destroyer = new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal);
 const carrier = new Ship(Name.Carrier, [3, 3], Orientation.Vertical);
 const battleship = new Ship(Name.Battleship, [0, 2], Orientation.Vertical);
 const cruiser = new Ship(Name.Cruiser, [7, 9], Orientation.Horizontal);
 
-myGameboard.placeShip(destroyer);
-myGameboard.placeShip(carrier);
-myGameboard.placeShip(battleship);
-myGameboard.placeShip(cruiser);
+playerGameboardObj.placeShip(destroyer);
+playerGameboardObj.placeShip(carrier);
+playerGameboardObj.placeShip(battleship);
+playerGameboardObj.placeShip(cruiser);
 
-myGameboard.createAttack([4, 0]);
-myGameboard.createAttack([3, 3]);
+playerGameboardObj.createAttack([4, 0]);
+playerGameboardObj.createAttack([3, 3]);
 
 // Create board
 
-const gameboard1 = document.querySelector(".gameboard") as HTMLElement;
-createBoard(gameboard1);
+const playerGameboardHTML = document.querySelector(".gameboard") as HTMLElement;
+createBoard(playerGameboardHTML);
 
 // Render ships
 
-myGameboard.ships.forEach((ship) => renderShip(ship, gameboard1));
+playerGameboardObj.ships.forEach((ship) => renderShip(ship, playerGameboardHTML));
 
 // Drag & Drop functionality
 
@@ -107,7 +107,7 @@ document.addEventListener("drop", (event: DragEvent) => {
   // Get the ship that has been dropped
   if (event.dataTransfer) {
     const droppedClass = event.dataTransfer.getData("text/plain");
-    const droppedShip = myGameboard.ships.find((ship) => ship.name === droppedClass);
+    const droppedShip = playerGameboardObj.ships.find((ship) => ship.name === droppedClass);
 
     if (droppedShip) {
       // Find the position in which the ship has been dropped
@@ -116,10 +116,10 @@ document.addEventListener("drop", (event: DragEvent) => {
       if (dropCell) {
         // Update the gameboard with the new position
         const [x, y] = JSON.parse(dropCell.id);
-        myGameboard.moveShip(droppedShip, [x, y]);
+        playerGameboardObj.moveShip(droppedShip, [x, y]);
 
         // Render updated ship
-        renderShip(droppedShip, gameboard1);
+        renderShip(droppedShip, playerGameboardHTML);
       }
     }
   }
