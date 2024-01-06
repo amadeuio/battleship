@@ -117,3 +117,15 @@ myGameboard.placeShip(new Ship(Name.Carrier, [3, 3], Orientation.Vertical));
 myGameboard.createAttack([4, 0]);
 myGameboard.createAttack([3, 3]); 
 */
+
+/*
+// Idea: move to closest leagal position implementation
+isPositionLegal()
+
+MoveToClosestLegalPosition() {
+  while (!isPositionLegal()) {
+      // keep trying positions
+      // by moving one step at a time
+  }
+} 
+*/
