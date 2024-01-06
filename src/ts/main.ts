@@ -125,38 +125,3 @@ document.addEventListener("drop", (event: DragEvent) => {
     }
   }
 });
-
-// Example usage:
-// const ship: Ship = {
-//   name: "ship1",
-//   position: [2, 3],
-//   orientation: "Horizontal",
-//   length: 3,
-// };
-// ships.push(ship);
-
-/* 
-const allCells: Cell[] = ([] as Cell[]).concat(...myGameboard.board);
-
-// Render gameboard based on gameboard.board
-allCells.forEach((cellData, index) => {
-  const cell: HTMLDivElement = document.createElement("div");
-  cell.className = "cell";
-  cell.id = "cell" + index;
-  if (cellData.ship) {
-    cell.classList.add("ship");
-    // Add drag-and-drop event listeners
-    cell.setAttribute("draggable", "true");
-
-    cell.addEventListener("dragstart", (event: DragEvent) => {
-      event.dataTransfer?.setData("text/plain", index.toString());
-      cell.classList.add("dragging");
-    });
-
-    cell.addEventListener("dragend", () => {
-      cell.classList.remove("dragging");
-    });
-  }
-  gameboard.appendChild(cell);
-});
- */
