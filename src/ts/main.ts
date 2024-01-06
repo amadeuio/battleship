@@ -104,10 +104,17 @@ const ships: any = [
 // Create data
 
 const myGameboard = new Gameboard();
-myGameboard.placeShip(new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal));
-myGameboard.placeShip(new Ship(Name.Carrier, [3, 3], Orientation.Vertical));
-myGameboard.placeShip(new Ship(Name.Battleship, [0, 2], Orientation.Vertical));
-myGameboard.placeShip(new Ship(Name.Cruiser, [7, 9], Orientation.Horizontal));
+
+const destroyer = new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal);
+const carrier = new Ship(Name.Carrier, [3, 3], Orientation.Vertical);
+const battleship = new Ship(Name.Battleship, [0, 2], Orientation.Vertical);
+const cruiser = new Ship(Name.Cruiser, [7, 9], Orientation.Horizontal);
+
+myGameboard.placeShip(destroyer);
+myGameboard.placeShip(carrier);
+myGameboard.placeShip(battleship);
+myGameboard.placeShip(cruiser);
+
 myGameboard.createAttack([4, 0]);
 myGameboard.createAttack([3, 3]);
 

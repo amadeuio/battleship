@@ -60,6 +60,33 @@ export class Gameboard {
     });
   }
 
+  moveShip(ship: Ship, newPosition: [number, number]): void {
+    // Remove the ship from its current position on the board
+    ship.calcCoordinates().forEach(([row, col]) => {
+      this.board[row][col].ship = null;
+    });
+
+    // Update the ship's position
+    ship.position = newPosition;
+
+    // Check for overlap with other ships in the new position
+    if (this.checkForOverlap(ship)) {
+      console.error("Cannot move ship. Overlaps with an existing ship.");
+
+      // Move the ship back to its original position
+      ship.calcCoordinates().forEach(([row, col]) => {
+        this.board[row][col].ship = ship.name;
+      });
+
+      return;
+    }
+
+    // Update the ship's position on the board
+    ship.calcCoordinates().forEach(([row, col]) => {
+      this.board[row][col].ship = ship.name;
+    });
+  }
+
   createAttack(position: [number, number]): void {
     const [startingRow, startingCol] = position;
 
