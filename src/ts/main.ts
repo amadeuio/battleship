@@ -99,8 +99,8 @@ document.addEventListener("dragover", (event: DragEvent) => {
 });
 
 // Find the ship and coordinates in which it has been droped
-// Update the object
-// Render the new ship object
+// Update the gameboard
+// Render the updated ship
 document.addEventListener("drop", (event: DragEvent) => {
   event.preventDefault();
 
@@ -114,10 +114,9 @@ document.addEventListener("drop", (event: DragEvent) => {
       const dropCell = (event.target as HTMLElement).closest(".grid-item");
 
       if (dropCell) {
+        // Update the gameboard with the new position
         const [x, y] = JSON.parse(dropCell.id);
-
-        // Update ship object's position
-        droppedShip.position = [x, y];
+        myGameboard.moveShip(droppedShip, [x, y]);
 
         // Render updated ship
         renderShip(droppedShip, gameboard1);
