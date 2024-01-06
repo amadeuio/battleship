@@ -56,6 +56,21 @@ function renderShip(ship: Ship, gameboard: HTMLElement) {
   shipDiv.style.left = leftValue;
 }
 
+function renderBoard(board: Cell[][], gameboardHTML: HTMLElement): void {
+  // Convert to list
+  const boardList = board.flat();
+
+  // Select html grid items inside specified gameboard
+  var htmlCells = gameboardHTML.getElementsByClassName("grid-item");
+
+  // Iterate through board list, add 🔥 to the corresponding html divs
+  boardList.forEach((objCell, index) => {
+    if (objCell.hit && objCell.ship) {
+      htmlCells[index].textContent = "🔥";
+    }
+  });
+}
+
 // Program starts
 
 // Create data
@@ -72,13 +87,19 @@ playerGameboardObj.placeShip(carrier);
 playerGameboardObj.placeShip(battleship);
 playerGameboardObj.placeShip(cruiser);
 
-playerGameboardObj.createAttack([4, 0]);
+playerGameboardObj.createAttack([5, 5]);
 playerGameboardObj.createAttack([3, 3]);
+playerGameboardObj.createAttack([0, 2]);
+playerGameboardObj.createAttack([7, 9]);
 
-// Create board
+// Create HTML board
 
 const playerGameboardHTML = document.querySelector(".gameboard") as HTMLElement;
 createBoard(playerGameboardHTML);
+
+// Render board
+
+renderBoard(playerGameboardObj.board, playerGameboardHTML);
 
 // Render ships
 
