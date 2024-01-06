@@ -56,49 +56,6 @@ function renderShip(ship: Ship, gameboard: HTMLElement) {
   shipDiv.style.left = leftValue;
 }
 
-const ships: any = [
-  {
-    name: "Destroyer",
-    length: 3,
-    position: [2, 2],
-    orientation: "Horizontal",
-    hits: 0,
-    sunk: false,
-  },
-  {
-    name: "Battleship",
-    length: 4,
-    position: [5, 4],
-    orientation: "Vertical",
-    hits: 0,
-    sunk: false,
-  },
-  {
-    name: "Submarine",
-    length: 3,
-    position: [5, 9],
-    orientation: "Horizontal",
-    hits: 0,
-    sunk: false,
-  },
-  {
-    name: "Carrier",
-    length: 5,
-    position: [1, 1],
-    orientation: "Vertical",
-    hits: 0,
-    sunk: false,
-  },
-  {
-    name: "Cruiser",
-    length: 3,
-    position: [9, 6],
-    orientation: "Vertical",
-    hits: 0,
-    sunk: false,
-  },
-];
-
 // Program starts
 
 // Create data
