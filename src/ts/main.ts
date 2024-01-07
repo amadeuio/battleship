@@ -57,8 +57,9 @@ function renderShip(ship: Ship, gameboard: HTMLElement) {
 }
 
 function renderBoard(board: Cell[][], gameboardHTML: HTMLElement): void {
-  // Convert to list
-  const boardList = board.flat();
+  // Flattens the board matrix column-wise
+  const transposedBoard = board[0].map((_, i) => board.map((row) => row[i]));
+  const boardList = transposedBoard.flat();
 
   // Select html grid items inside specified gameboard
   var htmlCells = gameboardHTML.getElementsByClassName("grid-item");
