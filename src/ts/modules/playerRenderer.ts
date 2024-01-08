@@ -33,17 +33,13 @@ export class PlayerRenderer {
   }
 
   renderAttacks() {
-    const board = this.player.attacks;
-
-    // Flatten the board matrix column-wise
-    const transposedBoard = board[0].map((_, i) => board.map((row) => row[i]));
-    const boardList = transposedBoard.flat();
-
     // Select html grid items inside specified gameboard
     var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
 
     // Iterate through board list, add 🔥 to the corresponding html divs
-    boardList.forEach((objCell, index) => {
+    this.player.attacks.forEach((objCell, index) => {
+      console.log(objCell);
+
       if (objCell.hit && objCell.ship) {
         htmlCells[index].textContent = "🔥";
       }
