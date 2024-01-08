@@ -27,7 +27,8 @@ body {
   aspect-ratio: 1 / 1;
 }
 
-.Player-cell {
+.Player-cell,
+.Opponent-cell {
   border: 1px solid black;
   /* z-index: 2; */ /* this causes problems with drag & drop functionality */
   display: flex;
