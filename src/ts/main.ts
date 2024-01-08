@@ -4,6 +4,48 @@ import "../styles/style.css";
 import { Name, Orientation, Ship } from "./modules/ship";
 import { Gameboard, Cell } from "./modules/gameboard";
 
+// Add drag & drop functionality
+function addDragAndDrop(): void {
+  document.addEventListener("dragstart", (event: DragEvent) => {
+    // Get the dragged ship
+    const draggedShip = (event.target as HTMLElement).className;
+    if (event.dataTransfer) {
+      event.dataTransfer.setData("text/plain", draggedShip);
+    }
+  });
+
+  document.addEventListener("dragover", (event: DragEvent) => {
+    event.preventDefault();
+  });
+
+  // Find the ship and coordinates in which it has been droped
+  // Update the gameboard
+  // Render the updated ship
+  document.addEventListener("drop", (event: DragEvent) => {
+    event.preventDefault();
+
+    // Get the ship that has been dropped
+    if (event.dataTransfer) {
+      const droppedClass = event.dataTransfer.getData("text/plain");
+      const droppedShip = playerGameboardObj.ships.find((ship) => ship.name === droppedClass);
+
+      if (droppedShip) {
+        // Find the position in which the ship has been dropped
+        const dropCell = (event.target as HTMLElement).closest(".grid-item");
+
+        if (dropCell) {
+          // Update the gameboard with the new position
+          const [x, y] = JSON.parse(dropCell.id);
+          playerGameboardObj.moveShip(droppedShip, [x, y]);
+
+          // Render updated ship
+          renderShip(droppedShip, playerGameboardHTML);
+        }
+      }
+    }
+  });
+}
+
 // Create a 10x10 gameboard
 function createBoard(gameboard: HTMLElement) {
   for (let row = 0; row < 10; row++) {
@@ -56,8 +98,9 @@ function renderShip(ship: Ship, gameboard: HTMLElement) {
   shipDiv.style.left = leftValue;
 }
 
+// Render board matrix
 function renderBoard(board: Cell[][], gameboardHTML: HTMLElement): void {
-  // Flattens the board matrix column-wise
+  // Flatten the board matrix column-wise
   const transposedBoard = board[0].map((_, i) => board.map((row) => row[i]));
   const boardList = transposedBoard.flat();
 
@@ -108,41 +151,4 @@ playerGameboardObj.ships.forEach((ship) => renderShip(ship, playerGameboardHTML)
 
 // Drag & Drop functionality
 
-document.addEventListener("dragstart", (event: DragEvent) => {
-  // Get the dragged ship
-  const draggedShip = (event.target as HTMLElement).className;
-  if (event.dataTransfer) {
-    event.dataTransfer.setData("text/plain", draggedShip);
-  }
-});
-
-document.addEventListener("dragover", (event: DragEvent) => {
-  event.preventDefault();
-});
-
-// Find the ship and coordinates in which it has been droped
-// Update the gameboard
-// Render the updated ship
-document.addEventListener("drop", (event: DragEvent) => {
-  event.preventDefault();
-
-  // Get the ship that has been dropped
-  if (event.dataTransfer) {
-    const droppedClass = event.dataTransfer.getData("text/plain");
-    const droppedShip = playerGameboardObj.ships.find((ship) => ship.name === droppedClass);
-
-    if (droppedShip) {
-      // Find the position in which the ship has been dropped
-      const dropCell = (event.target as HTMLElement).closest(".grid-item");
-
-      if (dropCell) {
-        // Update the gameboard with the new position
-        const [x, y] = JSON.parse(dropCell.id);
-        playerGameboardObj.moveShip(droppedShip, [x, y]);
-
-        // Render updated ship
-        renderShip(droppedShip, playerGameboardHTML);
-      }
-    }
-  }
-});
+addDragAndDrop();

@@ -28,7 +28,7 @@ body {
 
 .grid-item {
   border: 1px solid black;
-  z-index: 2; /* this causes problems with drag & drop functionality */
+  /* z-index: 2; */ /* this causes problems with drag & drop functionality */
   display: flex;
   justify-content: center;
   align-items: center;
