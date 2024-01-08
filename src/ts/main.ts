@@ -2,19 +2,7 @@ import "../styles/reset.css";
 import "../styles/style.css";
 
 import { Name, Orientation, Ship } from "./modules/ship";
-import { Gameboard, Cell } from "./modules/gameboard";
-
-class Player {
-  name: string;
-  gameboard: Gameboard;
-  death: boolean;
-
-  constructor(name: string, gameboard: Gameboard) {
-    this.name = name;
-    this.gameboard = gameboard;
-    this.death = false;
-  }
-}
+import { Player, Cell, Role } from "./modules/player";
 
 class PlayerRenderer {
   player: Player;
@@ -23,18 +11,18 @@ class PlayerRenderer {
   constructor(player: Player) {
     this.player = player;
     this.boardContainer = document.createElement("div");
-    this.boardContainer.className = this.player.name;
+    this.boardContainer.className = this.player.role;
   }
 
   createBoard() {
     const boardContainer = document.createElement("div");
-    boardContainer.className = this.player.name;
+    boardContainer.className = this.player.role;
 
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
         // Create div
         const boardCell = document.createElement("div");
-        boardCell.className = this.player.name + "-cell";
+        boardCell.className = this.player.role + "-cell";
 
         // Set the id of the div to be its coordinates
         const coordinates: [number, number] = [col, row];
@@ -48,14 +36,14 @@ class PlayerRenderer {
   }
 
   renderAttacks() {
-    const board = this.player.gameboard.board;
+    const board = this.player.attacks;
 
     // Flatten the board matrix column-wise
     const transposedBoard = board[0].map((_, i) => board.map((row) => row[i]));
     const boardList = transposedBoard.flat();
 
     // Select html grid items inside specified gameboard
-    var htmlCells = this.boardContainer.getElementsByClassName(this.player.name + "-cell");
+    var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
 
     // Iterate through board list, add 🔥 to the corresponding html divs
     boardList.forEach((objCell, index) => {
@@ -100,7 +88,7 @@ class PlayerRenderer {
       shipDiv.style.left = leftValue;
     }
 
-    this.player.gameboard.ships.forEach((ship) => renderShip(ship, this.boardContainer));
+    this.player.ships.forEach((ship) => renderShip(ship, this.boardContainer));
   }
 
   addDragDrop(): void {
@@ -125,16 +113,16 @@ class PlayerRenderer {
       // Get the ship that has been dropped
       if (event.dataTransfer) {
         const droppedClass = event.dataTransfer.getData("text/plain");
-        const droppedShip = this.player.gameboard.ships.find((ship) => ship.name === droppedClass);
+        const droppedShip = this.player.ships.find((ship) => ship.name === droppedClass);
 
         if (droppedShip) {
           // Find the position in which the ship has been dropped
-          const dropCell = (event.target as HTMLElement).closest(`.${this.player.name}-cell`);
+          const dropCell = (event.target as HTMLElement).closest(`.${this.player.role}-cell`);
 
           if (dropCell) {
             // Update the gameboard with the new position
             const [x, y] = JSON.parse(dropCell.id);
-            this.player.gameboard.moveShip(droppedShip, [x, y]);
+            this.player.moveShip(droppedShip, [x, y]);
 
             // Render updated ship
             this.renderShips();
@@ -147,36 +135,32 @@ class PlayerRenderer {
 
 // Program starts
 
-// Create gameboard data
+// Create player data
 
-const playerGameboardObj: Gameboard = new Gameboard();
+const player: Player = new Player(Role.Player);
 
 const destroyer = new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal);
 const carrier = new Ship(Name.Carrier, [3, 3], Orientation.Vertical);
 const battleship = new Ship(Name.Battleship, [0, 2], Orientation.Vertical);
 const cruiser = new Ship(Name.Cruiser, [7, 9], Orientation.Horizontal);
 
-playerGameboardObj.placeShip(destroyer);
-playerGameboardObj.placeShip(carrier);
-playerGameboardObj.placeShip(battleship);
-playerGameboardObj.placeShip(cruiser);
+player.placeShip(destroyer);
+player.placeShip(carrier);
+player.placeShip(battleship);
+player.placeShip(cruiser);
 
-playerGameboardObj.createAttack([5, 5]);
-playerGameboardObj.createAttack([3, 3]);
-playerGameboardObj.createAttack([0, 2]);
-playerGameboardObj.createAttack([7, 9]);
-
-// Create player data
-
-const player1: Player = new Player("Player1", playerGameboardObj);
+player.createAttack([5, 5]);
+player.createAttack([3, 3]);
+player.createAttack([0, 2]);
+player.createAttack([7, 9]);
 
 // Create PlayerRenderer
 
-const playerRenderer1: PlayerRenderer = new PlayerRenderer(player1);
+const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
 
 // Render
 
-playerRenderer1.createBoard();
-playerRenderer1.renderAttacks();
-playerRenderer1.renderShips();
-playerRenderer1.addDragDrop();
+playerRenderer.createBoard();
+playerRenderer.renderAttacks();
+playerRenderer.renderShips();
+playerRenderer.addDragDrop();

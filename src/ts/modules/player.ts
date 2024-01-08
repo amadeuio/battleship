@@ -5,16 +5,26 @@ export interface Cell {
   hit: boolean;
 }
 
-export class Gameboard {
-  board: Cell[][];
-  ships: Ship[];
+export enum Role {
+  Player = "Player",
+  Opponent = "Opponent",
+}
 
-  constructor() {
-    // Construct 10x10 array of arrays with { ship: null, hit: false } cells
-    this.board = Array.from({ length: 10 }, () =>
+export class Player {
+  role: Role;
+  nickname: string;
+  attacks: Cell[][];
+  ships: Ship[];
+  death: boolean;
+
+  constructor(role: Role) {
+    this.role = role;
+    this.nickname = "John";
+    this.attacks = this.attacks = Array.from({ length: 10 }, () =>
       Array.from({ length: 10 }, () => ({ ship: null, hit: false }))
     );
     this.ships = [];
+    this.death = false;
   }
 
   placeShip(ship: Ship): void {
@@ -30,14 +40,14 @@ export class Gameboard {
 
     // Add ship to board
     ship.calcCoordinates().forEach(([row, col]) => {
-      this.board[row][col].ship = ship.name;
+      this.attacks[row][col].ship = ship.name;
     });
   }
 
   private checkForOverlap(newShip: Ship): boolean {
     // Check if the new ship overlaps with any existing ships
     return newShip.calcCoordinates().some(([row, col]) => {
-      return this.board[row][col].ship !== null;
+      return this.attacks[row][col].ship !== null;
     });
   }
 
@@ -56,14 +66,14 @@ export class Gameboard {
 
     // Remove ship from the board
     ship.calcCoordinates().forEach(([row, col]) => {
-      this.board[row][col].ship = null;
+      this.attacks[row][col].ship = null;
     });
   }
 
   moveShip(ship: Ship, newPosition: [number, number]): void {
     // Remove the ship from its current position on the board
     ship.calcCoordinates().forEach(([row, col]) => {
-      this.board[row][col].ship = null;
+      this.attacks[row][col].ship = null;
     });
 
     // Update the ship's position
@@ -75,7 +85,7 @@ export class Gameboard {
 
       // Move the ship back to its original position
       ship.calcCoordinates().forEach(([row, col]) => {
-        this.board[row][col].ship = ship.name;
+        this.attacks[row][col].ship = ship.name;
       });
 
       return;
@@ -83,7 +93,7 @@ export class Gameboard {
 
     // Update the ship's position on the board
     ship.calcCoordinates().forEach(([row, col]) => {
-      this.board[row][col].ship = ship.name;
+      this.attacks[row][col].ship = ship.name;
     });
   }
 
@@ -91,31 +101,31 @@ export class Gameboard {
     const [startingRow, startingCol] = position;
 
     // Check if the cell has already been hit
-    if (this.board[startingRow][startingCol].hit) {
+    if (this.attacks[startingRow][startingCol].hit) {
       console.error("Duplicate attack. This cell has already been hit.");
       return;
     }
 
     // Add attack to board
-    this.board[startingRow][startingCol].hit = true;
+    this.attacks[startingRow][startingCol].hit = true;
 
     // Add attack to ship
-    const attackedShip = this.board[startingRow][startingCol].ship;
+    const attackedShip = this.attacks[startingRow][startingCol].ship;
     this.ships.find((ship) => ship.name === attackedShip)?.hit();
   }
 }
 
 /* 
 // Example usage
-const myGameboard = new Gameboard();
+const myPlayer = new Player();
 
 // Add ships
-myGameboard.placeShip(new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal));
-myGameboard.placeShip(new Ship(Name.Carrier, [3, 3], Orientation.Vertical));
+myPlayer.placeShip(new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal));
+myPlayer.placeShip(new Ship(Name.Carrier, [3, 3], Orientation.Vertical));
 
 // Create attacks
-myGameboard.createAttack([4, 0]);
-myGameboard.createAttack([3, 3]); 
+myPlayer.createAttack([4, 0]);
+myPlayer.createAttack([3, 3]); 
 */
 
 /*

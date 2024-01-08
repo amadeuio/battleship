@@ -17,7 +17,8 @@ body {
   justify-content: center;
 }
 
-.Player1 {
+.Player,
+.Opponent {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   position: relative;
@@ -26,7 +27,7 @@ body {
   aspect-ratio: 1 / 1;
 }
 
-.Player1-cell {
+.Player-cell {
   border: 1px solid black;
   /* z-index: 2; */ /* this causes problems with drag & drop functionality */
   display: flex;
