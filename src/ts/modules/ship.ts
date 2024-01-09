@@ -71,6 +71,8 @@ Example object:
 
 const destroyerShip = new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal);
 
+given a list of ships that look like this
+
 {
   name: 'Destroyer',
   length: 2,
@@ -80,5 +82,11 @@ const destroyerShip = new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal);
   sunk: false,
   coordinates: [ [ 4, 0 ], [ 5, 0 ] ]
 } 
+
+create a method fillBoard() that takes that list, and fills a 100 item array like this
+
+{ ship: null, hit: false }
+
+
 
 */

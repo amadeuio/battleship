@@ -30,7 +30,6 @@ export class Player {
     // IDEA: Instead of throwing an error, put ship in the closest available position
     if (this.checkForOverlap(ship)) {
       console.error("Cannot place ship. Overlaps with an existing ship.");
-      console.log("err");
       return;
     }
 
@@ -44,10 +43,22 @@ export class Player {
   }
 
   private checkForOverlap(newShip: Ship): boolean {
-    // Check if the new ship overlaps with any existing ships
-    return newShip.coordinates.some(([row, col]) => {
-      return this.board[col * 10 + row].ship !== null;
-    });
+    // Iterate through existing ships
+    for (const existingShip of this.ships) {
+      // Check if any coordinate of the new ship overlaps with existing ship
+      const overlap = newShip.coordinates.some((coord) =>
+        existingShip.coordinates.some(
+          (existingCoord) => existingCoord[0] === coord[0] && existingCoord[1] === coord[1]
+        )
+      );
+
+      if (overlap) {
+        return true; // Overlap found
+      }
+    }
+
+    // No overlap found
+    return false;
   }
 
   moveShip(ship: Ship, newPosition: [number, number]): void {
@@ -66,11 +77,6 @@ export class Player {
     if (this.checkForOverlap(ship)) {
       console.error("Cannot move ship. Overlaps with an existing ship.");
 
-      // Move the ship back to its original position
-      ship.coordinates.forEach(([row, col]) => {
-        this.board[col * 10 + row].ship = ship.name;
-      });
-
       // Revert the ship's position to its original value
       ship.position = originalPosition;
 
@@ -80,6 +86,16 @@ export class Player {
     // Update the ship's position on the board
     ship.coordinates.forEach(([row, col]) => {
       this.board[col * 10 + row].ship = ship.name;
+    });
+  }
+
+  // Place ships on the board
+  placeShipsOnBoard() {
+    this.ships.forEach((ship) => {
+      ship.coordinates.forEach(([x, y]) => {
+        const index = y * 10 + x;
+        this.board[index] = { ship: ship.name, hit: false };
+      });
     });
   }
 
@@ -95,7 +111,7 @@ export class Player {
     // Add attack to board
     this.board[startingCol * 10 + startingRow].hit = true;
 
-    // Add attack to ship
+    // Add attack to ships
     const attackedShip = this.board[startingCol * 10 + startingRow].ship;
     this.ships.find((ship) => ship.name === attackedShip)?.hit();
   }
@@ -124,4 +140,28 @@ MoveToClosestLegalPosition() {
       // by moving one random step at a time
   }
 } 
+*/
+
+/*
+
+1. Place random ships
+
+randomShips.forEach(ship => placeShip(ships))
+
+2. User will move ships
+
+moveShip()
+moveShip()
+...
+
+3. User will press play
+
+placeShipsOnBoard()
+
+4. Game will begin
+
+createAttack()
+createAttack()
+...
+
 */
