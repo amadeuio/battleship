@@ -37,17 +37,15 @@ export class Player {
   }
 
   private hasOverlap(candidateShip: Ship): boolean {
-    // Extracts flat array w coordinates from existing ships excluding the candidate ship
+    // Flat array with coordinates of all ships except candidate
     const existingCoordinates = this.ships
       .filter((ship) => ship !== candidateShip)
       .flatMap((ship) => ship.coordinates);
 
-    // Compares each coordinate of the candidate ship with coordinates of all other existing ships
-    const isOverlap = candidateShip.coordinates.some(([x, y]) =>
+    // Check for overlap with other ship coordinates
+    return candidateShip.coordinates.some(([x, y]) =>
       existingCoordinates.some(([ex, ey]) => x === ex && y === ey)
     );
-
-    return isOverlap;
   }
 
   moveShip(ship: Ship, newPosition: [number, number]): void {
