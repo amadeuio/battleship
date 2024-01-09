@@ -56,6 +56,16 @@ export class Player {
     return !hasOverlap && !isOutOfBounds;
   }
 
+  moveShip(ship: Ship, newPosition: [number, number]): void {
+    const initialPosition = ship.position;
+    ship.position = newPosition;
+
+    if (this.isValidPlacement(ship)) {
+      console.log("Is Valid");
+      ship.position = initialPosition;
+    }
+  }
+
   // Place ships on the board
   placeShipsOnBoard() {
     this.ships.forEach((ship) => {
