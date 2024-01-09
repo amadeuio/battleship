@@ -30,6 +30,7 @@ export class Player {
     // IDEA: Instead of throwing an error, put ship in the closest available position
     if (this.checkForOverlap(ship)) {
       console.error("Cannot place ship. Overlaps with an existing ship.");
+      console.log("err");
       return;
     }
 
@@ -55,6 +56,9 @@ export class Player {
       this.board[col * 10 + row].ship = null;
     });
 
+    // Save the original position for potential revert
+    const originalPosition = ship.position;
+
     // Update the ship's position
     ship.position = newPosition;
 
@@ -66,6 +70,9 @@ export class Player {
       ship.coordinates.forEach(([row, col]) => {
         this.board[col * 10 + row].ship = ship.name;
       });
+
+      // Revert the ship's position to its original value
+      ship.position = originalPosition;
 
       return;
     }
