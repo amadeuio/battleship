@@ -27,7 +27,6 @@ export class Player {
 
   placeShip(ship: Ship): void {
     // Check for overlap with existing ships
-    // IDEA: Instead of throwing an error, put ship in the closest available position
     if (this.checkForOverlap(ship)) {
       console.error("Cannot place ship. Overlaps with an existing ship.");
       return;
@@ -35,11 +34,6 @@ export class Player {
 
     // Add ship to list
     this.ships.push(ship);
-
-    // Add ship to board
-    ship.coordinates.forEach(([row, col]) => {
-      this.board[col * 10 + row].ship = ship.name;
-    });
   }
 
   private checkForOverlap(newShip: Ship): boolean {
@@ -62,11 +56,6 @@ export class Player {
   }
 
   moveShip(ship: Ship, newPosition: [number, number]): void {
-    // Remove the ship from its current position on the board
-    ship.coordinates.forEach(([row, col]) => {
-      this.board[col * 10 + row].ship = null;
-    });
-
     // Save the original position for potential revert
     const originalPosition = ship.position;
 
@@ -82,11 +71,6 @@ export class Player {
 
       return;
     }
-
-    // Update the ship's position on the board
-    ship.coordinates.forEach(([row, col]) => {
-      this.board[col * 10 + row].ship = ship.name;
-    });
   }
 
   // Place ships on the board
