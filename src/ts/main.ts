@@ -21,7 +21,7 @@ player.placeShip(carrier);
 player.placeShip(battleship);
 player.placeShip(cruiser);
 
-player.moveShip(cruiser, [3, 1]);
+player.moveShip(destroyer, [4, 3]);
 /* 
 player.createAttack([5, 5]);
 player.createAttack([3, 3]);
