@@ -13,14 +13,14 @@ export enum Role {
 export class Player {
   role: Role;
   nickname: string;
-  attacks: Cell[];
+  board: Cell[];
   ships: Ship[];
   death: boolean;
 
   constructor(role: Role) {
     this.role = role;
     this.nickname = "John";
-    this.attacks = Array.from({ length: 100 }, () => ({ ship: null, hit: false }));
+    this.board = Array.from({ length: 100 }, () => ({ ship: null, hit: false }));
     this.ships = [];
     this.death = false;
   }
@@ -38,14 +38,14 @@ export class Player {
 
     // Add ship to board
     ship.coordinates.forEach(([row, col]) => {
-      this.attacks[col * 10 + row].ship = ship.name;
+      this.board[col * 10 + row].ship = ship.name;
     });
   }
 
   private checkForOverlap(newShip: Ship): boolean {
     // Check if the new ship overlaps with any existing ships
     return newShip.coordinates.some(([row, col]) => {
-      return this.attacks[col * 10 + row].ship !== null;
+      return this.board[col * 10 + row].ship !== null;
     });
   }
 
@@ -64,14 +64,14 @@ export class Player {
 
     // Remove ship from the board
     ship.coordinates.forEach(([row, col]) => {
-      this.attacks[col * 10 + row].ship = null;
+      this.board[col * 10 + row].ship = null;
     });
   }
 
   moveShip(ship: Ship, newPosition: [number, number]): void {
     // Remove the ship from its current position on the board
     ship.coordinates.forEach(([row, col]) => {
-      this.attacks[col * 10 + row].ship = null;
+      this.board[col * 10 + row].ship = null;
     });
 
     // Update the ship's position
@@ -83,7 +83,7 @@ export class Player {
 
       // Move the ship back to its original position
       ship.coordinates.forEach(([row, col]) => {
-        this.attacks[col * 10 + row].ship = ship.name;
+        this.board[col * 10 + row].ship = ship.name;
       });
 
       return;
@@ -91,7 +91,7 @@ export class Player {
 
     // Update the ship's position on the board
     ship.coordinates.forEach(([row, col]) => {
-      this.attacks[col * 10 + row].ship = ship.name;
+      this.board[col * 10 + row].ship = ship.name;
     });
   }
 
@@ -99,16 +99,16 @@ export class Player {
     const [startingRow, startingCol] = position;
 
     // Check if the cell has already been hit
-    if (this.attacks[startingCol * 10 + startingRow].hit) {
+    if (this.board[startingCol * 10 + startingRow].hit) {
       console.error("Duplicate attack. This cell has already been hit.");
       return;
     }
 
     // Add attack to board
-    this.attacks[startingCol * 10 + startingRow].hit = true;
+    this.board[startingCol * 10 + startingRow].hit = true;
 
     // Add attack to ship
-    const attackedShip = this.attacks[startingCol * 10 + startingRow].ship;
+    const attackedShip = this.board[startingCol * 10 + startingRow].ship;
     this.ships.find((ship) => ship.name === attackedShip)?.hit();
   }
 }

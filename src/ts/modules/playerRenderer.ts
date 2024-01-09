@@ -37,7 +37,7 @@ export class PlayerRenderer {
     var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
 
     // Iterate through board list, add 🔥 to the corresponding html divs
-    this.player.attacks.forEach((objCell, index) => {
+    this.player.board.forEach((objCell, index) => {
       if (objCell.hit && objCell.ship) {
         htmlCells[index].textContent = "🔥";
       }
