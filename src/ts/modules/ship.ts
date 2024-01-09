@@ -47,7 +47,7 @@ export class Ship {
     return this.sunk;
   }
 
-  calcCoordinates(): [number, number][] {
+  get coordinates(): [number, number][] {
     const coordinates: [number, number][] = [];
     let [x, y] = this.position;
 
@@ -77,7 +77,8 @@ const destroyerShip = new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal);
   position: [ 4, 0 ],
   orientation: 'Horizontal',
   hits: 0,
-  sunk: false
+  sunk: false,
+  coordinates: [ [ 4, 0 ], [ 5, 0 ] ]
 } 
 
 */

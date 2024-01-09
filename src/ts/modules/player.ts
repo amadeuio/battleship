@@ -37,14 +37,14 @@ export class Player {
     this.ships.push(ship);
 
     // Add ship to board
-    ship.calcCoordinates().forEach(([row, col]) => {
+    ship.coordinates.forEach(([row, col]) => {
       this.attacks[col * 10 + row].ship = ship.name;
     });
   }
 
   private checkForOverlap(newShip: Ship): boolean {
     // Check if the new ship overlaps with any existing ships
-    return newShip.calcCoordinates().some(([row, col]) => {
+    return newShip.coordinates.some(([row, col]) => {
       return this.attacks[col * 10 + row].ship !== null;
     });
   }
@@ -63,14 +63,14 @@ export class Player {
     this.ships.splice(shipIndex, 1);
 
     // Remove ship from the board
-    ship.calcCoordinates().forEach(([row, col]) => {
+    ship.coordinates.forEach(([row, col]) => {
       this.attacks[col * 10 + row].ship = null;
     });
   }
 
   moveShip(ship: Ship, newPosition: [number, number]): void {
     // Remove the ship from its current position on the board
-    ship.calcCoordinates().forEach(([row, col]) => {
+    ship.coordinates.forEach(([row, col]) => {
       this.attacks[col * 10 + row].ship = null;
     });
 
@@ -82,7 +82,7 @@ export class Player {
       console.error("Cannot move ship. Overlaps with an existing ship.");
 
       // Move the ship back to its original position
-      ship.calcCoordinates().forEach(([row, col]) => {
+      ship.coordinates.forEach(([row, col]) => {
         this.attacks[col * 10 + row].ship = ship.name;
       });
 
@@ -90,7 +90,7 @@ export class Player {
     }
 
     // Update the ship's position on the board
-    ship.calcCoordinates().forEach(([row, col]) => {
+    ship.coordinates.forEach(([row, col]) => {
       this.attacks[col * 10 + row].ship = ship.name;
     });
   }
@@ -133,7 +133,7 @@ isPositionLegal()
 MoveToClosestLegalPosition() {
   while (!isPositionLegal()) {
       // keep trying positions
-      // by moving one step at a time
+      // by moving one random step at a time
   }
 } 
 */
