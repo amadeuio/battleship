@@ -14,7 +14,7 @@ const player: Player = new Player(Role.Player);
 const destroyer = new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal);
 const carrier = new Ship(Name.Carrier, [3, 3], Orientation.Vertical);
 const battleship = new Ship(Name.Battleship, [0, 2], Orientation.Vertical);
-const cruiser = new Ship(Name.Cruiser, [6, 1], Orientation.Vertical);
+const cruiser = new Ship(Name.Cruiser, [1, 0], Orientation.Vertical);
 
 player.placeShip(destroyer);
 player.placeShip(carrier);

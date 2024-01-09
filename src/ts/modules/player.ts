@@ -37,39 +37,31 @@ export class Player {
   }
 
   private checkForOverlap(newShip: Ship): boolean {
-    // Iterate through existing ships
-    for (const existingShip of this.ships) {
-      // Check if any coordinate of the new ship overlaps with existing ship
-      const overlap = newShip.coordinates.some((coord) =>
-        existingShip.coordinates.some(
-          (existingCoord) => existingCoord[0] === coord[0] && existingCoord[1] === coord[1]
-        )
-      );
+    const allExistingCoordinates: [number, number][] = [];
 
-      if (overlap) {
-        return true; // Overlap found
+    this.ships.forEach((ship) => {
+      if (!(ship === newShip)) {
+        ship.coordinates.forEach((c) => {
+          allExistingCoordinates.push(c);
+        });
       }
-    }
+    });
 
-    // No overlap found
-    return false;
+    const isOverlap = newShip.coordinates.some((arr1) =>
+      allExistingCoordinates.some((arr2) => arr1[0] === arr2[0] && arr1[1] === arr2[1])
+    );
+
+    return isOverlap;
   }
 
   moveShip(ship: Ship, newPosition: [number, number]): void {
-    // Save the original position for potential revert
-    const originalPosition = ship.position;
+    const initialPosition = ship.position;
 
-    // Update the ship's position
     ship.position = newPosition;
 
-    // Check for overlap with other ships in the new position
     if (this.checkForOverlap(ship)) {
       console.error("Cannot move ship. Overlaps with an existing ship.");
-
-      // Revert the ship's position to its original value
-      ship.position = originalPosition;
-
-      return;
+      ship.position = initialPosition;
     }
   }
 
