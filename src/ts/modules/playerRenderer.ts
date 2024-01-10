@@ -12,9 +12,9 @@ export class PlayerRenderer {
   }
 
   createBoard() {
-    const gameScreenContainer = document.getElementById("gameScreen") as HTMLElement;
-    const boardContainer = document.createElement("div");
-    boardContainer.className = this.player.role;
+    //const gameScreenContainer = document.getElementById("gameScreen") as HTMLElement;
+    const boardContainer = document.querySelector("." + this.player.role) as HTMLElement;
+    //boardContainer.className = this.player.role;
 
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
@@ -30,7 +30,7 @@ export class PlayerRenderer {
       }
     }
 
-    gameScreenContainer.appendChild(this.boardContainer);
+    boardContainer.appendChild(this.boardContainer);
   }
 
   renderAttacks() {
@@ -62,7 +62,7 @@ export class PlayerRenderer {
       gameboard.appendChild(shipDiv);
 
       // Find pixel coordinates of ship
-      const cellSize = 50; // px
+      const cellSize = 47; // px
       const topValue = `${y * cellSize}px`;
       const leftValue = `${x * cellSize}px`;
 

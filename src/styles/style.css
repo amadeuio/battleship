@@ -5,6 +5,15 @@ body {
   height: 100%;
 }
 
+body {
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+button {
+  padding: 8px 16px;
+}
+
 /* Start Screen */
 
 #startScreen {
@@ -48,24 +57,49 @@ label[for="nickname"] {
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
 }
 
+.player-container,
+.opponent-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-name,
+.opponent-name {
+  margin-bottom: 20px;
+}
+
+.player-footer,
+.opponent-footer {
+  margin-top: 40px;
+  height: 60px;
+  width: 230px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .Player,
 .Opponent {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   position: relative;
-  border: 1px solid black;
-  height: 500px;
+  height: 470px;
   aspect-ratio: 1 / 1;
 }
 
 .Player-cell,
 .Opponent-cell {
-  border: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
   /* z-index: 2; */ /* this causes problems with drag & drop functionality */
   display: flex;
   justify-content: center;
