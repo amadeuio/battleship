@@ -26,13 +26,11 @@ export class Player {
   }
 
   placeShip(ship: Ship): void {
-    // Check for overlap with existing ships
     if (!this.isValidPlacement(ship)) {
       console.log("Invalid placement.");
       return;
     }
 
-    // Add ship to list
     this.ships.push(ship);
   }
 
@@ -47,7 +45,6 @@ export class Player {
   }
 
   moveToClosestValidPosition(ship: Ship, desiredPosition: [number, number]): void {
-    // Shallow copy of initial position
     const initialPosition: [number, number] = [...ship.position];
 
     // Range the function will explore
@@ -67,12 +64,10 @@ export class Player {
       // ... can be expanded if needed
     ];
 
-    // Set the desired position
     ship.position = [...desiredPosition];
 
-    // Try every step until one places ship in a valid position
+    // Apply every step until one places ship in a valid position
     for (const step of explorationSteps) {
-      // Check if position is valid
       if (this.isValidPlacement(ship)) {
         console.log("Valid position found!: " + ship.position);
         return;
@@ -96,17 +91,14 @@ export class Player {
       .filter((ship) => ship !== candidateShip)
       .flatMap((ship) => ship.coordinates);
 
-    // Check for overlap with other ship coordinates
     const hasOverlap = candidateShip.coordinates.some(([x, y]) =>
       existingCoordinates.some(([ex, ey]) => x === ex && y === ey)
     );
 
-    // Check if the ship is out of bounds
     const isOutOfBounds = candidateShip.coordinates.some(
       ([x, y]) => x < 0 || x >= 10 || y < 0 || y >= 10
     );
 
-    // Return true if there is no overlap and the ship is not out of bounds
     return !hasOverlap && !isOutOfBounds;
   }
 
@@ -122,9 +114,8 @@ export class Player {
   createAttack(position: [number, number]): void {
     const [startingRow, startingCol] = position;
 
-    // Check if the cell has already been hit
     if (this.board[startingCol * 10 + startingRow].hit) {
-      console.error("Duplicate attack. This cell has already been hit.");
+      console.log("Duplicate attack. This cell has already been hit.");
       return;
     }
 
