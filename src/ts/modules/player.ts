@@ -44,6 +44,7 @@ export class Player {
     }
   }
 
+  // Experimental method
   moveToClosestValidPosition(ship: Ship, desiredPosition: [number, number]): void {
     const initialPosition: [number, number] = [...ship.position];
 
@@ -99,6 +100,7 @@ export class Player {
       ([x, y]) => x < 0 || x >= 10 || y < 0 || y >= 10
     );
 
+    // Return false if ship overlaps or is out of bounds
     return !hasOverlap && !isOutOfBounds;
   }
 
