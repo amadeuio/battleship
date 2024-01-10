@@ -23,13 +23,6 @@ player.placeShip(cruiser);
 
 player.moveToClosestValidPosition(destroyer, [3, 5]);
 
-/* 
-player.createAttack([5, 5]);
-player.createAttack([3, 3]);
-player.createAttack([0, 2]);
-player.createAttack([7, 9]); 
-*/
-
 // Create PlayerRenderer
 
 const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
@@ -39,4 +32,3 @@ const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
 playerRenderer.createBoard();
 playerRenderer.renderShips();
 playerRenderer.addDragDrop();
-//playerRenderer.renderAttacks();
