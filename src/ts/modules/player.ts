@@ -28,12 +28,66 @@ export class Player {
   placeShip(ship: Ship): void {
     // Check for overlap with existing ships
     if (!this.isValidPlacement(ship)) {
-      console.error("Cannot place ship. Overlaps with an existing ship.");
+      console.log("Invalid placement.");
       return;
     }
 
     // Add ship to list
     this.ships.push(ship);
+  }
+
+  moveShip(ship: Ship, newPosition: [number, number]): void {
+    const initialPosition = ship.position;
+    ship.position = newPosition;
+
+    if (this.isValidPlacement(ship)) {
+      console.log("Is Valid");
+      ship.position = initialPosition;
+    }
+  }
+
+  moveToClosestValidPosition(ship: Ship, desiredPosition: [number, number]): void {
+    // Shallow copy of initial position
+    const initialPosition: [number, number] = [...ship.position];
+
+    // Range the function will explore
+    const explorationSteps: [number, number][] = [
+      [1, 0],
+      [0, 1],
+      [-1, 0],
+      [0, -1],
+      [2, 0],
+      [0, 2],
+      [-2, 0],
+      [0, -2],
+      [3, 0],
+      [0, 3],
+      [-3, 0],
+      [0, -3],
+      // ... can be expanded if needed
+    ];
+
+    // Set the desired position
+    ship.position = [...desiredPosition];
+
+    // Try every step until one places ship in a valid position
+    for (const step of explorationSteps) {
+      // Check if position is valid
+      if (this.isValidPlacement(ship)) {
+        console.log("Valid position found!: " + ship.position);
+        return;
+      }
+
+      // Restore original desired positon
+      ship.position = [...desiredPosition];
+
+      // Apply a new exploration step
+      const [dx, dy] = step;
+      ship.position = [desiredPosition[0] + dx, desiredPosition[1] + dy];
+    }
+
+    // No succesful position was found, so restore initial
+    ship.position = initialPosition;
   }
 
   private isValidPlacement(candidateShip: Ship): boolean {
@@ -56,17 +110,6 @@ export class Player {
     return !hasOverlap && !isOutOfBounds;
   }
 
-  moveShip(ship: Ship, newPosition: [number, number]): void {
-    const initialPosition = ship.position;
-    ship.position = newPosition;
-
-    if (this.isValidPlacement(ship)) {
-      console.log("Is Valid");
-      ship.position = initialPosition;
-    }
-  }
-
-  // Place ships on the board
   placeShipsOnBoard() {
     this.ships.forEach((ship) => {
       ship.coordinates.forEach(([x, y]) => {
@@ -93,52 +136,3 @@ export class Player {
     this.ships.find((ship) => ship.name === attackedShip)?.hit();
   }
 }
-
-/* 
-// Example usage
-const myPlayer = new Player();
-
-// Add ships
-myPlayer.placeShip(new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal));
-myPlayer.placeShip(new Ship(Name.Carrier, [3, 3], Orientation.Vertical));
-
-// Create attacks
-myPlayer.createAttack([4, 0]);
-myPlayer.createAttack([3, 3]); 
-*/
-
-/*
-// Idea: move to closest leagal position implementation
-isPositionLegal()
-
-MoveToClosestLegalPosition() {
-  while (!isPositionLegal()) {
-      // keep trying positions
-      // by moving one random step at a time
-  }
-} 
-*/
-
-/*
-
-1. Place random ships
-
-randomShips.forEach(ship => placeShip(ships))
-
-2. User will move ships
-
-moveShip()
-moveShip()
-...
-
-3. User will press play
-
-placeShipsOnBoard()
-
-4. Game will begin
-
-createAttack()
-createAttack()
-...
-
-*/
