@@ -12,6 +12,7 @@ export class PlayerRenderer {
   }
 
   createBoard() {
+    const gameScreenContainer = document.getElementById("gameScreen") as HTMLElement;
     const boardContainer = document.createElement("div");
     boardContainer.className = this.player.role;
 
@@ -29,7 +30,7 @@ export class PlayerRenderer {
       }
     }
 
-    document.body.appendChild(this.boardContainer);
+    gameScreenContainer.appendChild(this.boardContainer);
   }
 
   renderAttacks() {

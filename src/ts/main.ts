@@ -5,6 +5,33 @@ import { Name, Orientation, Ship } from "./modules/ship";
 import { Player, Cell, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
 
+// Screen switching
+
+const startScreen = document.getElementById("startScreen") as HTMLElement;
+const gameScreen = document.getElementById("gameScreen") as HTMLElement;
+const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
+const startButton = document.querySelector(".start-button") as HTMLElement;
+
+startScreen.style.display = "none";
+gameScreen.style.display = "flex";
+
+startButton.addEventListener("click", () => {
+  const nickname = nicknameInput.value;
+  startGame();
+});
+
+nicknameInput.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    const nickname = this.value;
+    startGame();
+  }
+});
+
+function startGame(): void {
+  startScreen.style.display = "none";
+  gameScreen.style.display = "flex";
+}
+
 // Program starts
 
 // Create player data

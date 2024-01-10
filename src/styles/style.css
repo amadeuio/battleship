@@ -1,20 +1,56 @@
-:root {
-  --primary-blue: #007bff;
-  --light-blue: #4da6ff;
-  --dark-blue: #0056b3;
-  --accent-blue: #0054a7;
-  --background-blue: #5985b4;
-}
+/* Global */
 
-html {
-  height: 100%;
-}
-
+html,
 body {
   height: 100%;
+}
+
+/* Start Screen */
+
+#startScreen {
+  height: 100%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+}
+
+.nickname-container {
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+h1 {
+  font-size: 58px;
+}
+
+label[for="nickname"] {
+  font-size: 24px;
+}
+
+#nickname {
+  height: 30px;
+  width: 250px;
+}
+
+.start-button {
+  height: 30px;
+  width: 80px;
+}
+
+/* Game Screen */
+
+#gameScreen {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .Player,
