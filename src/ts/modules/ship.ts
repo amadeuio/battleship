@@ -63,6 +63,15 @@ export class Ship {
 
     return coordinates;
   }
+
+  // Hack
+  clone(): Ship {
+    // Create a new instance with the same properties
+    const clonedShip = new Ship(this.name, this.position, this.orientation);
+    clonedShip.hits = this.hits;
+    clonedShip.sunk = this.sunk;
+    return clonedShip;
+  }
 }
 
 /* 
@@ -70,8 +79,6 @@ export class Ship {
 Example object:
 
 const destroyerShip = new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal);
-
-given a list of ships that look like this
 
 {
   name: 'Destroyer',
@@ -82,11 +89,5 @@ given a list of ships that look like this
   sunk: false,
   coordinates: [ [ 4, 0 ], [ 5, 0 ] ]
 } 
-
-create a method fillBoard() that takes that list, and fills a 100 item array like this
-
-{ ship: null, hit: false }
-
-
 
 */

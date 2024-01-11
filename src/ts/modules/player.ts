@@ -31,7 +31,8 @@ export class Player {
       return;
     }
 
-    this.ships.push(ship);
+    const clonedShip = ship.clone();
+    this.ships.push(clonedShip);
   }
 
   moveShip(ship: Ship, newPosition: [number, number]): void {

@@ -1,5 +1,5 @@
 import { Ship } from "./ship";
-import { Player } from "./player";
+import { Player, Role } from "./player";
 
 export class PlayerRenderer {
   player: Player;
@@ -17,6 +17,13 @@ export class PlayerRenderer {
         const boardCell = document.createElement("div");
         boardCell.className = this.player.role + "-cell";
 
+        // Create overlay for opponent
+        /* if (this.player.role === Role.Opponent) {
+          const overlayCell = document.createElement("div");
+          overlayCell.className = "overlay-cell";
+          this.boardContainer.appendChild(overlayCell);
+        } */
+
         // Set the id of the div to be its coordinates
         const coordinates: [number, number] = [col, row];
         boardCell.id = JSON.stringify(coordinates);
@@ -26,16 +33,31 @@ export class PlayerRenderer {
     }
   }
 
+  // Takes player.board list, and renders it on screen
   renderAttacks() {
     // Select html grid items inside specified gameboard
     var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
 
     // Iterate through board list, add 🔥 to the corresponding html divs
-    this.player.board.forEach((objCell, index) => {
-      if (objCell.hit && objCell.ship) {
-        htmlCells[index].textContent = "🔥";
-      }
-    });
+    if (this.player.role === Role.Player) {
+      this.player.board.forEach((objCell, index) => {
+        if (objCell.hit) {
+          htmlCells[index].textContent = "🌊";
+          if (objCell.ship) htmlCells[index].textContent = "🔥";
+        }
+      });
+    }
+
+    if (this.player.role === Role.Opponent) {
+      // Iterate through board list, add 🔥 to the corresponding html divs
+      this.player.board.forEach((objCell, index) => {
+        if (objCell.hit) {
+          htmlCells[index].textContent = "🌊";
+          htmlCells[index].classList.add("reveal-cell");
+          if (objCell.ship) htmlCells[index].textContent = "🔥";
+        }
+      });
+    }
   }
 
   renderShips() {

@@ -46,11 +46,6 @@ label[for="nickname"] {
   width: 250px;
 }
 
-.start-button {
-  height: 30px;
-  width: 80px;
-}
-
 /* Game Screen */
 
 #gameScreen {
@@ -89,18 +84,31 @@ label[for="nickname"] {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   position: relative;
-  height: 470px;
-  aspect-ratio: 1 / 1;
 }
 
 .Player-cell,
 .Opponent-cell {
+  width: 47px;
+  aspect-ratio: 1 / 1;
+  font-size: 12px;
   border-left: 1px solid black;
   border-top: 1px solid black;
-  /* z-index: 2; */ /* this causes problems with drag & drop functionality */
+  z-index: 2; /* this causes problems with drag & drop functionality */
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.Opponent-cell {
+  cursor: crosshair;
+
+  background-color: rgb(107, 107, 115);
+  z-index: 3;
+}
+
+.reveal-cell {
+  background-color: transparent;
 }
 
 .Destroyer,
