@@ -135,4 +135,8 @@ export class Player {
       (this.findShip(position) as Ship).hit();
     }
   }
+
+  hasLost(): boolean {
+    return this.ships.every((ship) => ship.sunk);
+  }
 }
