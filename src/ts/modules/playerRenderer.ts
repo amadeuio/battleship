@@ -7,15 +7,10 @@ export class PlayerRenderer {
 
   constructor(player: Player) {
     this.player = player;
-    this.boardContainer = document.createElement("div");
-    this.boardContainer.className = this.player.role;
+    this.boardContainer = document.querySelector("." + this.player.role) as HTMLElement;
   }
 
   createBoard() {
-    //const gameScreenContainer = document.getElementById("gameScreen") as HTMLElement;
-    const boardContainer = document.querySelector("." + this.player.role) as HTMLElement;
-    //boardContainer.className = this.player.role;
-
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
         // Create div
@@ -29,8 +24,6 @@ export class PlayerRenderer {
         this.boardContainer.appendChild(boardCell);
       }
     }
-
-    boardContainer.appendChild(this.boardContainer);
   }
 
   renderAttacks() {
