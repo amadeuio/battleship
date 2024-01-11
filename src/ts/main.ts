@@ -109,6 +109,12 @@ const playRound = async (event: MouseEvent) => {
 
   try {
     opponent.createAttack([x, y]);
+
+    // Render opponent ship when sunk
+    const hitShip = opponent.findShip([x, y]);
+    if (hitShip && hitShip.sunk) {
+      opponentRenderer.renderShip(hitShip);
+    }
   } catch (error) {
     // Duplicate attack, stop the function
     console.log((error as Error).message);

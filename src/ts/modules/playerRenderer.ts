@@ -60,42 +60,42 @@ export class PlayerRenderer {
     }
   }
 
-  renderShips() {
-    function renderShip(ship: Ship, gameboard: HTMLElement) {
-      const [x, y] = ship.position;
+  renderShip(ship: Ship) {
+    const [x, y] = ship.position;
 
-      // Remove existing ship with the same name
-      const existingShip = document.querySelector(`.${ship.name}`);
-      if (existingShip) {
-        existingShip.remove();
-      }
-
-      // Create ship div
-      const shipDiv = document.createElement("div");
-      shipDiv.classList.add(ship.name);
-      shipDiv.setAttribute("draggable", "true");
-      gameboard.appendChild(shipDiv);
-
-      // Find pixel coordinates of ship
-      const cellSize = 47; // px
-      const topValue = `${y * cellSize}px`;
-      const leftValue = `${x * cellSize}px`;
-
-      // Add dimensions to ship
-      if (ship.orientation === "Horizontal") {
-        shipDiv.style.width = `${ship.length * cellSize}px`;
-        shipDiv.style.height = `${cellSize}px`;
-      } else {
-        shipDiv.style.width = `${cellSize}px`;
-        shipDiv.style.height = `${ship.length * cellSize}px`;
-      }
-
-      // Position ship
-      shipDiv.style.top = topValue;
-      shipDiv.style.left = leftValue;
+    // Remove existing ship with the same name
+    const existingShip = document.querySelector(`.${ship.name}`);
+    if (existingShip) {
+      existingShip.remove();
     }
 
-    this.player.ships.forEach((ship) => renderShip(ship, this.boardContainer));
+    // Create ship div
+    const shipDiv = document.createElement("div");
+    shipDiv.classList.add(ship.name);
+    shipDiv.setAttribute("draggable", "true");
+    this.boardContainer.appendChild(shipDiv);
+
+    // Find pixel coordinates of ship
+    const cellSize = 47; // px
+    const topValue = `${y * cellSize}px`;
+    const leftValue = `${x * cellSize}px`;
+
+    // Add dimensions to ship
+    if (ship.orientation === "Horizontal") {
+      shipDiv.style.width = `${ship.length * cellSize}px`;
+      shipDiv.style.height = `${cellSize}px`;
+    } else {
+      shipDiv.style.width = `${cellSize}px`;
+      shipDiv.style.height = `${ship.length * cellSize}px`;
+    }
+
+    // Position ship
+    shipDiv.style.top = topValue;
+    shipDiv.style.left = leftValue;
+  }
+
+  renderShips() {
+    this.player.ships.forEach((ship) => this.renderShip(ship));
   }
 
   addDragDrop(): void {

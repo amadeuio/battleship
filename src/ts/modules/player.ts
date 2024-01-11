@@ -114,7 +114,13 @@ export class Player {
     });
   }
 
-  createAttack(position: [number, number]): string | void {
+  findShip(position: [number, number]): Ship | undefined {
+    const [startingRow, startingCol] = position;
+    const attackedShip = this.board[startingCol * 10 + startingRow].ship;
+    return this.ships.find((ship) => ship.name === attackedShip);
+  }
+
+  createAttack(position: [number, number]): void {
     const [startingRow, startingCol] = position;
 
     if (this.board[startingCol * 10 + startingRow].hit) {
@@ -125,7 +131,8 @@ export class Player {
     this.board[startingCol * 10 + startingRow].hit = true;
 
     // Add attack to ships
-    const attackedShip = this.board[startingCol * 10 + startingRow].ship;
-    this.ships.find((ship) => ship.name === attackedShip)?.hit();
+    if (this.findShip(position)) {
+      (this.findShip(position) as Ship).hit();
+    }
   }
 }
