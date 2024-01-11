@@ -101,24 +101,21 @@ async function delayedRandomAttack(): Promise<void> {
 
 const playRound = async (event: MouseEvent) => {
   // Player's turn
-  if (event.target) {
-    const clickedElement = (event.target as HTMLElement).closest(".Opponent-cell");
-    clickedElement?.classList.add("default-cursor");
+  const clickedElement = (event.target as HTMLElement).closest(".Opponent-cell") as HTMLElement;
+  clickedElement.classList.add("default-cursor");
 
-    if (clickedElement) {
-      const [x, y] = JSON.parse(clickedElement.id);
+  // Coordinates of clicked array
+  const [x, y] = JSON.parse(clickedElement.id);
 
-      try {
-        opponent.createAttack([x, y]);
-      } catch (error) {
-        // Duplicate attack, stop the function
-        console.log((error as Error).message);
-        return;
-      }
-
-      opponentRenderer.renderAttacks();
-    }
+  try {
+    opponent.createAttack([x, y]);
+  } catch (error) {
+    // Duplicate attack, stop the function
+    console.log((error as Error).message);
+    return;
   }
+
+  opponentRenderer.renderAttacks();
 
   // Computer's turn
 
