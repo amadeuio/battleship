@@ -114,12 +114,11 @@ export class Player {
     });
   }
 
-  createAttack(position: [number, number]): void {
+  createAttack(position: [number, number]): string | void {
     const [startingRow, startingCol] = position;
 
     if (this.board[startingCol * 10 + startingRow].hit) {
-      console.log("Duplicate attack. This cell has already been hit.");
-      return;
+      throw new Error("Duplicate attack. This cell has already been hit.");
     }
 
     // Add attack to board
