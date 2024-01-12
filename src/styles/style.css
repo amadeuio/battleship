@@ -54,7 +54,7 @@ label[for="nickname"] {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr 170px;
+  grid-template-rows: 1fr 160px;
 }
 
 .player-container,
@@ -83,11 +83,29 @@ label[for="nickname"] {
   align-items: center;
 }
 
-.restart-button {
-  margin-left: 20px;
+.player-footer,
+.opponent-footer {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.game-message {
+.message-footer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-button {
+  margin-left: 10px;
+}
+
+.restart-button {
+  margin-left: 20px;
 }
 
 .Player,

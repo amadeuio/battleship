@@ -17,7 +17,8 @@ function playGame(): void {
 const startScreen = document.getElementById("startScreen") as HTMLElement;
 const gameScreen = document.getElementById("gameScreen") as HTMLElement;
 const footer = document.querySelector(".footer") as HTMLElement;
-const startButtonsContainer = document.querySelector(".start-buttons-container") as HTMLElement;
+const playerFooter = document.querySelector(".player-footer") as HTMLElement;
+const opponentFooter = document.querySelector(".opponent-footer") as HTMLElement;
 
 // Inputs & Buttons
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
@@ -27,11 +28,7 @@ const startButton = document.querySelector(".start-button") as HTMLElement;
 // Initial conditions
 startScreen.style.display = "none";
 gameScreen.style.display = "grid";
-startButtonsContainer.remove();
-
-startButton.addEventListener("click", () => {
-  footer.style.visibility = "hidden";
-});
+//playerFooter.remove();
 
 playButton.addEventListener("click", () => {
   const nickname = nicknameInput.value;
@@ -94,9 +91,9 @@ opponentRenderer.renderAttacks();
 const opponentContainer = document.querySelector(".Opponent");
 
 function updateGameMessage(message: string): void {
-  const gameMessage = document.querySelector(".game-message") as HTMLElement;
+  const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 
-  gameMessage.textContent = message || "Invalid key";
+  messageFooter.textContent = message || "Invalid key";
 }
 
 function addRestartButton() {
@@ -191,6 +188,17 @@ const playRound = async (event: MouseEvent) => {
   }
 };
 
-updateGameMessage("It's your turn 🙋");
+// Bug
+startButton.addEventListener("click", (event) => {
+  playerFooter.remove();
+  opponentFooter.remove();
+
+  const messageFooter = document.createElement("div");
+  messageFooter.className = "message-footer";
+  footer.appendChild(messageFooter);
+
+  updateGameMessage("It's your turn 🙋");
+  playRound(event);
+});
 
 opponentRenderer.boardContainer.addEventListener("click", playRound);
