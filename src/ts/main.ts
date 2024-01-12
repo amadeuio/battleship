@@ -117,12 +117,6 @@ const playRound = async (event: MouseEvent) => {
   // Add attack to object
   try {
     opponent.createAttack([x, y]);
-
-    // Render opponent ship when sunk
-    const hitShip = opponent.findShip([x, y]);
-    if (hitShip && hitShip.sunk) {
-      opponentRenderer.renderShip(hitShip);
-    }
   } catch (error) {
     // Duplicate attack, stop the function
     console.log((error as Error).message);
@@ -131,6 +125,13 @@ const playRound = async (event: MouseEvent) => {
 
   // Render attack
   opponentRenderer.renderAttacks();
+
+  // Render opponent ship when sunk
+  const hitShip = opponent.findShip([x, y]);
+
+  if (hitShip && hitShip.sunk) {
+    opponentRenderer.renderShip(hitShip);
+  }
 
   // Check if opponent has lost
   if (opponent.hasLost()) {
