@@ -144,7 +144,7 @@ const playRound = async (event: MouseEvent) => {
   }
 
   // Check if opponent has lost
-  if (opponent.hasLost()) {
+  if (!opponent.hasLost()) {
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
     console.log("Computer has lost!");
