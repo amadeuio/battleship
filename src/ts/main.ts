@@ -89,6 +89,8 @@ playerRenderer.renderAttacks();
 opponentRenderer.createBoard();
 opponentRenderer.renderAttacks();
 
+const opponentContainer = document.querySelector(".Opponent");
+
 async function delayedRandomAttack(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -101,12 +103,18 @@ async function delayedRandomAttack(): Promise<void> {
 
 const playRound = async (event: MouseEvent) => {
   // Player's turn
-  const clickedElement = (event.target as HTMLElement).closest(".Opponent-cell") as HTMLElement;
-  clickedElement.classList.add("default-cursor");
 
-  // Coordinates of clicked array
+  // Remove crosshair cursor
+  opponentContainer?.classList.add("default-cursor");
+
+  // Disable the click event listener
+  opponentRenderer.boardContainer.removeEventListener("click", playRound);
+
+  // Get player's attack coordinates
+  const clickedElement = (event.target as HTMLElement).closest(".Opponent-cell") as HTMLElement;
   const [x, y] = JSON.parse(clickedElement.id);
 
+  // Add attack to object
   try {
     opponent.createAttack([x, y]);
 
@@ -121,22 +129,34 @@ const playRound = async (event: MouseEvent) => {
     return;
   }
 
+  // Render attack
   opponentRenderer.renderAttacks();
+
+  // Check if opponent has lost
+  if (opponent.hasLost()) {
+    console.log("Computer has lost!");
+    return;
+  }
 
   // Computer's turn
 
-  // Disable the click event listener
-  opponentRenderer.boardContainer.removeEventListener("click", playRound);
-
   try {
-    // Start the async operation
     await delayedRandomAttack();
-    // Async operation completed successfully
   } catch (error) {
-    // Handle errors from the async operation
+    console.log((error as Error).message);
+    return;
   } finally {
-    // Re-enable the click event listener whether the async operation succeeds or fails
+    // Check if player has lost
+    if (player.hasLost()) {
+      console.log("Player has lost!");
+      return;
+    }
+
+    // Re-enable the click event listener
     opponentRenderer.boardContainer.addEventListener("click", playRound);
+
+    // Re-add crosshair cursor, signaling it's the player's turn again
+    opponentContainer?.classList.remove("default-cursor");
   }
 };
 

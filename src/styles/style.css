@@ -86,6 +86,14 @@ label[for="nickname"] {
   position: relative;
 }
 
+.Opponent {
+  cursor: crosshair;
+}
+
+.default-cursor {
+  cursor: default;
+}
+
 .Player-cell,
 .Opponent-cell {
   width: 47px;
@@ -101,13 +109,8 @@ label[for="nickname"] {
 }
 
 .Opponent-cell {
-  cursor: crosshair;
   background-color: rgb(107, 107, 115);
   z-index: 3;
-}
-
-.default-cursor {
-  cursor: default;
 }
 
 .reveal-cell {
