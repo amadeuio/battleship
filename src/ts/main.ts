@@ -18,6 +18,7 @@ const startScreen = document.getElementById("startScreen") as HTMLElement;
 const gameScreen = document.getElementById("gameScreen") as HTMLElement;
 const playerFooter = document.querySelector(".player-footer") as HTMLElement;
 const startButtonsContainer = document.querySelector(".start-buttons-container") as HTMLElement;
+const gameMessage = document.querySelector(".game-message") as HTMLElement;
 
 // Inputs & Buttons
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
@@ -93,6 +94,10 @@ opponentRenderer.renderAttacks();
 
 const opponentContainer = document.querySelector(".Opponent");
 
+function updateGameMessage(message: string): void {
+  gameMessage.textContent = message;
+}
+
 async function delayedRandomAttack(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -105,6 +110,8 @@ async function delayedRandomAttack(): Promise<void> {
 
 const playRound = async (event: MouseEvent) => {
   // Player's turn
+
+  updateGameMessage("💻 Computer's thinking...");
 
   // Remove crosshair cursor
   opponentContainer?.classList.add("default-cursor");
@@ -150,6 +157,8 @@ const playRound = async (event: MouseEvent) => {
     console.log((error as Error).message);
     return;
   } finally {
+    updateGameMessage("🫵 Your turn");
+
     // Check if player has lost
     if (player.hasLost()) {
       opponentRenderer.boardContainer.removeEventListener("click", playRound);
@@ -164,5 +173,7 @@ const playRound = async (event: MouseEvent) => {
     opponentContainer?.classList.remove("default-cursor");
   }
 };
+
+updateGameMessage("🫵 Your turn");
 
 opponentRenderer.boardContainer.addEventListener("click", playRound);
