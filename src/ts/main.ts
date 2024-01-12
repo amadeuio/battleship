@@ -139,7 +139,7 @@ const playRound = async (event: MouseEvent) => {
   } catch (error) {
     // Duplicate attack, stop the function
     console.log((error as Error).message);
-    return;
+    return; // BUG
   }
 
   // Render attack
@@ -150,6 +150,7 @@ const playRound = async (event: MouseEvent) => {
 
   if (hitShip && hitShip.sunk) {
     opponentRenderer.renderShip(hitShip);
+    updateGameMessage(`You have taken down the ${hitShip.name}!`);
   }
 
   // Check if opponent has lost
@@ -188,7 +189,6 @@ const playRound = async (event: MouseEvent) => {
   }
 };
 
-// Bug
 startButton.addEventListener("click", (event) => {
   playerFooter.remove();
   opponentFooter.remove();
@@ -198,7 +198,6 @@ startButton.addEventListener("click", (event) => {
   footer.appendChild(messageFooter);
 
   updateGameMessage("It's your turn 🙋");
-  playRound(event);
 });
 
 opponentRenderer.boardContainer.addEventListener("click", playRound);
