@@ -17,15 +17,17 @@ function playGame(): void {
 const startScreen = document.getElementById("startScreen") as HTMLElement;
 const gameScreen = document.getElementById("gameScreen") as HTMLElement;
 const playerFooter = document.querySelector(".player-footer") as HTMLElement;
+const startButtonsContainer = document.querySelector(".start-buttons-container") as HTMLElement;
 
 // Inputs & Buttons
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
 const playButton = document.querySelector(".play-button") as HTMLElement;
 const startButton = document.querySelector(".start-button") as HTMLElement;
 
+// Initial conditions
 startScreen.style.display = "none";
-gameScreen.style.display = "flex";
-playerFooter.style.visibility = "hidden";
+gameScreen.style.display = "grid";
+startButtonsContainer.remove();
 
 startButton.addEventListener("click", () => {
   playerFooter.style.visibility = "hidden";
@@ -97,7 +99,7 @@ async function delayedRandomAttack(): Promise<void> {
       player.createAttack(getRandomCoordinate());
       playerRenderer.renderAttacks();
       resolve();
-    }, 900);
+    }, 1200);
   });
 }
 
@@ -135,6 +137,7 @@ const playRound = async (event: MouseEvent) => {
 
   // Check if opponent has lost
   if (opponent.hasLost()) {
+    opponentRenderer.boardContainer.removeEventListener("click", playRound);
     console.log("Computer has lost!");
     return;
   }
@@ -149,6 +152,7 @@ const playRound = async (event: MouseEvent) => {
   } finally {
     // Check if player has lost
     if (player.hasLost()) {
+      opponentRenderer.boardContainer.removeEventListener("click", playRound);
       console.log("Player has lost!");
       return;
     }

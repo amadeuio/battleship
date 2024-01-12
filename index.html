@@ -7,7 +7,7 @@
     <title>Battleship</title>
   </head>
   <body>
-    <!-- Start Screen -->
+    <!-- Start screen -->
     <div id="startScreen">
       <h1>BATTLESHIP</h1>
       <div class="nickname-container">
@@ -17,24 +17,27 @@
       </div>
     </div>
 
-    <!-- Game Screen -->
+    <!-- Game screen -->
     <div id="gameScreen">
       <div class="player-container">
-        <!-- this div creates the double border -->
         <div class="player-name">John</div>
         <div class="Player"></div>
-        <div class="player-footer">
-          <button class="randomise-button">Randomise</button>
-          <button class="start-button">Start Game</button>
-        </div>
       </div>
+
       <div class="opponent-container">
         <div class="opponent-name">Computer</div>
         <div class="Opponent"></div>
-        <div class="opponent-footer"></div>
+      </div>
+
+      <div class="footer">
+        <div class="start-buttons-container">
+          <button class="randomise-button">Randomise</button>
+          <button class="start-button">Start Game</button>
+        </div>
+        <div class="game-message">It's your turn</div>
       </div>
     </div>
 
-    <script type="module" src="/src/ts/main.ts"></script>
+    <script type="module" src="/src/ts/main.ts" defer></script>
   </body>
 </html>
