@@ -18,7 +18,6 @@ const startScreen = document.getElementById("startScreen") as HTMLElement;
 const gameScreen = document.getElementById("gameScreen") as HTMLElement;
 const playerFooter = document.querySelector(".player-footer") as HTMLElement;
 const startButtonsContainer = document.querySelector(".start-buttons-container") as HTMLElement;
-const gameMessage = document.querySelector(".game-message") as HTMLElement;
 
 // Inputs & Buttons
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
@@ -95,7 +94,9 @@ opponentRenderer.renderAttacks();
 const opponentContainer = document.querySelector(".Opponent");
 
 function updateGameMessage(message: string): void {
-  gameMessage.textContent = message;
+  const gameMessage = document.querySelector(".game-message") as HTMLElement;
+
+  gameMessage.textContent = message || "Invalid key";
 }
 
 async function delayedRandomAttack(): Promise<void> {
@@ -111,7 +112,7 @@ async function delayedRandomAttack(): Promise<void> {
 const playRound = async (event: MouseEvent) => {
   // Player's turn
 
-  updateGameMessage("💻 Computer's thinking...");
+  updateGameMessage("The computer's thinking... 💻");
 
   // Remove crosshair cursor
   opponentContainer?.classList.add("default-cursor");
@@ -145,6 +146,7 @@ const playRound = async (event: MouseEvent) => {
   // Check if opponent has lost
   if (opponent.hasLost()) {
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
+    updateGameMessage("You win! 🙋🎉");
     console.log("Computer has lost!");
     return;
   }
@@ -157,11 +159,12 @@ const playRound = async (event: MouseEvent) => {
     console.log((error as Error).message);
     return;
   } finally {
-    updateGameMessage("🫵 Your turn");
+    updateGameMessage("It's your turn 🙋");
 
     // Check if player has lost
     if (player.hasLost()) {
       opponentRenderer.boardContainer.removeEventListener("click", playRound);
+      updateGameMessage("Computer wins! 💻🎉");
       console.log("Player has lost!");
       return;
     }
@@ -174,6 +177,6 @@ const playRound = async (event: MouseEvent) => {
   }
 };
 
-updateGameMessage("🫵 Your turn");
+updateGameMessage("It's your turn 🙋");
 
 opponentRenderer.boardContainer.addEventListener("click", playRound);
