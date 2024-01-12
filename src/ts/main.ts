@@ -16,7 +16,7 @@ function playGame(): void {
 // Divs
 const startScreen = document.getElementById("startScreen") as HTMLElement;
 const gameScreen = document.getElementById("gameScreen") as HTMLElement;
-const playerFooter = document.querySelector(".player-footer") as HTMLElement;
+const footer = document.querySelector(".footer") as HTMLElement;
 const startButtonsContainer = document.querySelector(".start-buttons-container") as HTMLElement;
 
 // Inputs & Buttons
@@ -30,7 +30,7 @@ gameScreen.style.display = "grid";
 startButtonsContainer.remove();
 
 startButton.addEventListener("click", () => {
-  playerFooter.style.visibility = "hidden";
+  footer.style.visibility = "hidden";
 });
 
 playButton.addEventListener("click", () => {
@@ -99,6 +99,18 @@ function updateGameMessage(message: string): void {
   gameMessage.textContent = message || "Invalid key";
 }
 
+function addRestartButton() {
+  var restartButton = document.createElement("button");
+  restartButton.className = "restart-button";
+  restartButton.innerHTML = "Restart";
+
+  restartButton.addEventListener("click", function () {
+    console.log("Restart clicked");
+  });
+
+  footer.appendChild(restartButton);
+}
+
 async function delayedRandomAttack(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -144,10 +156,11 @@ const playRound = async (event: MouseEvent) => {
   }
 
   // Check if opponent has lost
-  if (!opponent.hasLost()) {
+  if (opponent.hasLost()) {
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
     console.log("Computer has lost!");
+    addRestartButton();
     return;
   }
 
@@ -166,6 +179,7 @@ const playRound = async (event: MouseEvent) => {
       opponentRenderer.boardContainer.removeEventListener("click", playRound);
       updateGameMessage("Computer wins! 💻🎉");
       console.log("Player has lost!");
+      addRestartButton();
       return;
     }
 

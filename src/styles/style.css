@@ -83,6 +83,10 @@ label[for="nickname"] {
   align-items: center;
 }
 
+.restart-button {
+  margin-left: 20px;
+}
+
 .game-message {
 }
 
