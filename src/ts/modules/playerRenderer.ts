@@ -92,10 +92,6 @@ export class PlayerRenderer {
     this.player.ships.forEach((ship) => this.renderShip(ship));
   }
 
-  getHTMLShips(): NodeListOf<HTMLDivElement> {
-    return this.boardContainer.querySelectorAll(".ship");
-  }
-
   addDragDrop(): void {
     this.boardContainer.addEventListener("dragstart", this.handleDragStart);
     this.boardContainer.addEventListener("dragover", this.handleDragOver);
@@ -111,6 +107,10 @@ export class PlayerRenderer {
     this.boardContainer.removeEventListener("dragstart", this.handleDragStart);
     this.boardContainer.removeEventListener("dragover", this.handleDragOver);
     this.boardContainer.removeEventListener("drop", this.handleDrop);
+  }
+
+  private getHTMLShips(): NodeListOf<HTMLDivElement> {
+    return this.boardContainer.querySelectorAll(".ship");
   }
 
   private handleDragStart = (event: DragEvent) => {
