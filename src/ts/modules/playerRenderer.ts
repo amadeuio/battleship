@@ -65,7 +65,7 @@ export class PlayerRenderer {
 
     // Create ship div
     const shipDiv = document.createElement("div");
-    shipDiv.classList.add(ship.name);
+    shipDiv.classList.add(ship.name, "ship");
     shipDiv.setAttribute("draggable", "true");
     this.boardContainer.appendChild(shipDiv);
 
@@ -90,6 +90,10 @@ export class PlayerRenderer {
 
   renderShips() {
     this.player.ships.forEach((ship) => this.renderShip(ship));
+  }
+
+  getHTMLShips(): NodeListOf<HTMLDivElement> {
+    return this.boardContainer.querySelectorAll(".ship");
   }
 
   addDragDrop(): void {
