@@ -166,6 +166,7 @@ const playRound = async (event: MouseEvent) => {
     console.log((error as Error).message);
     return;
   } finally {
+
     playerRenderer.renderAttacks();
 
     // Check if player has lost

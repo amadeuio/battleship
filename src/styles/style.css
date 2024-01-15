@@ -122,10 +122,6 @@ label[for="nickname"] {
   cursor: crosshair;
 }
 
-.default-cursor {
-  cursor: default;
-}
-
 .Player-cell,
 .Opponent-cell {
   width: 47px;
@@ -160,4 +156,9 @@ label[for="nickname"] {
   background-size: contain;
   background-position: center;
   cursor: grab;
+}
+
+.default-cursor {
+  /* Has to be positioned after the ships */
+  cursor: default;
 }

@@ -97,16 +97,17 @@ export class PlayerRenderer {
   }
 
   addDragDrop(): void {
-    this.getHTMLShips().forEach((HTMLShip) => {
-      HTMLShip.classList.add("grab-cursor");
-    });
-
     this.boardContainer.addEventListener("dragstart", this.handleDragStart);
     this.boardContainer.addEventListener("dragover", this.handleDragOver);
     this.boardContainer.addEventListener("drop", this.handleDrop);
   }
 
   removeDragDrop(): void {
+    this.getHTMLShips().forEach((HTMLShip) => {
+      HTMLShip.classList.add("default-cursor");
+      HTMLShip.draggable = false;
+    });
+
     this.boardContainer.removeEventListener("dragstart", this.handleDragStart);
     this.boardContainer.removeEventListener("dragover", this.handleDragOver);
     this.boardContainer.removeEventListener("drop", this.handleDrop);
