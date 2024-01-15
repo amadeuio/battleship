@@ -98,6 +98,7 @@ label[for="nickname"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid black;
 }
 
 .start-button {

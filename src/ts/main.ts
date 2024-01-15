@@ -97,6 +97,8 @@ function updateGameMessage(message: string): void {
 }
 
 function addRestartButton() {
+  const messageFooter = document.querySelector(".message-footer") as HTMLElement;
+
   var restartButton = document.createElement("button");
   restartButton.className = "restart-button";
   restartButton.innerHTML = "Restart";
@@ -105,7 +107,7 @@ function addRestartButton() {
     console.log("Restart clicked");
   });
 
-  footer.appendChild(restartButton);
+  messageFooter.appendChild(restartButton);
 }
 
 async function delayedRandomAttack(): Promise<void> {
@@ -145,7 +147,7 @@ const playRound = async (event: MouseEvent) => {
   }
 
   // Check if opponent has lost
-  if (opponent.hasLost()) {
+  if (!opponent.hasLost()) {
     console.log("Computer has lost!");
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
