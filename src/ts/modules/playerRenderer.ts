@@ -106,7 +106,7 @@ export class PlayerRenderer {
     });
 
     // Find the ship and coordinates in which it has been droped
-    // Update the gameboard
+    // Update the player object
     // Render the updated ship
     this.boardContainer.addEventListener("drop", (event: DragEvent) => {
       event.preventDefault();
@@ -129,7 +129,7 @@ export class PlayerRenderer {
         const [x, y] = JSON.parse(dropCell.id);
 
         // Move the dragged ship to the new position
-        this.player.moveShip(droppedShip, [x, y]);
+        this.player.moveToClosestValidPosition(droppedShip, [x, y]);
 
         // Render updated ship
         this.renderShips();
