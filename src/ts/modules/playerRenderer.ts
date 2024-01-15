@@ -93,47 +93,54 @@ export class PlayerRenderer {
   }
 
   addDragDrop(): void {
-    this.boardContainer.addEventListener("dragstart", (event: DragEvent) => {
-      // Get the dragged ship
-      const draggedShip = (event.target as HTMLElement).className;
-      if (event.dataTransfer) {
-        event.dataTransfer.setData("text/plain", draggedShip);
-      }
-    });
-
-    this.boardContainer.addEventListener("dragover", (event: DragEvent) => {
-      event.preventDefault();
-    });
-
-    // Find the ship and coordinates in which it has been droped
-    // Update the player object
-    // Render the updated ship
-    this.boardContainer.addEventListener("drop", (event: DragEvent) => {
-      event.preventDefault();
-
-      if (event.dataTransfer) {
-        // Get the ship that has been dropped
-        const droppedClass = event.dataTransfer.getData("text/plain");
-        const droppedShip = this.player.ships.find((ship) => ship.name === droppedClass) as Ship;
-
-        // Find the cell in which the ship has been dropped
-        let dropCell = event.target as HTMLElement;
-
-        // Edge case: Placement on top of an existing ship
-        if (!dropCell.id) {
-          const stackingElements = document.elementsFromPoint(event.clientX, event.clientY);
-          dropCell = stackingElements[1] as HTMLElement;
-        }
-
-        // Get the coordinates of the drop cell
-        const [x, y] = JSON.parse(dropCell.id);
-
-        // Move the dragged ship to the new position
-        this.player.moveToClosestValidPosition(droppedShip, [x, y]);
-
-        // Render updated ship
-        this.renderShips();
-      }
-    });
+    this.boardContainer.addEventListener("dragstart", this.handleDragStart);
+    this.boardContainer.addEventListener("dragover", this.handleDragOver);
+    this.boardContainer.addEventListener("drop", this.handleDrop);
   }
+
+  removeDragDrop(): void {
+    this.boardContainer.removeEventListener("dragstart", this.handleDragStart);
+    this.boardContainer.removeEventListener("dragover", this.handleDragOver);
+    this.boardContainer.removeEventListener("drop", this.handleDrop);
+  }
+
+  private handleDragStart = (event: DragEvent) => {
+    // Get the dragged ship
+    const draggedShip = (event.target as HTMLElement).className;
+    if (event.dataTransfer) {
+      event.dataTransfer.setData("text/plain", draggedShip);
+    }
+  };
+
+  private handleDragOver = (event: DragEvent) => {
+    event.preventDefault();
+  };
+
+  private handleDrop = (event: DragEvent) => {
+    event.preventDefault();
+
+    if (event.dataTransfer) {
+      // Get the ship that has been dropped
+      const droppedClass = event.dataTransfer.getData("text/plain");
+      const droppedShip = this.player.ships.find((ship) => ship.name === droppedClass) as Ship;
+
+      // Find the cell in which the ship has been dropped
+      let dropCell = event.target as HTMLElement;
+
+      // Edge case: Placement on top of an existing ship
+      if (!dropCell.id) {
+        const stackingElements = document.elementsFromPoint(event.clientX, event.clientY);
+        dropCell = stackingElements[1] as HTMLElement;
+      }
+
+      // Get the coordinates of the drop cell
+      const [x, y] = JSON.parse(dropCell.id);
+
+      // Move the dragged ship to the new position
+      this.player.moveToClosestValidPosition(droppedShip, [x, y]);
+
+      // Render updated ship
+      this.renderShips();
+    }
+  };
 }

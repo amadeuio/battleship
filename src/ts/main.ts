@@ -196,4 +196,5 @@ startButton.addEventListener("click", () => {
 
   opponentRenderer.boardContainer.classList.add("crosshair-cursor");
   opponentRenderer.boardContainer.addEventListener("click", playRound);
+  playerRenderer.removeDragDrop();
 });
