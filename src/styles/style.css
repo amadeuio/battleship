@@ -117,12 +117,8 @@ label[for="nickname"] {
   position: relative;
 }
 
-.Opponent {
+.crosshair-cursor {
   cursor: crosshair;
-}
-
-.default-cursor {
-  cursor: default;
 }
 
 .Player-cell,

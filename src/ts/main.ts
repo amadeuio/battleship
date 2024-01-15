@@ -124,7 +124,7 @@ const playRound = async (event: MouseEvent) => {
   updateGameMessage("The computer's thinking... 💻");
 
   // Remove crosshair cursor
-  opponentContainer?.classList.add("default-cursor");
+  opponentContainer?.classList.remove("crosshair-cursor");
 
   // Disable the click event listener
   opponentRenderer.boardContainer.removeEventListener("click", playRound);
@@ -185,11 +185,11 @@ const playRound = async (event: MouseEvent) => {
     opponentRenderer.boardContainer.addEventListener("click", playRound);
 
     // Re-add crosshair cursor, signaling it's the player's turn again
-    opponentContainer?.classList.remove("default-cursor");
+    opponentContainer?.classList.add("crosshair-cursor");
   }
 };
 
-startButton.addEventListener("click", (event) => {
+startButton.addEventListener("click", () => {
   playerFooter.remove();
   opponentFooter.remove();
 
@@ -198,6 +198,7 @@ startButton.addEventListener("click", (event) => {
   footer.appendChild(messageFooter);
 
   updateGameMessage("It's your turn 🙋");
-});
 
-opponentRenderer.boardContainer.addEventListener("click", playRound);
+  opponentRenderer.boardContainer.classList.add("crosshair-cursor");
+  opponentRenderer.boardContainer.addEventListener("click", playRound);
+});
