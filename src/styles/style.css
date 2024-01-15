@@ -121,6 +121,10 @@ label[for="nickname"] {
   cursor: crosshair;
 }
 
+.default-cursor {
+  cursor: default;
+}
+
 .Player-cell,
 .Opponent-cell {
   width: 47px;
