@@ -70,11 +70,6 @@ opponent.placeShip(submarine);
 player.placeShipsOnBoard();
 opponent.placeShipsOnBoard();
 
-player.createAttack([0, 0]);
-
-opponent.createAttack([0, 0]);
-opponent.createAttack([0, 1]);
-
 // Create PlayerRenderer
 
 const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
@@ -85,6 +80,7 @@ const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
 playerRenderer.createBoard();
 playerRenderer.renderShips();
 playerRenderer.renderAttacks();
+
 opponentRenderer.createBoard();
 opponentRenderer.renderAttacks();
 
@@ -147,7 +143,7 @@ const playRound = async (event: MouseEvent) => {
   }
 
   // Check if opponent has lost
-  if (!opponent.hasLost()) {
+  if (opponent.hasLost()) {
     console.log("Computer has lost!");
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");

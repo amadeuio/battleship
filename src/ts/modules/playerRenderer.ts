@@ -17,13 +17,6 @@ export class PlayerRenderer {
         const boardCell = document.createElement("div");
         boardCell.className = this.player.role + "-cell";
 
-        // Create overlay for opponent
-        /* if (this.player.role === Role.Opponent) {
-          const overlayCell = document.createElement("div");
-          overlayCell.className = "overlay-cell";
-          this.boardContainer.appendChild(overlayCell);
-        } */
-
         // Set the id of the div to be its coordinates
         const coordinates: [number, number] = [col, row];
         boardCell.id = JSON.stringify(coordinates);
