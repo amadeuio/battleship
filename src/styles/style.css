@@ -133,7 +133,7 @@ label[for="nickname"] {
   font-size: 12px;
   border-left: 1px solid black;
   border-top: 1px solid black;
-  z-index: 2; /* this causes problems with drag & drop functionality */
+  /* z-index: 2; */ /* this causes problems with drag & drop functionality */
   display: flex;
   justify-content: center;
   align-items: center;

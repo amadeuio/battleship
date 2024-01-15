@@ -80,6 +80,7 @@ const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
 playerRenderer.createBoard();
 playerRenderer.renderShips();
 playerRenderer.renderAttacks();
+playerRenderer.addDragDrop();
 
 opponentRenderer.createBoard();
 opponentRenderer.renderAttacks();

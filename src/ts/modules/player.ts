@@ -39,8 +39,8 @@ export class Player {
     const initialPosition = ship.position;
     ship.position = newPosition;
 
-    if (this.isValidPlacement(ship)) {
-      console.log("Is Valid");
+    if (!this.isValidPlacement(ship)) {
+      console.log("Invalid placement.");
       ship.position = initialPosition;
     }
   }
