@@ -87,7 +87,7 @@ export class Player {
     ship.position = initialPosition;
   }
 
-  private isValidPlacement(candidateShip: Ship): boolean {
+  isValidPlacement(candidateShip: Ship): boolean {
     // Flat array with coordinates of all ships except candidate
     const existingCoordinates = this.ships
       .filter((ship) => ship !== candidateShip)

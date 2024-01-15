@@ -111,24 +111,28 @@ export class PlayerRenderer {
     document.addEventListener("drop", (event: DragEvent) => {
       event.preventDefault();
 
-      // Get the ship that has been dropped
       if (event.dataTransfer) {
+        // Get the ship that has been dropped
         const droppedClass = event.dataTransfer.getData("text/plain");
-        const droppedShip = this.player.ships.find((ship) => ship.name === droppedClass);
+        const droppedShip = this.player.ships.find((ship) => ship.name === droppedClass) as Ship;
 
-        if (droppedShip) {
-          // Find the position in which the ship has been dropped
-          const dropCell = (event.target as HTMLElement).closest(`.${this.player.role}-cell`);
+        // Find the cell in which the ship has been dropped
+        let dropCell = event.target as HTMLElement;
 
-          if (dropCell) {
-            // Update the gameboard with the new position
-            const [x, y] = JSON.parse(dropCell.id);
-            this.player.moveShip(droppedShip, [x, y]);
-
-            // Render updated ship
-            this.renderShips();
-          }
+        // Edge case: Placement on top of an existing ship
+        if (!dropCell.id) {
+          const stackingElements = document.elementsFromPoint(event.clientX, event.clientY);
+          dropCell = stackingElements[1] as HTMLElement;
         }
+
+        // Get the coordinates of the drop cell
+        const [x, y] = JSON.parse(dropCell.id);
+
+        // Move the dragged ship to the new position
+        this.player.moveShip(droppedShip, [x, y]);
+
+        // Render updated ship
+        this.renderShips();
       }
     });
   }

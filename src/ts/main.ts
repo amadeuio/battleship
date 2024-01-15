@@ -49,23 +49,23 @@ nicknameInput.addEventListener("keyup", function (event) {
 const player: Player = new Player(Role.Player);
 const opponent: Player = new Player(Role.Opponent);
 
+const battleship = new Ship(Name.Battleship, [0, 0], Orientation.Vertical);
 const destroyer = new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal);
 const carrier = new Ship(Name.Carrier, [3, 3], Orientation.Vertical);
-const battleship = new Ship(Name.Battleship, [0, 0], Orientation.Vertical);
 const cruiser = new Ship(Name.Cruiser, [1, 0], Orientation.Vertical);
 const submarine = new Ship(Name.Submarine, [4, 6], Orientation.Horizontal);
 
 player.placeShip(battleship);
 player.placeShip(destroyer);
-player.placeShip(carrier);
-player.placeShip(cruiser);
-player.placeShip(submarine);
+//player.placeShip(carrier);
+//player.placeShip(cruiser);
+//player.placeShip(submarine);
 
-opponent.placeShip(battleship);
+/* opponent.placeShip(battleship);
 opponent.placeShip(destroyer);
 opponent.placeShip(carrier);
 opponent.placeShip(cruiser);
-opponent.placeShip(submarine);
+opponent.placeShip(submarine); */
 
 player.placeShipsOnBoard();
 opponent.placeShipsOnBoard();
