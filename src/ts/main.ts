@@ -178,7 +178,7 @@ const playRound = async (event: MouseEvent) => {
       return;
     }
 
-    // Re-enable the click event listener, the crosshair cursor, signaling it's the player's turn again
+    // Re-enable click event listener and crosshair cursor, signaling it's the player's turn again
     updateGameMessage("It's your turn 🙋");
     opponentContainer?.classList.add("crosshair-cursor");
     opponentRenderer.boardContainer.addEventListener("click", playRound);

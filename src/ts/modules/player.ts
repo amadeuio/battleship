@@ -124,7 +124,7 @@ export class Player {
     const [startingRow, startingCol] = position;
 
     if (this.board[startingCol * 10 + startingRow].hit) {
-      throw new Error("Duplicate attack. This cell has already been hit.");
+      throw new Error("Duplicate attack. Choose another one 🔄");
     }
 
     // Add attack to board
