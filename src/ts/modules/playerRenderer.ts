@@ -97,6 +97,10 @@ export class PlayerRenderer {
   }
 
   addDragDrop(): void {
+    this.getHTMLShips().forEach((HTMLShip) => {
+      HTMLShip.classList.add("grab-cursor");
+    });
+
     this.boardContainer.addEventListener("dragstart", this.handleDragStart);
     this.boardContainer.addEventListener("dragover", this.handleDragOver);
     this.boardContainer.addEventListener("drop", this.handleDrop);
@@ -109,8 +113,12 @@ export class PlayerRenderer {
   }
 
   private handleDragStart = (event: DragEvent) => {
-    // Get the dragged ship
-    const draggedShip = (event.target as HTMLElement).className;
+    // Get the element being dragged
+    const draggedElement = event.target as HTMLElement;
+
+    // Extract the first class of the dragged element, which is the ship name
+    const draggedShip = draggedElement.classList.item(0) as string;
+
     if (event.dataTransfer) {
       event.dataTransfer.setData("text/plain", draggedShip);
     }
