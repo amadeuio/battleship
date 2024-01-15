@@ -112,7 +112,6 @@ async function delayedRandomAttack(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
       player.createAttack(getRandomCoordinate());
-      playerRenderer.renderAttacks();
       resolve();
     }, 1200);
   });
@@ -121,33 +120,25 @@ async function delayedRandomAttack(): Promise<void> {
 const playRound = async (event: MouseEvent) => {
   // Player's turn
 
-  updateGameMessage("The computer's thinking... 💻");
-
-  // Remove crosshair cursor
-  opponentContainer?.classList.remove("crosshair-cursor");
-
-  // Disable the click event listener
-  opponentRenderer.boardContainer.removeEventListener("click", playRound);
-
   // Get player's attack coordinates
   const clickedElement = (event.target as HTMLElement).closest(".Opponent-cell") as HTMLElement;
   const [x, y] = JSON.parse(clickedElement.id);
 
-  // Add attack to object
+  // Add attack to opponent's object
   try {
     opponent.createAttack([x, y]);
   } catch (error) {
     // Duplicate attack, stop the function
     console.log((error as Error).message);
-    return; // BUG
+    updateGameMessage((error as Error).message);
+    return;
   }
 
-  // Render attack
+  // Render updated attacks object
   opponentRenderer.renderAttacks();
 
-  // Render opponent ship when sunk
+  // Check if a ship has been sunk, and render it if so
   const hitShip = opponent.findShip([x, y]);
-
   if (hitShip && hitShip.sunk) {
     opponentRenderer.renderShip(hitShip);
     updateGameMessage(`You have taken down the ${hitShip.name}!`);
@@ -155,14 +146,20 @@ const playRound = async (event: MouseEvent) => {
 
   // Check if opponent has lost
   if (opponent.hasLost()) {
+    console.log("Computer has lost!");
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
-    console.log("Computer has lost!");
     addRestartButton();
     return;
   }
 
-  // Computer's turn
+  // Opponent's turn
+
+  // Remove crosshair cursor and disable the click event listener on opponent's board
+  opponentContainer?.classList.remove("crosshair-cursor");
+  opponentRenderer.boardContainer.removeEventListener("click", playRound);
+
+  updateGameMessage("The computer's thinking... 💻");
 
   try {
     await delayedRandomAttack();
@@ -170,22 +167,21 @@ const playRound = async (event: MouseEvent) => {
     console.log((error as Error).message);
     return;
   } finally {
-    updateGameMessage("It's your turn 🙋");
+    playerRenderer.renderAttacks();
 
     // Check if player has lost
     if (player.hasLost()) {
+      console.log("Player has lost!");
       opponentRenderer.boardContainer.removeEventListener("click", playRound);
       updateGameMessage("Computer wins! 💻🎉");
-      console.log("Player has lost!");
       addRestartButton();
       return;
     }
 
-    // Re-enable the click event listener
-    opponentRenderer.boardContainer.addEventListener("click", playRound);
-
-    // Re-add crosshair cursor, signaling it's the player's turn again
+    // Re-enable the click event listener, the crosshair cursor, signaling it's the player's turn again
+    updateGameMessage("It's your turn 🙋");
     opponentContainer?.classList.add("crosshair-cursor");
+    opponentRenderer.boardContainer.addEventListener("click", playRound);
   }
 };
 
