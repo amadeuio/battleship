@@ -101,14 +101,14 @@ export class PlayerRenderer {
       }
     });
 
-    document.addEventListener("dragover", (event: DragEvent) => {
+    this.boardContainer.addEventListener("dragover", (event: DragEvent) => {
       event.preventDefault();
     });
 
     // Find the ship and coordinates in which it has been droped
     // Update the gameboard
     // Render the updated ship
-    document.addEventListener("drop", (event: DragEvent) => {
+    this.boardContainer.addEventListener("drop", (event: DragEvent) => {
       event.preventDefault();
 
       if (event.dataTransfer) {
