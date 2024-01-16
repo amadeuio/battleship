@@ -56,11 +56,13 @@ const carrier = new Ship(Name.Carrier, [3, 3], Orientation.Vertical);
 const cruiser = new Ship(Name.Cruiser, [1, 0], Orientation.Vertical);
 const submarine = new Ship(Name.Submarine, [4, 6], Orientation.Horizontal);
 
-player.placeShip(destroyer);
-player.placeShip(battleship);
+//player.placeShip(destroyer);
+//player.placeShip(battleship);
 //player.placeShip(carrier);
 //player.placeShip(cruiser);
 //player.placeShip(submarine);
+
+player.populateRandomly();
 
 /* opponent.placeShip(battleship);
 opponent.placeShip(destroyer);
@@ -85,6 +87,12 @@ playerRenderer.addDragDrop();
 
 opponentRenderer.createBoard();
 opponentRenderer.renderAttacks();
+
+randomiseButton.addEventListener("click", () => {
+  player.populateRandomly();
+  player.placeShipsOnBoard();
+  playerRenderer.renderShips();
+});
 
 const opponentContainer = document.querySelector(".Opponent");
 
@@ -186,10 +194,6 @@ const playRound = async (event: MouseEvent) => {
 };
 
 //player.populateRandomly();
-
-randomiseButton.addEventListener("click", () => {
-  console.log("randomise clicked");
-});
 
 startButton.addEventListener("click", () => {
   playerFooter.remove();

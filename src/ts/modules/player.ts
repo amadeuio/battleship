@@ -140,8 +140,14 @@ export class Player {
   }
 
   populateRandomly(): void {
-    console.log(this.getRandomCoordinate());
-    console.log(this.getRandomOrientation());
+    this.ships = [];
+
+    const shipNames = [Name.Battleship, Name.Carrier, Name.Cruiser, Name.Destroyer, Name.Submarine];
+
+    for (const shipName of shipNames) {
+      const newShip = new Ship(shipName, this.getRandomCoordinate(), this.getRandomOrientation());
+      this.placeShip(newShip);
+    }
   }
 
   private getRandomCoordinate(): [number, number] {
