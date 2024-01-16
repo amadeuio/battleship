@@ -125,19 +125,24 @@ export class Player {
   }
 
   createAttack(position: [number, number]): void {
-    const [startingRow, startingCol] = position;
+    const [row, col] = position;
 
-    if (this.board[startingCol * 10 + startingRow].hit) {
+    if (!this.isValidAttack(position)) {
       throw new Error("Duplicate attack. Choose another one 🔄");
     }
 
     // Add attack to board
-    this.board[startingCol * 10 + startingRow].hit = true;
+    this.board[col * 10 + row].hit = true;
 
     // Add attack to ships
     if (this.findShip(position)) {
       (this.findShip(position) as Ship).hit();
     }
+  }
+
+  isValidAttack(position: [number, number]): boolean {
+    const [row, col] = position;
+    return !this.board[col * 10 + row].hit;
   }
 
   hasLost(): boolean {
