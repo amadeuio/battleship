@@ -4,7 +4,7 @@ import "../styles/style.css";
 import { Name, Orientation, Ship } from "./modules/ship";
 import { Player, Cell, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
-import { getRandomCoordinate } from "./utils/getRandomCoordinate";
+import { getRandomUnrepCoordinate } from "./utils/getRandomUnrepCoordinate";
 
 // Screen switching
 
@@ -119,7 +119,7 @@ function addRestartButton() {
 async function delayedRandomAttack(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      player.createAttack(getRandomCoordinate());
+      player.createAttack(getRandomUnrepCoordinate());
       resolve();
     }, 1200);
   });

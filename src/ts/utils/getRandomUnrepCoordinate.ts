@@ -32,6 +32,6 @@ const originalArray = generateArray();
 const shuffledArray = shuffleArray(originalArray);
 
 // Returns a pseudo-random, unrepeated [x, y] coordinate from [0, 0] to [9, 9]
-export function getRandomCoordinate(): any {
+export function getRandomUnrepCoordinate(): any {
   return shuffledArray.splice(0, 1)[0]; // Return the first element of the spliced array
 }
