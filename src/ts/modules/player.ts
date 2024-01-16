@@ -28,9 +28,6 @@ export class Player {
   placeShip(ship: Ship): void {
     const clonedShip = ship.clone();
 
-    // Move invalid placement to valid before pushing to the list
-    //this.moveToClosestValidPosition(clonedShip, clonedShip.position);
-
     this.ships.push(clonedShip);
   }
 
@@ -62,7 +59,15 @@ export class Player {
       [0, 3],
       [-3, 0],
       [0, -3],
-      // ... can be expanded if needed
+      [4, 0],
+      [0, 4],
+      [-4, 0],
+      [0, -4],
+      [5, 0],
+      [0, 5],
+      [-5, 0],
+      [0, -5],
+      // ... can be further expanded if needed
     ];
 
     ship.position = [...desiredPosition];

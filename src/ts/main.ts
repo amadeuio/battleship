@@ -63,6 +63,7 @@ const submarine = new Ship(Name.Submarine, [4, 6], Orientation.Horizontal);
 //player.placeShip(submarine);
 
 player.populateRandomly();
+opponent.populateRandomly();
 
 /* opponent.placeShip(battleship);
 opponent.placeShip(destroyer);
