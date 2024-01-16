@@ -112,27 +112,27 @@ export class Player {
   placeShipsOnBoard() {
     this.ships.forEach((ship) => {
       ship.coordinates.forEach(([x, y]) => {
-        const index = y * 10 + x;
+        const index = x + y * 10;
         this.board[index] = { ship: ship.name, hit: false };
       });
     });
   }
 
   findShip(position: [number, number]): Ship | undefined {
-    const [startingRow, startingCol] = position;
-    const attackedShip = this.board[startingCol * 10 + startingRow].ship;
+    const [x, y] = position;
+    const attackedShip = this.board[x + y * 10].ship;
     return this.ships.find((ship) => ship.name === attackedShip);
   }
 
   createAttack(position: [number, number]): void {
-    const [row, col] = position;
+    const [x, y] = position;
 
     if (!this.isValidAttack(position)) {
       throw new Error("Duplicate attack. Choose another one 🔄");
     }
 
     // Add attack to board
-    this.board[col * 10 + row].hit = true;
+    this.board[x + y * 10].hit = true;
 
     // Add attack to ships
     if (this.findShip(position)) {
@@ -141,8 +141,8 @@ export class Player {
   }
 
   isValidAttack(position: [number, number]): boolean {
-    const [row, col] = position;
-    return !this.board[col * 10 + row].hit;
+    const [x, y] = position;
+    return !this.board[x + y * 10].hit;
   }
 
   hasLost(): boolean {
