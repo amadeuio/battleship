@@ -27,7 +27,6 @@ export class Player {
 
   placeShip(ship: Ship): void {
     const clonedShip = ship.clone();
-
     this.ships.push(clonedShip);
   }
 
@@ -35,9 +34,34 @@ export class Player {
     const initialPosition = ship.position;
     ship.position = newPosition;
 
-    if (!this.isValidPlacement(ship)) {
+    if (this.isInvalidPlacement(ship)) {
       console.log("Invalid placement.");
       ship.position = initialPosition;
+    }
+  }
+
+  placeShipsOnBoard() {
+    this.ships.forEach((ship) => {
+      ship.coordinates.forEach(([x, y]) => {
+        const index = x + y * 10;
+        this.board[index] = { ship: ship.name, hit: false };
+      });
+    });
+  }
+
+  populateRandomly(): void {
+    this.ships = [];
+
+    const shipNames = [Name.Battleship, Name.Carrier, Name.Cruiser, Name.Destroyer, Name.Submarine];
+
+    for (const shipName of shipNames) {
+      const newShip = new Ship(shipName, this.getRandomCoordinate(), this.getRandomOrientation());
+
+      while (this.isInvalidPlacement(newShip)) {
+        newShip.position = this.getRandomCoordinate();
+      }
+
+      this.placeShip(newShip);
     }
   }
 
@@ -74,7 +98,7 @@ export class Player {
 
     // Apply every step until one places ship in a valid position
     for (const step of explorationSteps) {
-      if (this.isValidPlacement(ship)) {
+      if (!this.isInvalidPlacement(ship)) {
         console.log("Valid position found!: " + ship.position);
         return;
       }
@@ -91,7 +115,33 @@ export class Player {
     ship.position = initialPosition;
   }
 
-  isValidPlacement(candidateShip: Ship): boolean {
+  createAttack(position: [number, number]): void {
+    const [x, y] = position;
+
+    if (this.isInvalidAttack(position)) {
+      throw new Error("Duplicate attack. Choose another one 🔄");
+    }
+
+    // Add attack to board
+    this.board[x + y * 10].hit = true;
+
+    // Add attack to ships
+    if (this.findShip(position)) {
+      (this.findShip(position) as Ship).hit();
+    }
+  }
+
+  findShip(position: [number, number]): Ship | undefined {
+    const [x, y] = position;
+    const attackedShip = this.board[x + y * 10].ship;
+    return this.ships.find((ship) => ship.name === attackedShip);
+  }
+
+  hasLost(): boolean {
+    return this.ships.every((ship) => ship.sunk);
+  }
+
+  isInvalidPlacement(candidateShip: Ship): boolean {
     // Flat array with coordinates of all ships except candidate
     const existingCoordinates = this.ships
       .filter((ship) => ship !== candidateShip)
@@ -105,64 +155,13 @@ export class Player {
       ([x, y]) => x < 0 || x >= 10 || y < 0 || y >= 10
     );
 
-    // Return false if ship overlaps or is out of bounds
-    return !hasOverlap && !isOutOfBounds;
+    // Return true if ship overlaps or is out of bounds
+    return hasOverlap || isOutOfBounds;
   }
 
-  placeShipsOnBoard() {
-    this.ships.forEach((ship) => {
-      ship.coordinates.forEach(([x, y]) => {
-        const index = x + y * 10;
-        this.board[index] = { ship: ship.name, hit: false };
-      });
-    });
-  }
-
-  findShip(position: [number, number]): Ship | undefined {
+  isInvalidAttack(position: [number, number]): boolean {
     const [x, y] = position;
-    const attackedShip = this.board[x + y * 10].ship;
-    return this.ships.find((ship) => ship.name === attackedShip);
-  }
-
-  createAttack(position: [number, number]): void {
-    const [x, y] = position;
-
-    if (!this.isValidAttack(position)) {
-      throw new Error("Duplicate attack. Choose another one 🔄");
-    }
-
-    // Add attack to board
-    this.board[x + y * 10].hit = true;
-
-    // Add attack to ships
-    if (this.findShip(position)) {
-      (this.findShip(position) as Ship).hit();
-    }
-  }
-
-  isValidAttack(position: [number, number]): boolean {
-    const [x, y] = position;
-    return !this.board[x + y * 10].hit;
-  }
-
-  hasLost(): boolean {
-    return this.ships.every((ship) => ship.sunk);
-  }
-
-  populateRandomly(): void {
-    this.ships = [];
-
-    const shipNames = [Name.Battleship, Name.Carrier, Name.Cruiser, Name.Destroyer, Name.Submarine];
-
-    for (const shipName of shipNames) {
-      const newShip = new Ship(shipName, this.getRandomCoordinate(), this.getRandomOrientation());
-
-      while (!this.isValidPlacement(newShip)) {
-        newShip.position = this.getRandomCoordinate();
-      }
-
-      this.placeShip(newShip);
-    }
+    return this.board[x + y * 10].hit;
   }
 
   private getRandomCoordinate(): [number, number] {
