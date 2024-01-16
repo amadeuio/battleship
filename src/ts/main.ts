@@ -55,7 +55,8 @@ const playRound = async (event: MouseEvent) => {
   // Check if a ship has been sunk, and render it if so
   const hitShip = opponent.findShip([x, y]);
   if (hitShip && hitShip.sunk) {
-    opponentRenderer.renderShip(hitShip);
+    opponentRenderer.renderShip(hitShip); // BUG: When this is called, the ship on player's board disappears
+    console.log(`You have taken down the ${hitShip.name}!`);
     updateGameMessage(`You have taken down the ${hitShip.name}!`);
   }
 

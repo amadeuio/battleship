@@ -58,7 +58,7 @@ export class PlayerRenderer {
     const [x, y] = ship.position;
 
     // Remove existing ship with the same name
-    const existingShip = document.querySelector(`.${ship.name}`);
+    const existingShip = this.boardContainer.querySelector(`.${ship.name}`);
     if (existingShip) {
       existingShip.remove();
     }
