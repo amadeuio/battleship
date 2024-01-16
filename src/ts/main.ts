@@ -33,15 +33,6 @@ function addRestartButton() {
   messageFooter.appendChild(restartButton);
 }
 
-async function delayedRandomAttack(): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      player.createAttack(getRandomUnrepCoordinate());
-      resolve();
-    }, 1200);
-  });
-}
-
 const playRound = async (event: MouseEvent) => {
   // Player's turn
 
@@ -87,7 +78,7 @@ const playRound = async (event: MouseEvent) => {
   updateGameMessage("The computer's thinking... 💻");
 
   try {
-    await delayedRandomAttack();
+    await player.createDelayedRandomUnrepAttack();
   } catch (error) {
     console.log((error as Error).message);
     return;

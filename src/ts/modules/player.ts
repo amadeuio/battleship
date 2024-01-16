@@ -131,6 +131,25 @@ export class Player {
     }
   }
 
+  createRandomUnrepAttack(): void {
+    let randomCoord = this.getRandomCoordinate();
+
+    while (this.isInvalidAttack(randomCoord)) {
+      randomCoord = this.getRandomCoordinate();
+    }
+
+    this.createAttack(randomCoord);
+  }
+
+  async createDelayedRandomUnrepAttack(): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.createRandomUnrepAttack();
+        resolve();
+      }, 1200);
+    });
+  }
+
   findShip(position: [number, number]): Ship | undefined {
     const [x, y] = position;
     const attackedShip = this.board[x + y * 10].ship;
