@@ -1,4 +1,4 @@
-import { Name, Ship } from "./ship";
+import { Name, Orientation, Ship } from "./ship";
 
 export interface Cell {
   ship: Name | null;
@@ -26,12 +26,11 @@ export class Player {
   }
 
   placeShip(ship: Ship): void {
-    if (!this.isValidPlacement(ship)) {
-      console.log("Invalid placement.");
-      return;
-    }
-
     const clonedShip = ship.clone();
+
+    // Move invalid placement to valid before pushing to the list
+    this.moveToClosestValidPosition(clonedShip, clonedShip.position);
+
     this.ships.push(clonedShip);
   }
 
@@ -138,5 +137,27 @@ export class Player {
 
   hasLost(): boolean {
     return this.ships.every((ship) => ship.sunk);
+  }
+
+  populateRandomly(): void {
+    console.log(this.getRandomCoordinate());
+    console.log(this.getRandomOrientation());
+  }
+
+  private getRandomCoordinate(): [number, number] {
+    const randomX = Math.floor(Math.random() * 10);
+    const randomY = Math.floor(Math.random() * 10);
+
+    return [randomX, randomY];
+  }
+
+  private getRandomOrientation(): Orientation {
+    const randomNumber = Math.floor(Math.random() * 2);
+
+    if (randomNumber === 0) {
+      return Orientation.Horizontal;
+    } else {
+      return Orientation.Vertical;
+    }
   }
 }

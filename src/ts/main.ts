@@ -24,6 +24,7 @@ const opponentFooter = document.querySelector(".opponent-footer") as HTMLElement
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
 const playButton = document.querySelector(".play-button") as HTMLElement;
 const startButton = document.querySelector(".start-button") as HTMLElement;
+const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
 
 // Initial conditions
 startScreen.style.display = "none";
@@ -50,13 +51,13 @@ const player: Player = new Player(Role.Player);
 const opponent: Player = new Player(Role.Opponent);
 
 const battleship = new Ship(Name.Battleship, [0, 0], Orientation.Vertical);
-const destroyer = new Ship(Name.Destroyer, [5, 5], Orientation.Horizontal);
+const destroyer = new Ship(Name.Destroyer, [0, 0], Orientation.Horizontal);
 const carrier = new Ship(Name.Carrier, [3, 3], Orientation.Vertical);
 const cruiser = new Ship(Name.Cruiser, [1, 0], Orientation.Vertical);
 const submarine = new Ship(Name.Submarine, [4, 6], Orientation.Horizontal);
 
-player.placeShip(battleship);
 player.placeShip(destroyer);
+player.placeShip(battleship);
 //player.placeShip(carrier);
 //player.placeShip(cruiser);
 //player.placeShip(submarine);
@@ -166,7 +167,6 @@ const playRound = async (event: MouseEvent) => {
     console.log((error as Error).message);
     return;
   } finally {
-
     playerRenderer.renderAttacks();
 
     // Check if player has lost
@@ -184,6 +184,12 @@ const playRound = async (event: MouseEvent) => {
     opponentRenderer.boardContainer.addEventListener("click", playRound);
   }
 };
+
+//player.populateRandomly();
+
+randomiseButton.addEventListener("click", () => {
+  console.log("randomise clicked");
+});
 
 startButton.addEventListener("click", () => {
   playerFooter.remove();
