@@ -29,7 +29,7 @@ export class Player {
     const clonedShip = ship.clone();
 
     // Move invalid placement to valid before pushing to the list
-    this.moveToClosestValidPosition(clonedShip, clonedShip.position);
+    //this.moveToClosestValidPosition(clonedShip, clonedShip.position);
 
     this.ships.push(clonedShip);
   }
@@ -146,6 +146,11 @@ export class Player {
 
     for (const shipName of shipNames) {
       const newShip = new Ship(shipName, this.getRandomCoordinate(), this.getRandomOrientation());
+
+      while (!this.isValidPlacement(newShip)) {
+        newShip.position = this.getRandomCoordinate();
+      }
+
       this.placeShip(newShip);
     }
   }
@@ -160,10 +165,6 @@ export class Player {
   private getRandomOrientation(): Orientation {
     const randomNumber = Math.floor(Math.random() * 2);
 
-    if (randomNumber === 0) {
-      return Orientation.Horizontal;
-    } else {
-      return Orientation.Vertical;
-    }
+    return randomNumber === 0 ? Orientation.Horizontal : Orientation.Vertical;
   }
 }
