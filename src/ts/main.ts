@@ -4,7 +4,6 @@ import "../styles/style.css";
 import { Name, Orientation, Ship } from "./modules/ship";
 import { Player, Cell, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
-import { getRandomUnrepCoordinate } from "./utils/getRandomUnrepCoordinate";
 
 // Functions
 
