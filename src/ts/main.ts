@@ -6,96 +6,12 @@ import { Player, Cell, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
 import { getRandomUnrepCoordinate } from "./utils/getRandomUnrepCoordinate";
 
-// Screen switching
+// Functions
 
 function playGame(): void {
   startScreen.style.display = "none";
   gameScreen.style.display = "flex";
 }
-
-// Divs
-const startScreen = document.getElementById("startScreen") as HTMLElement;
-const gameScreen = document.getElementById("gameScreen") as HTMLElement;
-const footer = document.querySelector(".footer") as HTMLElement;
-const playerFooter = document.querySelector(".player-footer") as HTMLElement;
-const opponentFooter = document.querySelector(".opponent-footer") as HTMLElement;
-
-// Inputs & Buttons
-const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
-const playButton = document.querySelector(".play-button") as HTMLElement;
-const startButton = document.querySelector(".start-button") as HTMLElement;
-const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
-
-// Initial conditions
-startScreen.style.display = "none";
-gameScreen.style.display = "grid";
-//playerFooter.remove();
-
-playButton.addEventListener("click", () => {
-  const nickname = nicknameInput.value;
-  playGame();
-});
-
-nicknameInput.addEventListener("keyup", function (event) {
-  if (event.key === "Enter") {
-    const nickname = this.value;
-    playGame();
-  }
-});
-
-// Program starts
-
-// Create player data
-
-const player: Player = new Player(Role.Player);
-const opponent: Player = new Player(Role.Opponent);
-
-const battleship = new Ship(Name.Battleship, [0, 0], Orientation.Vertical);
-const destroyer = new Ship(Name.Destroyer, [0, 0], Orientation.Horizontal);
-const carrier = new Ship(Name.Carrier, [3, 3], Orientation.Vertical);
-const cruiser = new Ship(Name.Cruiser, [1, 0], Orientation.Vertical);
-const submarine = new Ship(Name.Submarine, [4, 6], Orientation.Horizontal);
-
-//player.placeShip(destroyer);
-//player.placeShip(battleship);
-//player.placeShip(carrier);
-//player.placeShip(cruiser);
-//player.placeShip(submarine);
-
-player.populateRandomly();
-opponent.populateRandomly();
-
-/* opponent.placeShip(battleship);
-opponent.placeShip(destroyer);
-opponent.placeShip(carrier);
-opponent.placeShip(cruiser);
-opponent.placeShip(submarine); */
-
-player.placeShipsOnBoard();
-opponent.placeShipsOnBoard();
-
-// Create PlayerRenderer
-
-const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
-const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
-
-// Render
-
-playerRenderer.createBoard();
-playerRenderer.renderShips();
-playerRenderer.renderAttacks();
-playerRenderer.addDragDrop();
-
-opponentRenderer.createBoard();
-opponentRenderer.renderAttacks();
-
-randomiseButton.addEventListener("click", () => {
-  player.populateRandomly();
-  player.placeShipsOnBoard();
-  playerRenderer.renderShips();
-});
-
-const opponentContainer = document.querySelector(".Opponent");
 
 function updateGameMessage(message: string): void {
   const messageFooter = document.querySelector(".message-footer") as HTMLElement;
@@ -194,9 +110,67 @@ const playRound = async (event: MouseEvent) => {
   }
 };
 
-//player.populateRandomly();
+// Program starts
+
+// Divs
+const startScreen = document.getElementById("startScreen") as HTMLElement;
+const gameScreen = document.getElementById("gameScreen") as HTMLElement;
+const footer = document.querySelector(".footer") as HTMLElement;
+const playerFooter = document.querySelector(".player-footer") as HTMLElement;
+const opponentFooter = document.querySelector(".opponent-footer") as HTMLElement;
+const opponentContainer = document.querySelector(".Opponent") as HTMLElement;
+
+// Inputs & Buttons
+const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
+const playButton = document.querySelector(".play-button") as HTMLElement;
+const startButton = document.querySelector(".start-button") as HTMLElement;
+const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
+
+// Initial conditions
+startScreen.style.display = "none";
+gameScreen.style.display = "grid";
+
+playButton.addEventListener("click", () => {
+  const nickname = nicknameInput.value;
+  playGame();
+});
+
+nicknameInput.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    const nickname = this.value;
+    playGame();
+  }
+});
+
+// Create player data
+
+const player: Player = new Player(Role.Player);
+const opponent: Player = new Player(Role.Opponent);
+
+player.populateRandomly();
+opponent.populateRandomly();
+
+// Create Rendering
+
+const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
+const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
+
+playerRenderer.createBoard();
+playerRenderer.renderShips();
+playerRenderer.addDragDrop();
+opponentRenderer.createBoard();
+
+// Start and randomise buttons
+
+randomiseButton.addEventListener("click", () => {
+  player.populateRandomly();
+  playerRenderer.renderShips();
+});
 
 startButton.addEventListener("click", () => {
+  player.placeShipsOnBoard();
+  opponent.placeShipsOnBoard();
+
   playerFooter.remove();
   opponentFooter.remove();
 
@@ -207,6 +181,7 @@ startButton.addEventListener("click", () => {
   updateGameMessage("It's your turn 🙋");
 
   opponentRenderer.boardContainer.classList.add("crosshair-cursor");
-  opponentRenderer.boardContainer.addEventListener("click", playRound);
   playerRenderer.removeDragDrop();
+
+  opponentRenderer.boardContainer.addEventListener("click", playRound);
 });
