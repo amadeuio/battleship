@@ -40,6 +40,7 @@ function addRestartButton() {
 
     playerRenderer.renderShips();
     playerRenderer.addDragDrop();
+    playerRenderer.renderAttacks();
     opponentRenderer.renderAttacks();
   });
 }
@@ -77,7 +78,7 @@ const playRound = async (event: MouseEvent) => {
   }
 
   // Check if opponent has lost
-  if (!opponent.hasLost()) {
+  if (opponent.hasLost()) {
     console.log("Computer has lost!");
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
