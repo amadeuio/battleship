@@ -31,6 +31,13 @@ export class PlayerRenderer {
     // Select html grid items inside specified gameboard
     var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
 
+    // Restore cells
+    for (var i = 0; i < htmlCells.length; i++) {
+      var cell = htmlCells[i];
+      cell.textContent = "";
+      cell.classList.remove("reveal-cell");
+    }
+
     // Iterate through board list, add 🔥 to the corresponding html divs
     if (this.player.role === Role.Player) {
       this.player.board.forEach((objCell, index) => {

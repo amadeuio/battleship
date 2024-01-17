@@ -19,12 +19,29 @@ function addRestartButton() {
   var restartButton = document.createElement("button");
   restartButton.className = "restart-button";
   restartButton.innerHTML = "Restart";
+  messageFooter.appendChild(restartButton);
 
   restartButton.addEventListener("click", function () {
     console.log("Restart clicked");
-  });
 
-  messageFooter.appendChild(restartButton);
+    // Initialise footer
+    playerFooter.style.display = "flex";
+    opponentFooter.style.display = "flex";
+    messageFooter.style.display = "none";
+
+    // Initialise data
+
+    player.populateRandomly();
+    opponent.populateRandomly();
+    player.restartBoard();
+    opponent.restartBoard();
+
+    // Render data
+
+    playerRenderer.renderShips();
+    playerRenderer.addDragDrop();
+    opponentRenderer.renderAttacks();
+  });
 }
 
 const playRound = async (event: MouseEvent) => {
@@ -47,6 +64,10 @@ const playRound = async (event: MouseEvent) => {
   // Render updated attacks object
   opponentRenderer.renderAttacks();
 
+  // Remove crosshair cursor and disable the click event listener on opponent's board
+  opponentContainer?.classList.remove("crosshair-cursor");
+  opponentRenderer.boardContainer.removeEventListener("click", playRound);
+
   // Check if a ship has been sunk, and render it if so
   const hitShip = opponent.findShip([x, y]);
   if (hitShip && hitShip.sunk) {
@@ -65,10 +86,6 @@ const playRound = async (event: MouseEvent) => {
   }
 
   // Opponent's turn
-
-  // Remove crosshair cursor and disable the click event listener on opponent's board
-  opponentContainer?.classList.remove("crosshair-cursor");
-  opponentRenderer.boardContainer.removeEventListener("click", playRound);
 
   updateGameMessage("The computer's thinking... 💻");
 
@@ -98,7 +115,10 @@ const playRound = async (event: MouseEvent) => {
 
 // Program starts
 
+// DOM
+
 // Divs
+
 const startScreen = document.getElementById("startScreen") as HTMLElement;
 const gameScreen = document.getElementById("gameScreen") as HTMLElement;
 const playerName = document.querySelector(".player-name") as HTMLElement;
@@ -109,30 +129,13 @@ const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 const opponentContainer = document.querySelector(".Opponent") as HTMLElement;
 
 // Inputs & Buttons
+
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
 const playButton = document.querySelector(".play-button") as HTMLElement;
 const startButton = document.querySelector(".start-button") as HTMLElement;
 const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
 
-// Create player data
-
-const player: Player = new Player(Role.Player);
-const opponent: Player = new Player(Role.Opponent);
-
-player.populateRandomly();
-opponent.populateRandomly();
-
-// Create Rendering
-
-const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
-const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
-
-playerRenderer.createBoard();
-playerRenderer.renderShips();
-playerRenderer.addDragDrop();
-opponentRenderer.createBoard();
-
-// Initial conditions
+// Start screen
 
 startScreen.style.display = "flex";
 gameScreen.style.display = "none";
@@ -157,6 +160,27 @@ nicknameInput.addEventListener("keyup", function (event) {
     opponent.nickname = "Computer";
   }
 });
+
+// Data
+
+// Create player & playerRenderer
+
+const player: Player = new Player(Role.Player);
+const opponent: Player = new Player(Role.Opponent);
+const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
+const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
+
+// Initialize player data
+
+player.populateRandomly();
+opponent.populateRandomly();
+
+// Render data
+
+playerRenderer.createBoard();
+playerRenderer.renderShips();
+playerRenderer.addDragDrop();
+opponentRenderer.createBoard();
 
 // Start and randomise buttons
 

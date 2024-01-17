@@ -49,6 +49,10 @@ export class Player {
     });
   }
 
+  restartBoard(): void {
+    this.board = Array.from({ length: 100 }, () => ({ ship: null, hit: false }));
+  }
+
   populateRandomly(): void {
     this.ships = [];
 
