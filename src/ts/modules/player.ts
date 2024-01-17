@@ -40,7 +40,7 @@ export class Player {
     }
   }
 
-  placeShipsOnBoard() {
+  syncShipsToBoard() {
     this.ships.forEach((ship) => {
       ship.coordinates.forEach(([x, y]) => {
         const index = x + y * 10;

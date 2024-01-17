@@ -190,8 +190,8 @@ randomiseButton.addEventListener("click", () => {
 });
 
 startButton.addEventListener("click", () => {
-  player.placeShipsOnBoard();
-  opponent.placeShipsOnBoard();
+  player.syncShipsToBoard();
+  opponent.syncShipsToBoard();
 
   playerFooter.style.display = "none";
   opponentFooter.style.display = "none";
