@@ -109,15 +109,17 @@ export class PlayerRenderer {
   }
 
   addClick(): void {
-    this.boardContainer.addEventListener("click", (event) => {
-      const clickedHTMLShip = event.target as HTMLElement;
-      const clickedShipName = clickedHTMLShip.classList.item(0) as string;
-      const clickedObjShip = this.player.findShipByName(clickedShipName) as Ship;
-
-      this.player.switchOrientation(clickedObjShip);
-      this.renderShip(clickedObjShip);
-    });
+    this.boardContainer.addEventListener("click", this.handleClick);
   }
+
+  private handleClick = (event: MouseEvent) => {
+    const clickedHTMLShip = event.target as HTMLElement;
+    const clickedShipName = clickedHTMLShip.classList.item(0) as string;
+    const clickedObjShip = this.player.findShipByName(clickedShipName) as Ship;
+
+    this.player.switchOrientation(clickedObjShip);
+    this.renderShip(clickedObjShip);
+  };
 
   addDragDrop(): void {
     this.boardContainer.addEventListener("dragstart", this.handleDragStart);
