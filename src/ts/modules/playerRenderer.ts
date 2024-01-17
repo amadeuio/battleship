@@ -26,39 +26,47 @@ export class PlayerRenderer {
     }
   }
 
-  // Takes player.board list, and renders it on screen
+  // Takes player.board list and renders it on screen
   renderAttacks() {
-    // Select html grid items inside specified gameboard
     var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
 
-    // Restore cells
+    // Restore blank cells
     for (var i = 0; i < htmlCells.length; i++) {
       var cell = htmlCells[i];
       cell.textContent = "";
-      cell.classList.remove("default-cursor");
-      cell.classList.remove("reveal-cell");
+
+      if (this.player.role === Role.Opponent) {
+        cell.classList.remove("default-cursor");
+        cell.classList.remove("reveal-cell");
+      }
     }
 
-    // Iterate through board list, add 🔥 to the corresponding html divs
+    // Render player attacks on board
     if (this.player.role === Role.Player) {
-      this.player.board.forEach((objCell, index) => {
+      for (let i = 0; i < this.player.board.length; i++) {
+        const objCell = this.player.board[i];
+        const htmlCell = htmlCells[i];
+
         if (objCell.hit) {
-          htmlCells[index].textContent = "🌊";
-          if (objCell.ship) htmlCells[index].textContent = "🔥";
+          htmlCell.textContent = "🌊";
+          if (objCell.ship) htmlCell.textContent = "🔥";
         }
-      });
+      }
     }
 
+    // Render opponent attacks on board
     if (this.player.role === Role.Opponent) {
-      // Iterate through board list, add 🔥 to the corresponding html divs
-      this.player.board.forEach((objCell, index) => {
+      for (let i = 0; i < this.player.board.length; i++) {
+        const objCell = this.player.board[i];
+        const htmlCell = htmlCells[i];
+
         if (objCell.hit) {
-          htmlCells[index].textContent = "🌊";
-          htmlCells[index].classList.add("default-cursor");
-          htmlCells[index].classList.add("reveal-cell");
-          if (objCell.ship) htmlCells[index].textContent = "🔥";
+          htmlCell.textContent = "🌊";
+          htmlCell.classList.add("default-cursor");
+          htmlCell.classList.add("reveal-cell");
+          if (objCell.ship) htmlCell.textContent = "🔥";
         }
-      });
+      }
     }
   }
 
