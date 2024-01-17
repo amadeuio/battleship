@@ -35,6 +35,7 @@ export class PlayerRenderer {
     for (var i = 0; i < htmlCells.length; i++) {
       var cell = htmlCells[i];
       cell.textContent = "";
+      cell.classList.remove("default-cursor");
       cell.classList.remove("reveal-cell");
     }
 
@@ -52,8 +53,8 @@ export class PlayerRenderer {
       // Iterate through board list, add 🔥 to the corresponding html divs
       this.player.board.forEach((objCell, index) => {
         if (objCell.hit) {
-          htmlCells[index].classList.add("default-cursor");
           htmlCells[index].textContent = "🌊";
+          htmlCells[index].classList.add("default-cursor");
           htmlCells[index].classList.add("reveal-cell");
           if (objCell.ship) htmlCells[index].textContent = "🔥";
         }

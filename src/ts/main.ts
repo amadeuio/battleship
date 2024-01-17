@@ -1,8 +1,7 @@
 import "../styles/reset.css";
 import "../styles/style.css";
 
-import { Name, Orientation, Ship } from "./modules/ship";
-import { Player, Cell, Role } from "./modules/player";
+import { Player, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
 
 // Functions
@@ -25,6 +24,7 @@ function addRestartButton() {
     console.log("Restart clicked");
 
     // Initialise footer
+
     playerFooter.style.display = "flex";
     opponentFooter.style.display = "flex";
     messageFooter.style.display = "none";
