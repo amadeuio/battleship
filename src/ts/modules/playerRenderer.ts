@@ -108,8 +108,27 @@ export class PlayerRenderer {
     this.player.ships.forEach((ship) => this.renderShip(ship));
   }
 
-  addClick(): void {
+  addDragDropAndClick(): void {
     this.boardContainer.addEventListener("click", this.handleClick);
+    this.boardContainer.addEventListener("dragstart", this.handleDragStart);
+    this.boardContainer.addEventListener("dragover", this.handleDragOver);
+    this.boardContainer.addEventListener("drop", this.handleDrop);
+  }
+
+  removeDragDropAndClick(): void {
+    this.getHTMLShips().forEach((HTMLShip) => {
+      HTMLShip.classList.add("default-cursor");
+      HTMLShip.draggable = false;
+    });
+
+    this.boardContainer.removeEventListener("click", this.handleClick);
+    this.boardContainer.removeEventListener("dragstart", this.handleDragStart);
+    this.boardContainer.removeEventListener("dragover", this.handleDragOver);
+    this.boardContainer.removeEventListener("drop", this.handleDrop);
+  }
+
+  private getHTMLShips(): NodeListOf<HTMLDivElement> {
+    return this.boardContainer.querySelectorAll(".ship");
   }
 
   private handleClick = (event: MouseEvent) => {
@@ -120,27 +139,6 @@ export class PlayerRenderer {
     this.player.switchOrientation(clickedObjShip);
     this.renderShip(clickedObjShip);
   };
-
-  addDragDrop(): void {
-    this.boardContainer.addEventListener("dragstart", this.handleDragStart);
-    this.boardContainer.addEventListener("dragover", this.handleDragOver);
-    this.boardContainer.addEventListener("drop", this.handleDrop);
-  }
-
-  removeDragDrop(): void {
-    this.getHTMLShips().forEach((HTMLShip) => {
-      HTMLShip.classList.add("default-cursor");
-      HTMLShip.draggable = false;
-    });
-
-    this.boardContainer.removeEventListener("dragstart", this.handleDragStart);
-    this.boardContainer.removeEventListener("dragover", this.handleDragOver);
-    this.boardContainer.removeEventListener("drop", this.handleDrop);
-  }
-
-  private getHTMLShips(): NodeListOf<HTMLDivElement> {
-    return this.boardContainer.querySelectorAll(".ship");
-  }
 
   private handleDragStart = (event: DragEvent) => {
     // Get the element being dragged

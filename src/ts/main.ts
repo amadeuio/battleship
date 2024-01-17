@@ -39,7 +39,7 @@ function addRestartButton() {
     // Render data
 
     playerRenderer.renderShips();
-    playerRenderer.addDragDrop();
+    playerRenderer.addDragDropAndClick();
     playerRenderer.renderAttacks();
     opponentRenderer.renderAttacks();
   });
@@ -183,8 +183,7 @@ opponent.populateRandomly();
 
 playerRenderer.createBoard();
 playerRenderer.renderShips();
-playerRenderer.addDragDrop();
-playerRenderer.addClick();
+playerRenderer.addDragDropAndClick();
 opponentRenderer.createBoard();
 
 // Start and randomise buttons
@@ -205,7 +204,7 @@ startButton.addEventListener("click", () => {
   updateGameMessage("It's your turn 🙋");
 
   opponentRenderer.boardContainer.classList.add("crosshair-cursor");
-  playerRenderer.removeDragDrop();
+  playerRenderer.removeDragDropAndClick();
 
   opponentRenderer.boardContainer.addEventListener("click", playRound);
 });
