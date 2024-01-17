@@ -7,11 +7,6 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 
 // Functions
 
-function playGame(): void {
-  startScreen.style.display = "none";
-  gameScreen.style.display = "flex";
-}
-
 function updateGameMessage(message: string): void {
   const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 
@@ -106,6 +101,7 @@ const playRound = async (event: MouseEvent) => {
 // Divs
 const startScreen = document.getElementById("startScreen") as HTMLElement;
 const gameScreen = document.getElementById("gameScreen") as HTMLElement;
+const playerName = document.querySelector(".player-name") as HTMLElement;
 const footer = document.querySelector(".footer") as HTMLElement;
 const playerFooter = document.querySelector(".player-footer") as HTMLElement;
 const opponentFooter = document.querySelector(".opponent-footer") as HTMLElement;
@@ -116,22 +112,6 @@ const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
 const playButton = document.querySelector(".play-button") as HTMLElement;
 const startButton = document.querySelector(".start-button") as HTMLElement;
 const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
-
-// Initial conditions
-startScreen.style.display = "none";
-gameScreen.style.display = "grid";
-
-playButton.addEventListener("click", () => {
-  const nickname = nicknameInput.value;
-  playGame();
-});
-
-nicknameInput.addEventListener("keyup", function (event) {
-  if (event.key === "Enter") {
-    const nickname = this.value;
-    playGame();
-  }
-});
 
 // Create player data
 
@@ -150,6 +130,31 @@ playerRenderer.createBoard();
 playerRenderer.renderShips();
 playerRenderer.addDragDrop();
 opponentRenderer.createBoard();
+
+// Initial conditions
+
+startScreen.style.display = "flex";
+gameScreen.style.display = "none";
+
+playButton.addEventListener("click", () => {
+  const nickname = nicknameInput.value;
+  startScreen.style.display = "none";
+  gameScreen.style.display = "grid";
+  player.nickname = nickname;
+  playerName.textContent = nickname;
+  opponent.nickname = "Computer";
+});
+
+nicknameInput.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    const nickname = this.value;
+    startScreen.style.display = "none";
+    gameScreen.style.display = "grid";
+    player.nickname = nickname;
+    playerName.textContent = nickname;
+    opponent.nickname = "Computer";
+  }
+});
 
 // Start and randomise buttons
 
