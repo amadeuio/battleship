@@ -134,21 +134,18 @@ export class PlayerRenderer {
   private handleClick = (event: MouseEvent) => {
     const clickedHTMLShip = event.target as HTMLElement;
     const clickedShipName = clickedHTMLShip.classList.item(0) as string;
-    const clickedObjShip = this.player.findShipByName(clickedShipName) as Ship;
+    const clickedShipObj = this.player.findShipByName(clickedShipName) as Ship;
 
-    this.player.switchOrientation(clickedObjShip);
-    this.renderShip(clickedObjShip);
+    this.player.switchOrientation(clickedShipObj);
+    this.renderShip(clickedShipObj);
   };
 
   private handleDragStart = (event: DragEvent) => {
-    // Get the element being dragged
-    const draggedElement = event.target as HTMLElement;
-
-    // Extract the first class of the dragged element, which is the ship name
-    const draggedShip = draggedElement.classList.item(0) as string;
+    const draggedHTMLShip = event.target as HTMLElement;
+    const draggedShipName = draggedHTMLShip.classList.item(0) as string;
 
     if (event.dataTransfer) {
-      event.dataTransfer.setData("text/plain", draggedShip);
+      event.dataTransfer.setData("text/plain", draggedShipName);
     }
   };
 
@@ -160,9 +157,8 @@ export class PlayerRenderer {
     event.preventDefault();
 
     if (event.dataTransfer) {
-      // Get the ship that has been dropped
-      const droppedClass = event.dataTransfer.getData("text/plain") as string;
-      const droppedShip = this.player.findShipByName(droppedClass) as Ship;
+      const droppedShipName = event.dataTransfer.getData("text/plain") as string;
+      const droppedShipObj = this.player.findShipByName(droppedShipName) as Ship;
 
       // Find the cell in which the ship has been dropped
       let dropCell = event.target as HTMLElement;
@@ -177,7 +173,7 @@ export class PlayerRenderer {
       const [x, y] = JSON.parse(dropCell.id);
 
       // Move the dragged ship to the new position
-      this.player.moveToClosestValidPosition(droppedShip, [x, y]);
+      this.player.moveToClosestValidPosition(droppedShipObj, [x, y]);
 
       // Render updated ship
       this.renderShips();
