@@ -136,8 +136,10 @@ export class PlayerRenderer {
     const clickedShipName = clickedHTMLShip.classList.item(0) as string;
     const clickedShipObj = this.player.findShipByName(clickedShipName) as Ship;
 
-    this.player.switchOrientation(clickedShipObj);
-    this.renderShip(clickedShipObj);
+    if (clickedShipObj) {
+      this.player.switchOrientation(clickedShipObj);
+      this.renderShip(clickedShipObj);
+    }
   };
 
   private handleDragStart = (event: DragEvent) => {

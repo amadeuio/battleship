@@ -41,6 +41,7 @@ export class Player {
   }
 
   switchOrientation(ship: Ship): void {
+    const initialPosition: [number, number] = [...ship.position];
     const initialOrientation: Orientation = ship.orientation;
 
     if (ship.orientation === Orientation.Vertical) {
@@ -49,13 +50,13 @@ export class Player {
       ship.orientation = Orientation.Vertical;
     }
 
-    if (this.isInvalidPlacement(ship)) {
-      console.log("Invalid switch");
-      ship.orientation = initialOrientation;
-      return;
-    }
+    const smartMove = this.moveToClosestValidPosition(ship, ship.position);
 
-    this.moveShip(ship, ship.position);
+    if (!smartMove) {
+      console.log("Smart move could not be found");
+      ship.position = initialPosition;
+      ship.orientation = initialOrientation;
+    }
   }
 
   syncShipsToBoard() {
@@ -88,7 +89,7 @@ export class Player {
   }
 
   // Experimental method
-  moveToClosestValidPosition(ship: Ship, desiredPosition: [number, number]): void {
+  moveToClosestValidPosition(ship: Ship, desiredPosition: [number, number]): boolean {
     const initialPosition: [number, number] = [...ship.position];
 
     // Range the function will explore
@@ -122,7 +123,7 @@ export class Player {
     for (const step of explorationSteps) {
       if (!this.isInvalidPlacement(ship)) {
         console.log("Valid position found!: " + ship.position);
-        return;
+        return true;
       }
 
       // Restore original desired positon
@@ -135,6 +136,7 @@ export class Player {
 
     // No succesful position was found, so restore initial
     ship.position = initialPosition;
+    return false;
   }
 
   createAttack(position: [number, number]): void {
