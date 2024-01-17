@@ -56,7 +56,7 @@ const playRound = async (event: MouseEvent) => {
   }
 
   // Check if opponent has lost
-  if (opponent.hasLost()) {
+  if (!opponent.hasLost()) {
     console.log("Computer has lost!");
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
@@ -105,6 +105,7 @@ const playerName = document.querySelector(".player-name") as HTMLElement;
 const footer = document.querySelector(".footer") as HTMLElement;
 const playerFooter = document.querySelector(".player-footer") as HTMLElement;
 const opponentFooter = document.querySelector(".opponent-footer") as HTMLElement;
+const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 const opponentContainer = document.querySelector(".Opponent") as HTMLElement;
 
 // Inputs & Buttons
@@ -135,6 +136,7 @@ opponentRenderer.createBoard();
 
 startScreen.style.display = "flex";
 gameScreen.style.display = "none";
+messageFooter.style.display = "none";
 
 playButton.addEventListener("click", () => {
   const nickname = nicknameInput.value;
@@ -167,12 +169,9 @@ startButton.addEventListener("click", () => {
   player.placeShipsOnBoard();
   opponent.placeShipsOnBoard();
 
-  playerFooter.remove();
-  opponentFooter.remove();
-
-  const messageFooter = document.createElement("div");
-  messageFooter.className = "message-footer";
-  footer.appendChild(messageFooter);
+  playerFooter.style.display = "none";
+  opponentFooter.style.display = "none";
+  messageFooter.style.display = "flex";
 
   updateGameMessage("It's your turn 🙋");
 
