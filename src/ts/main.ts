@@ -70,7 +70,7 @@ const playRound = async (event: MouseEvent) => {
   opponentRenderer.boardContainer.removeEventListener("click", playRound);
 
   // Check if a ship has been sunk, and render it if so
-  const hitShip = opponent.findShip([x, y]);
+  const hitShip = opponent.findShipByCoord([x, y]);
   if (hitShip && hitShip.sunk) {
     opponentRenderer.renderShip(hitShip); // BUG: When this is called, the ship on player's board disappears
     console.log(`You have taken down the ${hitShip.name}!`);
@@ -142,6 +142,9 @@ startScreen.style.display = "flex";
 gameScreen.style.display = "none";
 messageFooter.style.display = "none";
 
+startScreen.style.display = "none";
+gameScreen.style.display = "grid";
+
 playButton.addEventListener("click", () => {
   const nickname = nicknameInput.value;
   startScreen.style.display = "none";
@@ -181,6 +184,7 @@ opponent.populateRandomly();
 playerRenderer.createBoard();
 playerRenderer.renderShips();
 playerRenderer.addDragDrop();
+playerRenderer.addClick();
 opponentRenderer.createBoard();
 
 // Start and randomise buttons

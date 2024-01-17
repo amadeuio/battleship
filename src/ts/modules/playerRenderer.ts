@@ -108,6 +108,17 @@ export class PlayerRenderer {
     this.player.ships.forEach((ship) => this.renderShip(ship));
   }
 
+  addClick(): void {
+    this.boardContainer.addEventListener("click", (event) => {
+      const clickedHTMLShip = event.target as HTMLElement;
+      const clickedShipName = clickedHTMLShip.classList.item(0) as string;
+      const clickedObjShip = this.player.findShipByName(clickedShipName) as Ship;
+
+      this.player.switchOrientation(clickedObjShip);
+      this.renderShip(clickedObjShip);
+    });
+  }
+
   addDragDrop(): void {
     this.boardContainer.addEventListener("dragstart", this.handleDragStart);
     this.boardContainer.addEventListener("dragover", this.handleDragOver);
@@ -150,8 +161,8 @@ export class PlayerRenderer {
 
     if (event.dataTransfer) {
       // Get the ship that has been dropped
-      const droppedClass = event.dataTransfer.getData("text/plain");
-      const droppedShip = this.player.ships.find((ship) => ship.name === droppedClass) as Ship;
+      const droppedClass = event.dataTransfer.getData("text/plain") as string;
+      const droppedShip = this.player.findShipByName(droppedClass) as Ship;
 
       // Find the cell in which the ship has been dropped
       let dropCell = event.target as HTMLElement;

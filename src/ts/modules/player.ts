@@ -40,6 +40,24 @@ export class Player {
     }
   }
 
+  switchOrientation(ship: Ship): void {
+    const initialOrientation: Orientation = ship.orientation;
+
+    if (ship.orientation === Orientation.Vertical) {
+      ship.orientation = Orientation.Horizontal;
+    } else {
+      ship.orientation = Orientation.Vertical;
+    }
+
+    if (this.isInvalidPlacement(ship)) {
+      console.log("Invalid switch");
+      ship.orientation = initialOrientation;
+      return;
+    }
+
+    this.moveShip(ship, ship.position);
+  }
+
   syncShipsToBoard() {
     this.ships.forEach((ship) => {
       ship.coordinates.forEach(([x, y]) => {
@@ -130,8 +148,8 @@ export class Player {
     this.board[x + y * 10].hit = true;
 
     // Add attack to ships
-    if (this.findShip(position)) {
-      (this.findShip(position) as Ship).hit();
+    if (this.findShipByCoord(position)) {
+      (this.findShipByCoord(position) as Ship).hit();
     }
   }
 
@@ -154,10 +172,14 @@ export class Player {
     });
   }
 
-  findShip(position: [number, number]): Ship | undefined {
+  findShipByCoord(position: [number, number]): Ship | undefined {
     const [x, y] = position;
-    const attackedShip = this.board[x + y * 10].ship;
-    return this.ships.find((ship) => ship.name === attackedShip);
+    const attackedShip = this.board[x + y * 10].ship as string;
+    return this.findShipByName(attackedShip);
+  }
+
+  findShipByName(name: String): Ship | undefined {
+    return this.ships.find((ship) => ship.name === name);
   }
 
   hasLost(): boolean {
