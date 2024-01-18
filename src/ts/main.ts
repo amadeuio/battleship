@@ -1,6 +1,7 @@
 import "../styles/reset.css";
 import "../styles/style.css";
 
+import { Ship, Name, Orientation } from "./modules/ship";
 import { Player, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
 
@@ -89,7 +90,7 @@ const playRound = async (event: MouseEvent) => {
   }
 
   // Check if opponent has lost
-  if (fakeHasLost()) {
+  if (opponent.hasLost()) {
     console.log("Computer has lost!");
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
@@ -185,6 +186,10 @@ const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
 const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
 
 // Initialize player data
+
+/* const myVessel = new Ship(Name.Carrier, [0, 0], Orientation.Vertical);
+player.placeShip(myVessel);
+console.log(player.isInvalidPlacement(myVessel)); */
 
 player.populateRandomly();
 opponent.populateRandomly();

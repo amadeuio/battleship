@@ -1,4 +1,4 @@
-import { Ship } from "./ship";
+import { Orientation, Ship } from "./ship";
 import { Player, Role } from "./player";
 
 export class PlayerRenderer {
@@ -90,13 +90,13 @@ export class PlayerRenderer {
     const topValue = `${y * cellSize}px`;
     const leftValue = `${x * cellSize}px`;
 
+    // Default ship img orientation is vertical
+    shipDiv.style.width = `${cellSize}px`;
+    shipDiv.style.height = `${ship.length * cellSize}px`;
+
     // Add dimensions to ship
-    if (ship.orientation === "Horizontal") {
-      shipDiv.style.width = `${ship.length * cellSize}px`;
-      shipDiv.style.height = `${cellSize}px`;
-    } else {
-      shipDiv.style.width = `${cellSize}px`;
-      shipDiv.style.height = `${ship.length * cellSize}px`;
+    if (ship.orientation === Orientation.Horizontal) {
+      shipDiv.classList.add("rotate");
     }
 
     // Position ship

@@ -1,5 +1,9 @@
 /* Global */
 
+:root {
+  --cell-size: 47px;
+}
+
 html,
 body {
   height: 100%;
@@ -9,6 +13,11 @@ body {
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
+}
+
+body {
+  background-image: url("images/cover.png");
+  background-repeat: repeat;
 }
 
 button {
@@ -102,7 +111,6 @@ label[for="nickname"] {
 
 .drag-drop-message {
   font-size: 14px;
-
 }
 
 .message-footer {
@@ -136,7 +144,7 @@ label[for="nickname"] {
 
 .Player-cell,
 .Opponent-cell {
-  width: 47px;
+  width: var(--cell-size);
   aspect-ratio: 1 / 1;
   font-size: 12px;
   border-left: 1px solid black;
@@ -164,10 +172,40 @@ label[for="nickname"] {
 .Cruiser {
   z-index: 1;
   position: absolute;
-  background-image: url("./sprite.png");
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   cursor: grab;
+}
+
+.Carrier {
+  background-image: url("images/carrier.png");
+}
+
+.Battleship {
+  background-image: url("images/battleship.png");
+}
+
+.Cruiser {
+  background-image: url("images/cruiser.png");
+}
+
+.Submarine {
+  background-image: url("images/submarine.png");
+}
+.Destroyer {
+  background-image: url("images/destroyer.png");
+}
+
+.rotate {
+  /* transform: rotate(90deg);
+  transform-origin: 110px 94px 0px; */
+  transform: rotate(-90deg);
+  transform-origin: calc(var(--cell-size) / 2) calc(var(--cell-size) / 2);
+}
+
+.dragover {
+  background-color: red;
+  border: 4px solid black;
 }
 
 .default-cursor {
