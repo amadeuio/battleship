@@ -6,6 +6,16 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 
 // Functions
 
+let count = 0;
+function fakeHasLost() {
+  count++;
+  if (count % 5 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function updateGameMessage(message: string): void {
   const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 
@@ -41,6 +51,7 @@ function addRestartButton() {
     playerRenderer.renderShips();
     playerRenderer.addDragDropAndClick();
     playerRenderer.renderAttacks();
+    opponentRenderer.clearShips();
     opponentRenderer.renderAttacks();
   });
 }
@@ -72,13 +83,13 @@ const playRound = async (event: MouseEvent) => {
   // Check if a ship has been sunk, and render it if so
   const hitShip = opponent.findShipByCoord([x, y]);
   if (hitShip && hitShip.sunk) {
-    opponentRenderer.renderShip(hitShip); // BUG: When this is called, the ship on player's board disappears
+    opponentRenderer.renderShip(hitShip);
     console.log(`You have taken down the ${hitShip.name}!`);
     updateGameMessage(`You have taken down the ${hitShip.name}!`);
   }
 
   // Check if opponent has lost
-  if (opponent.hasLost()) {
+  if (fakeHasLost()) {
     console.log("Computer has lost!");
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
@@ -123,7 +134,6 @@ const playRound = async (event: MouseEvent) => {
 const startScreen = document.getElementById("startScreen") as HTMLElement;
 const gameScreen = document.getElementById("gameScreen") as HTMLElement;
 const playerName = document.querySelector(".player-name") as HTMLElement;
-const footer = document.querySelector(".footer") as HTMLElement;
 const playerFooter = document.querySelector(".player-footer") as HTMLElement;
 const opponentFooter = document.querySelector(".opponent-footer") as HTMLElement;
 const messageFooter = document.querySelector(".message-footer") as HTMLElement;

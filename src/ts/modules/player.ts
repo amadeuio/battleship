@@ -40,7 +40,7 @@ export class Player {
     }
   }
 
-  switchOrientation(ship: Ship): void {
+  switchShipOrientation(ship: Ship): void {
     const initialPosition: [number, number] = [...ship.position];
     const initialOrientation: Orientation = ship.orientation;
 

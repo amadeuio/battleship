@@ -108,6 +108,12 @@ export class PlayerRenderer {
     this.player.ships.forEach((ship) => this.renderShip(ship));
   }
 
+  clearShips() {
+    this.getHTMLShips().forEach((HTMLShip) => {
+      HTMLShip.remove();
+    });
+  }
+
   addDragDropAndClick(): void {
     this.boardContainer.addEventListener("click", this.handleClick);
     this.boardContainer.addEventListener("dragstart", this.handleDragStart);
@@ -137,7 +143,7 @@ export class PlayerRenderer {
     const clickedShipObj = this.player.findShipByName(clickedShipName) as Ship;
 
     if (clickedShipObj) {
-      this.player.switchOrientation(clickedShipObj);
+      this.player.switchShipOrientation(clickedShipObj);
       this.renderShip(clickedShipObj);
     }
   };
