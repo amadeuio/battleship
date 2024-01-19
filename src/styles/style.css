@@ -4,6 +4,15 @@
   --cell-size: 47px;
 }
 
+/* img {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: grab;
+} */
+
 html,
 body {
   height: 100%;
@@ -178,7 +187,6 @@ label[for="nickname"] {
 }
 
 .Carrier {
-  background-image: url("images/carrier.png");
 }
 
 .Battleship {
@@ -204,8 +212,7 @@ label[for="nickname"] {
 }
 
 .dragover {
-  background-color: red;
-  border: 4px solid black;
+  background-color: blue;
 }
 
 .default-cursor {

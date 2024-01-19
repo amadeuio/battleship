@@ -74,16 +74,17 @@ export class PlayerRenderer {
     const [x, y] = ship.position;
 
     // Remove existing ship with the same name
-    const existingShip = this.boardContainer.querySelector(`.${ship.name}`);
+    const existingShip = this.boardContainer.querySelector(`.Carrier`);
     if (existingShip) {
       existingShip.remove();
     }
 
     // Create ship div
-    const shipDiv = document.createElement("div");
-    shipDiv.classList.add(ship.name, "ship");
-    shipDiv.setAttribute("draggable", "true");
-    this.boardContainer.appendChild(shipDiv);
+    let shipImg = new Image();
+    shipImg.src = `images/carrier.png`;
+    shipImg.classList.add(ship.name, "ship");
+    shipImg.setAttribute("draggable", "true");
+    this.boardContainer.appendChild(shipImg);
 
     // Find pixel coordinates of ship
     const cellSize = 47; // px
@@ -91,17 +92,17 @@ export class PlayerRenderer {
     const leftValue = `${x * cellSize}px`;
 
     // Default ship img orientation is vertical
-    shipDiv.style.width = `${cellSize}px`;
-    shipDiv.style.height = `${ship.length * cellSize}px`;
+    shipImg.width = cellSize;
+    shipImg.height = ship.length * cellSize;
 
     // Add dimensions to ship
     if (ship.orientation === Orientation.Horizontal) {
-      shipDiv.classList.add("rotate");
+      shipImg.classList.add("rotate");
     }
 
     // Position ship
-    shipDiv.style.top = topValue;
-    shipDiv.style.left = leftValue;
+    shipImg.style.top = topValue;
+    shipImg.style.left = leftValue;
   }
 
   renderShips() {

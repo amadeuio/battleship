@@ -187,12 +187,12 @@ const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
 
 // Initialize player data
 
-/* const myVessel = new Ship(Name.Carrier, [0, 0], Orientation.Vertical);
+const myVessel = new Ship(Name.Carrier, [0, 0], Orientation.Vertical);
 player.placeShip(myVessel);
-console.log(player.isInvalidPlacement(myVessel)); */
+console.log(player.isInvalidPlacement(myVessel));
 
-player.populateRandomly();
-opponent.populateRandomly();
+/* player.populateRandomly();
+opponent.populateRandomly(); */
 
 // Render data
 
