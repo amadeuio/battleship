@@ -173,7 +173,7 @@ export class PlayerRenderer {
       .on("tap", (event) => {
         element.classList.add("transition");
 
-        draggedShipObj.toggleOrientation();
+        this.player.switchShipOrientation(draggedShipObj);
         angle = orientationToAngle(draggedShipObj.orientation) as number;
         event.target.style.transform = `translate(0px, 0px) rotate(${angle}deg)`;
 
