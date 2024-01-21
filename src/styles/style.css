@@ -4,15 +4,6 @@
   --cell-size: 47px;
 }
 
-/* img {
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  cursor: grab;
-} */
-
 html,
 body {
   height: 100%;
@@ -158,6 +149,7 @@ label[for="nickname"] {
   font-size: 12px;
   border-left: 1px solid black;
   border-top: 1px solid black;
+  box-sizing: border-box;
   /* z-index: 2; */ /* this causes problems with drag & drop functionality */
   display: flex;
   justify-content: center;
@@ -181,44 +173,13 @@ label[for="nickname"] {
 .Cruiser {
   z-index: 1;
   position: absolute;
-  background-size: cover;
-  background-position: center;
   cursor: grab;
-}
-
-.Carrier {
   touch-action: none;
-  transform-origin: 23px 23px;
-}
-
-.Battleship {
-  background-image: url("images/battleship.png");
-}
-
-.Cruiser {
-  background-image: url("images/cruiser.png");
-}
-
-.Submarine {
-  background-image: url("images/submarine.png");
-}
-.Destroyer {
-  background-image: url("images/destroyer.png");
+  transform-origin: 25px 25px;
 }
 
 .transition {
   transition: 0.3s;
-}
-
-.rotate {
-  /* transform: rotate(90deg);
-  transform-origin: 110px 94px 0px; */
-  /*   transform: rotate(90deg);
- */
-}
-
-.dragover {
-  background-color: blue;
 }
 
 .default-cursor {

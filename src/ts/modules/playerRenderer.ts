@@ -6,13 +6,11 @@ export class PlayerRenderer {
   player: Player;
   boardContainer: HTMLElement;
   cellSize: number;
-  angle: number;
 
   constructor(player: Player) {
     this.player = player;
     this.boardContainer = document.querySelector("." + this.player.role) as HTMLElement;
     this.cellSize = 47;
-    this.angle = 0;
   }
 
   createBoard() {
@@ -79,30 +77,31 @@ export class PlayerRenderer {
     const [x, y] = ship.position;
 
     // Remove existing ship with the same name
-    const existingShip = this.boardContainer.querySelector(`.Carrier`);
+    const existingShip = this.boardContainer.querySelector(`.${ship.name}`);
     if (existingShip) {
       existingShip.remove();
     }
 
     // Create ship div
     let shipImg = new Image();
-    shipImg.src = `images/carrier.png`;
+    shipImg.src = `images/${ship.name}.png`;
     shipImg.classList.add(ship.name, "ship");
     this.addInteract(shipImg);
     this.boardContainer.appendChild(shipImg);
 
-    // Find pixel coordinates of ship
-    const topValue = `${y * this.cellSize}px`;
-    const leftValue = `${x * this.cellSize}px`;
-
-    // Render dimensions acoording to orientation
+    // Render dimensions
     shipImg.width = this.cellSize;
     shipImg.height = ship.length * this.cellSize;
 
+    // Rotate if necessary
     if (ship.orientation === Orientation.Horizontal) {
-      this.angle = -90;
-      shipImg.style.transform = `translate(0px, 0px) rotate(${this.angle}deg)`;
+      const angle = -90;
+      shipImg.style.transform = `translate(0px, 0px) rotate(${angle}deg)`;
     }
+
+    // Find pixel coordinates of ship
+    const topValue = `${y * this.cellSize}px`;
+    const leftValue = `${x * this.cellSize - 3}px`; // -3 offsets non symetrical image
 
     // Position ship
     shipImg.style.top = topValue;
@@ -112,62 +111,61 @@ export class PlayerRenderer {
   addInteract(element: HTMLElement): void {
     var x = 0;
     var y = 0;
+    var angle = 0;
 
-    function toggleAngle(angle: number): number | undefined {
-      if (angle === 0) {
-        return -90;
-      } else if (angle === -90) {
+    const draggedShipName = element.classList.item(0) as string;
+    const draggedShipObj = this.player.findShipByName(draggedShipName) as Ship;
+
+    function orientationToAngle(orientation: Orientation): number | undefined {
+      if (orientation === Orientation.Vertical) {
         return 0;
+      } else if (orientation === Orientation.Horizontal) {
+        return -90;
       }
     }
 
     interact(element)
       .draggable({
-        // enable inertial throwing
         inertia: true,
-        // keep the element within the area of it's parent
         modifiers: [
           interact.modifiers.restrictRect({
             restriction: "parent",
             endOnly: true,
           }),
         ],
-        // enable autoScroll
         autoScroll: true,
 
         listeners: {
-          // call this function on every dragmove event
           move: (event) => {
             element.classList.remove("transition");
 
             x += event.dx;
             y += event.dy;
+            angle = orientationToAngle(draggedShipObj.orientation) as number;
 
-            event.target.style.transform = `translate(${x}px, ${y}px) rotate(${this.angle}deg)`;
+            event.target.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
           },
 
-          // call this function on every dragend event
           end: (event) => {
             const stackingElements = document.elementsFromPoint(event.clientX, event.clientY);
 
+            // Mouse grab position relative to ship
             var divRect = element.getBoundingClientRect();
-            if (this.player.ships[0].orientation === Orientation.Vertical) {
-              var xDelta = Math.floor((event.clientX - divRect.left) / this.cellSize);
-              var yDelta = Math.floor((event.clientY - divRect.top) / this.cellSize);
-            } else {
-              var xDelta = Math.floor((event.clientY - divRect.left) / this.cellSize);
-              var yDelta = Math.floor((event.clientX - divRect.top) / this.cellSize);
+            var xDelta = Math.floor((event.clientX - divRect.left) / this.cellSize);
+            var yDelta = Math.floor((event.clientY - divRect.top) / this.cellSize);
+
+            var dropCell = stackingElements[1] as HTMLElement;
+
+            // Edge case: Placement on top of an existing ship
+            if (!dropCell.id) {
+              const stackingElements = document.elementsFromPoint(event.clientX, event.clientY);
+              dropCell = stackingElements[2] as HTMLElement;
             }
 
-            xDelta = 0;
-            yDelta = 0;
-
-            const dropCell = stackingElements[1] as HTMLElement;
             const [x, y] = JSON.parse(dropCell.id);
 
-            this.player.moveToClosestValidPosition(this.player.ships[0], [x - xDelta, y - yDelta]);
+            this.player.moveToClosestValidPosition(draggedShipObj, [x - xDelta, y - yDelta]);
             this.renderShips();
-            console.log(this.player.ships[0].coordinates);
           },
         },
       })
@@ -175,22 +173,16 @@ export class PlayerRenderer {
       .on("tap", (event) => {
         element.classList.add("transition");
 
-        this.angle = toggleAngle(this.angle) as number;
-        event.target.style.transform = `translate(${x}px, ${y}px) rotate(${this.angle}deg)`;
+        draggedShipObj.toggleOrientation();
+        angle = orientationToAngle(draggedShipObj.orientation) as number;
+        event.target.style.transform = `translate(0px, 0px) rotate(${angle}deg)`;
 
-        this.player.ships[0].toggleOrientation();
+        // Wait for the transition effect
         setTimeout(() => {
+          this.player.moveToClosestValidPosition(draggedShipObj, draggedShipObj.position);
           this.renderShips();
-        }, 1000);
+        }, 300);
       });
-  }
-
-  private toggleAngle() {
-    if (this.angle === 0) {
-      return -90;
-    } else if (this.angle === -90) {
-      return 0;
-    }
   }
 
   addInteractToAll() {

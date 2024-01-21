@@ -187,11 +187,15 @@ const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
 
 // Initialize player data
 
-const myVessel = new Ship(Name.Carrier, [0, 0], Orientation.Vertical);
+/* const carrier = new Ship(Name.Carrier, [0, 0], Orientation.Vertical);
+const destroyer = new Ship(Name.Destroyer, [3, 3], Orientation.Vertical);
 
-player.placeShip(myVessel);
+player.placeShip(carrier);
+player.placeShip(destroyer);
+ */
+
+player.populateRandomly();
 playerRenderer.renderShips();
-playerRenderer.addInteractToAll();
 
 // Render data
 
