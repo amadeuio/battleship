@@ -50,7 +50,7 @@ function addRestartButton() {
     // Render data
 
     playerRenderer.renderShips();
-    playerRenderer.addDragDropAndClick();
+    // playerRenderer.addDragDropAndClick();
     playerRenderer.renderAttacks();
     opponentRenderer.clearShips();
     opponentRenderer.renderAttacks();
@@ -188,17 +188,14 @@ const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
 // Initialize player data
 
 const myVessel = new Ship(Name.Carrier, [0, 0], Orientation.Vertical);
-player.placeShip(myVessel);
-console.log(player.isInvalidPlacement(myVessel));
 
-/* player.populateRandomly();
-opponent.populateRandomly(); */
+player.placeShip(myVessel);
+playerRenderer.renderShips();
+playerRenderer.addInteractToAll();
 
 // Render data
 
 playerRenderer.createBoard();
-playerRenderer.renderShips();
-playerRenderer.addDragDropAndClick();
 opponentRenderer.createBoard();
 
 // Start and randomise buttons
@@ -219,7 +216,7 @@ startButton.addEventListener("click", () => {
   updateGameMessage("It's your turn 🙋");
 
   opponentRenderer.boardContainer.classList.add("crosshair-cursor");
-  playerRenderer.removeDragDropAndClick();
+  // playerRenderer.removeDragDropAndClick();
 
   opponentRenderer.boardContainer.addEventListener("click", playRound);
 });

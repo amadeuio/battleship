@@ -187,6 +187,8 @@ label[for="nickname"] {
 }
 
 .Carrier {
+  touch-action: none;
+  transform-origin: 23px 23px;
 }
 
 .Battleship {
@@ -204,11 +206,15 @@ label[for="nickname"] {
   background-image: url("images/destroyer.png");
 }
 
+.transition {
+  transition: 0.3s;
+}
+
 .rotate {
   /* transform: rotate(90deg);
   transform-origin: 110px 94px 0px; */
-  transform: rotate(-90deg);
-  transform-origin: calc(var(--cell-size) / 2) calc(var(--cell-size) / 2);
+  /*   transform: rotate(90deg);
+ */
 }
 
 .dragover {
