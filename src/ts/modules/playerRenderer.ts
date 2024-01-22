@@ -158,7 +158,6 @@ export class PlayerRenderer {
 
             // Edge case: Placement on top of an existing ship
             if (!dropCell.id) {
-              const stackingElements = document.elementsFromPoint(event.clientX, event.clientY);
               dropCell = stackingElements[2] as HTMLElement;
             }
 
