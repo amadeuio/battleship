@@ -64,14 +64,6 @@ export class Ship {
     return coordinates;
   }
 
-  toggleOrientation(): void {
-    if (this.orientation === Orientation.Vertical) {
-      this.orientation = Orientation.Horizontal;
-    } else {
-      this.orientation = Orientation.Vertical;
-    }
-  }
-
   // Hack
   clone(): Ship {
     // Create a new instance with the same properties
