@@ -184,7 +184,7 @@ export class PlayerRenderer {
     });
   }
 
-  getHTMLShips(): NodeListOf<HTMLDivElement> {
+  private getHTMLShips(): NodeListOf<HTMLDivElement> {
     return this.boardContainer.querySelectorAll(".ship");
   }
 }
