@@ -14,14 +14,12 @@ export class PlayerRenderer {
   }
 
   createBoard() {
-    for (let row = 0; row < 10; row++) {
+    for (let row = 9; row >= 0; row--) {
       for (let col = 0; col < 10; col++) {
-        // Create div
         const boardCell = document.createElement("div");
         boardCell.className = this.player.role + "-cell";
 
-        // Set the id of the div to be its coordinates
-        const coordinates: [number, number] = [col, row];
+        const coordinates = [col, row];
         boardCell.id = JSON.stringify(coordinates);
 
         this.boardContainer.appendChild(boardCell);
@@ -95,16 +93,16 @@ export class PlayerRenderer {
 
     // Rotate if necessary
     if (ship.orientation === Orientation.Horizontal) {
-      const angle = -90;
+      const angle = 90;
       shipImg.style.transform = `translate(0px, 0px) rotate(${angle}deg)`;
     }
 
     // Find pixel coordinates of ship
-    const topValue = `${y * this.cellSize}px`;
+    const bottomValue = `${y * this.cellSize}px`;
     const leftValue = `${x * this.cellSize - 3}px`; // -3 offsets non symetrical image
 
     // Position ship
-    shipImg.style.top = topValue;
+    shipImg.style.bottom = bottomValue;
     shipImg.style.left = leftValue;
   }
 
@@ -120,7 +118,7 @@ export class PlayerRenderer {
       if (orientation === Orientation.Vertical) {
         return 0;
       } else if (orientation === Orientation.Horizontal) {
-        return -90;
+        return 90;
       }
     }
 
@@ -152,7 +150,7 @@ export class PlayerRenderer {
             // Mouse grab position relative to ship
             var divRect = element.getBoundingClientRect();
             var xDelta = Math.floor((event.clientX - divRect.left) / this.cellSize);
-            var yDelta = Math.floor((event.clientY - divRect.top) / this.cellSize);
+            var yDelta = Math.floor((divRect.bottom - event.clientY) / this.cellSize);
 
             var dropCell = stackingElements[1] as HTMLElement;
 
@@ -165,6 +163,8 @@ export class PlayerRenderer {
 
             this.player.moveToClosestValidPosition(draggedShipObj, [x - xDelta, y - yDelta]);
             this.renderShips();
+
+            console.log(draggedShipObj.coordinates);
           },
         },
       })
@@ -200,7 +200,7 @@ export class PlayerRenderer {
     });
   }
 
-  private getHTMLShips(): NodeListOf<HTMLDivElement> {
+  getHTMLShips(): NodeListOf<HTMLDivElement> {
     return this.boardContainer.querySelectorAll(".ship");
   }
 }

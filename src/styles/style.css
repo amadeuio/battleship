@@ -175,7 +175,7 @@ label[for="nickname"] {
   position: absolute;
   cursor: grab;
   touch-action: none;
-  transform-origin: 25px 25px;
+  transform-origin: 25px calc(100% - 22px);
 }
 
 .transition {
