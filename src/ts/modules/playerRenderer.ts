@@ -90,12 +90,7 @@ export class PlayerRenderer {
     // Render dimensions
     shipImg.width = this.cellSize;
     shipImg.height = ship.length * this.cellSize;
-
-    // Rotate if necessary
-    if (ship.orientation === Orientation.Horizontal) {
-      const angle = 90;
-      shipImg.style.transform = `translate(0px, 0px) rotate(${angle}deg)`;
-    }
+    shipImg.style.transform = `translate(0px, 0px) rotate(${ship.orientation}deg)`;
 
     // Find pixel coordinates of ship
     const bottomValue = `${y * this.cellSize}px`;
@@ -109,18 +104,9 @@ export class PlayerRenderer {
   addInteract(element: HTMLElement): void {
     var x = 0;
     var y = 0;
-    var angle = 0;
 
     const draggedShipName = element.classList.item(0) as string;
     const draggedShipObj = this.player.findShipByName(draggedShipName) as Ship;
-
-    function orientationToAngle(orientation: Orientation): number | undefined {
-      if (orientation === Orientation.Vertical) {
-        return 0;
-      } else if (orientation === Orientation.Horizontal) {
-        return 90;
-      }
-    }
 
     interact(element)
       .draggable({
@@ -139,9 +125,8 @@ export class PlayerRenderer {
 
             x += event.dx;
             y += event.dy;
-            angle = orientationToAngle(draggedShipObj.orientation) as number;
 
-            event.target.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
+            event.target.style.transform = `translate(${x}px, ${y}px) rotate(${draggedShipObj.orientation}deg)`;
           },
 
           end: (event) => {
@@ -173,8 +158,7 @@ export class PlayerRenderer {
         element.classList.add("transition");
 
         this.player.switchShipOrientation(draggedShipObj);
-        angle = orientationToAngle(draggedShipObj.orientation) as number;
-        event.target.style.transform = `translate(0px, 0px) rotate(${angle}deg)`;
+        event.target.style.transform = `translate(0px, 0px) rotate(${draggedShipObj.orientation}deg)`;
 
         // Wait for the transition effect
         setTimeout(() => {

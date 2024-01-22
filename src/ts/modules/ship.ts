@@ -7,8 +7,8 @@ export enum Name {
 }
 
 export enum Orientation {
-  Horizontal = "Horizontal",
-  Vertical = "Vertical",
+  Horizontal = 90,
+  Vertical = 0,
 }
 
 export class Ship {

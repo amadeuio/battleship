@@ -193,10 +193,13 @@ const destroyer = new Ship(Name.Destroyer, [3, 3], Orientation.Vertical);
 player.placeShip(carrier);
 player.placeShip(destroyer); */
 
+player.populateRandomly();
+
 // Render data
 
 playerRenderer.createBoard();
 opponentRenderer.createBoard();
+playerRenderer.renderShips();
 
 // Start and randomise buttons
 
