@@ -27,9 +27,9 @@ function updateGameMessage(message: string): void {
 function addRestartButton() {
   const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 
-  var restartButton = document.createElement("button");
-  restartButton.className = "restart-button";
-  restartButton.innerHTML = "Restart";
+  var restartButton = new Image();
+  restartButton.src = "images/btn_restart.png";
+  restartButton.className = "restart button";
   messageFooter.appendChild(restartButton);
 
   restartButton.addEventListener("click", function () {

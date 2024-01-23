@@ -51,7 +51,7 @@ export class PlayerRenderer {
 
     // Restore blank cells
     for (var i = 0; i < htmlCells.length; i++) {
-      var cell = htmlCells[i];
+      var cell = htmlCells[i] as HTMLImageElement;
       cell.src = "images/tile.png";
 
       if (this.player.role === Role.Opponent) {
@@ -63,7 +63,7 @@ export class PlayerRenderer {
     // Render player attacks on board
     if (this.player.role === Role.Player) {
       for (let i = 0; i < this.player.board.length; i++) {
-        const htmlCell = htmlCells[i];
+        const htmlCell = htmlCells[i] as HTMLImageElement;
         const [x, y] = JSON.parse(htmlCell.id);
         const j = x + 10 * y; // transform coords
 
@@ -71,7 +71,10 @@ export class PlayerRenderer {
 
         if (objCell.hit) {
           htmlCell.src = "images/tile_green.png";
-          if (objCell.ship) htmlCell.textContent = "🔥";
+          if (objCell.ship) {
+            htmlCell.src = "images/tile_red.png";
+            htmlCell.textContent = "🔥";
+          }
         }
       }
     }
@@ -79,7 +82,7 @@ export class PlayerRenderer {
     // Render opponent attacks on board
     if (this.player.role === Role.Opponent) {
       for (let i = 0; i < this.player.board.length; i++) {
-        const htmlCell = htmlCells[i];
+        const htmlCell = htmlCells[i] as HTMLImageElement;
         const [x, y] = JSON.parse(htmlCell.id);
         const j = x + 10 * y; // transform coords
 
@@ -89,7 +92,10 @@ export class PlayerRenderer {
           htmlCell.src = "images/tile_green.png";
           htmlCell.classList.add("default-cursor");
           htmlCell.classList.add("reveal-cell");
-          if (objCell.ship) htmlCell.textContent = "🔥";
+          if (objCell.ship) {
+            htmlCell.src = "images/tile_red.png";
+            htmlCell.textContent = "🔥";
+          }
         }
       }
     }
