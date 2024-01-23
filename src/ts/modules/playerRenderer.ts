@@ -16,7 +16,8 @@ export class PlayerRenderer {
   createBoard() {
     for (let row = 9; row >= 0; row--) {
       for (let col = 0; col < 10; col++) {
-        const boardCell = document.createElement("div");
+        let boardCell = new Image();
+        boardCell.src = "images/tile.png";
         boardCell.className = this.player.role + "-cell";
 
         const coordinates = [col, row];
@@ -51,7 +52,7 @@ export class PlayerRenderer {
     // Restore blank cells
     for (var i = 0; i < htmlCells.length; i++) {
       var cell = htmlCells[i];
-      cell.textContent = "";
+      cell.src = "images/tile.png";
 
       if (this.player.role === Role.Opponent) {
         cell.classList.remove("default-cursor");
@@ -69,7 +70,7 @@ export class PlayerRenderer {
         const objCell = this.player.board[j];
 
         if (objCell.hit) {
-          htmlCell.textContent = "🌊";
+          htmlCell.src = "images/tile_green.png";
           if (objCell.ship) htmlCell.textContent = "🔥";
         }
       }
@@ -85,7 +86,7 @@ export class PlayerRenderer {
         const objCell = this.player.board[j];
 
         if (objCell.hit) {
-          htmlCell.textContent = "🌊";
+          htmlCell.src = "images/tile_green.png";
           htmlCell.classList.add("default-cursor");
           htmlCell.classList.add("reveal-cell");
           if (objCell.ship) htmlCell.textContent = "🔥";
