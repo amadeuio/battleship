@@ -107,6 +107,7 @@ export class PlayerRenderer {
     let shipImg = new Image();
     shipImg.src = `images/${ship.name}.png`;
     shipImg.classList.add(ship.name, "ship");
+    shipImg.draggable = false; // uses interact.js instead
     this.addInteract(shipImg);
     this.boardContainer.appendChild(shipImg);
 
