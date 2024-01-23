@@ -144,8 +144,8 @@ const opponentContainer = document.querySelector(".Opponent") as HTMLElement;
 
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
 const playButton = document.querySelector(".play") as HTMLElement;
-const startButton = document.querySelector(".start-button") as HTMLElement;
-const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
+const startButton = document.querySelector(".start") as HTMLElement;
+const randomiseButton = document.querySelector(".randomise") as HTMLElement;
 
 // Start screen
 
@@ -153,8 +153,8 @@ startScreen.style.display = "flex";
 gameScreen.style.display = "none";
 messageFooter.style.display = "none";
 
-/* startScreen.style.display = "none";
-gameScreen.style.display = "grid"; */
+startScreen.style.display = "none";
+gameScreen.style.display = "grid";
 
 playButton.addEventListener("click", () => {
   const nickname = nicknameInput.value;
