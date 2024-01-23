@@ -44,7 +44,7 @@ export class PlayerRenderer {
       }
     }
 
-    Alternative formula to transform coords:
+    Or, alternative formula to transform coords:
     const j = (i % 10) + (9 - Math.floor(i / 10)) * 10;
     */
 
@@ -191,9 +191,19 @@ export class PlayerRenderer {
       });
   }
 
+  removeInteract(element: HTMLElement): void {
+    interact(element).unset();
+  }
+
   addInteractToAll() {
     this.getHTMLShips().forEach((HTMLShip) => {
       this.addInteract(HTMLShip);
+    });
+  }
+
+  removeInteractToAll() {
+    this.getHTMLShips().forEach((HTMLShip) => {
+      this.removeInteract(HTMLShip);
     });
   }
 

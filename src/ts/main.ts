@@ -214,7 +214,7 @@ startButton.addEventListener("click", () => {
   updateGameMessage("It's your turn 🙋");
 
   opponentRenderer.boardContainer.classList.add("crosshair-cursor");
-  // playerRenderer.removeDragDropAndClick();
+  playerRenderer.removeInteractToAll();
 
   opponentRenderer.boardContainer.addEventListener("click", playRound);
 });
