@@ -7,6 +7,7 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 
 // Functions
 
+// Restart button testing purposes
 let count = 0;
 function fakeHasLost() {
   count++;
@@ -50,7 +51,6 @@ function addRestartButton() {
     // Render data
 
     playerRenderer.renderShips();
-    // playerRenderer.addDragDropAndClick();
     playerRenderer.renderAttacks();
     opponentRenderer.clearShips();
     opponentRenderer.renderAttacks();
@@ -111,7 +111,7 @@ const playRound = async (event: MouseEvent) => {
     playerRenderer.renderAttacks();
 
     // Check if player has lost
-    if (player.hasLost()) {
+    if (fakeHasLost()) {
       console.log("Player has lost!");
       opponentRenderer.boardContainer.removeEventListener("click", playRound);
       updateGameMessage("Computer wins! 💻🎉");
@@ -153,8 +153,8 @@ startScreen.style.display = "flex";
 gameScreen.style.display = "none";
 messageFooter.style.display = "none";
 
-startScreen.style.display = "none";
-gameScreen.style.display = "grid";
+/* startScreen.style.display = "none";
+gameScreen.style.display = "grid"; */
 
 playButton.addEventListener("click", () => {
   const nickname = nicknameInput.value;

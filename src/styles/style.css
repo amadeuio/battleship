@@ -4,6 +4,13 @@
   --cell-size: 47px;
 }
 
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("/fonts/BebasNeue-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   height: 100%;
@@ -11,7 +18,7 @@ body {
 
 body {
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Bebas Neue";
   font-size: 18px;
 }
 
