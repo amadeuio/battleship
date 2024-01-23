@@ -143,7 +143,7 @@ const opponentContainer = document.querySelector(".Opponent") as HTMLElement;
 // Inputs & Buttons
 
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
-const playButton = document.querySelector(".play-button") as HTMLElement;
+const playButton = document.querySelector(".play") as HTMLElement;
 const startButton = document.querySelector(".start-button") as HTMLElement;
 const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
 

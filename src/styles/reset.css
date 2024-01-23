@@ -127,3 +127,17 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+/* Extras */
+input[type="text"] {
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc; /* Reset border and add a default border for visual clarity */
+  font-size: 16px; /* Reset font size */
+  font-family: inherit;
+  vertical-align: middle;
+}
+input[type="text"]:focus {
+  border-color: #007bff; /* Change border color on focus */
+  outline: none; /* Remove the default focus outline */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow on focus for emphasis */
+}

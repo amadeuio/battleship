@@ -31,7 +31,26 @@ button {
   padding: 8px 16px;
 }
 
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.button {
+  width: 180px;
+  animation: blink 0.6s infinite;
+}
+
 /* Start Screen */
+
+/* Start Screen: Main styles */
 
 #startScreen {
   height: 100%;
@@ -42,25 +61,57 @@ button {
   justify-content: space-evenly;
 }
 
-.nickname-container {
-  height: 180px;
+.nickname-play-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
 }
 
-h1 {
-  font-size: 58px;
+.nickname-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 label[for="nickname"] {
-  font-size: 24px;
+  color: #12364c;
+  font-size: clamp(16px, 6vw, 30px);
+  margin-bottom: 25px;
 }
 
 #nickname {
-  height: 30px;
-  width: 250px;
+  font-family: "Bebas Neue";
+  font-size: clamp(12px, 6vw, 22px);
+  color: #12364c;
+  background-color: #d2e6f2;
+  padding: 8px;
+  border: none;
+}
+
+input[type="text"]:focus {
+  outline: 3px solid #12364c;
+}
+
+.play {
+  margin-top: 30px;
+}
+
+/* Start Screen: Responsiveness */
+
+#startScreen {
+  min-width: 200px;
+}
+
+.title {
+  width: clamp(0px, 80%, 500px);
+}
+
+#nickname {
+  width: clamp(100px, 60vw, 250px);
+}
+
+.play {
+  width: clamp(0px, 50%, 180px);
 }
 
 /* Game Screen */
