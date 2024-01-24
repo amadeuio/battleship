@@ -179,26 +179,7 @@ export class PlayerRenderer {
       });
   }
 
-  private handleResize() {
-    window.addEventListener("resize", () => {
-      this.setCellSize();
-      if (this.player.role === Role.Player) {
-        this.renderShips();
-      }
-    });
-  }
-
-  private setCellSize() {
-    if (window.innerWidth < 600) {
-      this.cellSize = 32;
-    } else {
-      this.cellSize = 47;
-    }
-
-    return this.cellSize;
-  }
-
-  removeInteract(element: HTMLElement): void {
+  private removeInteract(element: HTMLElement): void {
     interact(element).unset();
   }
 
@@ -226,5 +207,24 @@ export class PlayerRenderer {
 
   private getHTMLShips(): NodeListOf<HTMLDivElement> {
     return this.boardContainer.querySelectorAll(".ship");
+  }
+
+  private handleResize() {
+    window.addEventListener("resize", () => {
+      this.setCellSize();
+      if (this.player.role === Role.Player) {
+        this.renderShips();
+      }
+    });
+  }
+
+  private setCellSize() {
+    if (window.innerWidth < 600) {
+      this.cellSize = 32;
+    } else {
+      this.cellSize = 47;
+    }
+
+    return this.cellSize;
   }
 }
