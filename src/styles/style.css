@@ -17,13 +17,9 @@ body {
 }
 
 body {
-  box-sizing: border-box;
   font-family: "Bebas Neue";
   font-size: 22px;
   color: #12364c;
-}
-
-body {
   background-image: url("images/cover.png");
   background-repeat: repeat;
 }
@@ -45,8 +41,6 @@ body {
 }
 
 /* Start Screen */
-
-/* Start Screen: Main styles */
 
 #startScreen {
   height: 100%;
@@ -71,13 +65,12 @@ body {
 
 label[for="nickname"] {
   color: #12364c;
-  font-size: clamp(16px, 6vw, 30px);
   margin-bottom: 25px;
 }
 
 #nickname {
-  font-family: "Bebas Neue";
-  font-size: clamp(12px, 6vw, 22px);
+  font-family: inherit;
+  font-size: inherit;
   color: #12364c;
   background-color: #d2e6f2;
   padding: 8px;
@@ -94,32 +87,34 @@ input[type="text"]:focus {
   animation: blink 0.6s infinite;
 }
 
-/* Start Screen: Responsiveness */
-
-#startScreen {
-  min-width: 200px;
-}
-
 .title {
-  width: clamp(0px, 80%, 500px);
+  width: 500px;
 }
 
 #nickname {
-  width: clamp(100px, 60vw, 250px);
+  width: 250px;
 }
 
 .play {
-  width: clamp(0px, 50%, 180px);
+  width: 180px;
+}
+
+@media (max-width: 600px) {
+  .title {
+    width: 340px;
+  }
+
+  #nickname {
+    width: 200px;
+    font-size: 16px;
+  }
+
+  .play {
+    width: 150px;
+  }
 }
 
 /* Game Screen */
-
-.player-container,
-.opponent-container,
-.footer {
-  /* Testing */
-  border: 0px solid black;
-}
 
 #gameScreen {
   height: 100%;
@@ -173,10 +168,6 @@ input[type="text"]:focus {
   margin-bottom: 20px;
 }
 
-.drag-drop-message {
-  color: #12364c;
-}
-
 .message-footer {
   height: 100%;
   width: 100%;
@@ -222,14 +213,14 @@ input[type="text"]:focus {
   position: relative;
 }
 
-.Opponent-cell {
+/* .Opponent-cell {
   background-color: rgb(107, 107, 115);
   z-index: 3;
 }
 
 .reveal-cell {
   background-color: transparent;
-}
+} */
 
 .Destroyer,
 .Battleship,

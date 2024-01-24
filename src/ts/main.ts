@@ -155,9 +155,9 @@ startScreen.style.display = "flex";
 gameScreen.style.display = "none";
 messageFooter.style.display = "none";
 
-startScreen.style.display = "none";
+/* startScreen.style.display = "none";
 gameScreen.style.display = "grid";
-playerName.textContent = "John";
+playerName.textContent = "John"; */
 
 playButton.addEventListener("click", () => {
   const nickname = nicknameInput.value;
