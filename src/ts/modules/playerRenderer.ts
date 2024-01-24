@@ -33,23 +33,6 @@ export class PlayerRenderer {
   renderAttacks() {
     var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
 
-    /* 
-    Alternative idea to transform coords:
-    for (var row = 9; row >= 0; row--) {
-      // Iterate through columns from left to right
-      for (var col = 0; col <= 9; col++) {
-        // Calculate the index based on the row and column
-        var i = row * 10 + col;
-
-        var divElement = htmlCells[i];
-        console.log(divElement.id);
-      }
-    }
-
-    Or, alternative formula to transform coords:
-    const j = (i % 10) + (9 - Math.floor(i / 10)) * 10;
-    */
-
     // Restore blank cells
     for (var i = 0; i < htmlCells.length; i++) {
       var cell = htmlCells[i] as HTMLImageElement;
