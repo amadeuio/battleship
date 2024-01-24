@@ -132,6 +132,26 @@ const playRound = async (event: MouseEvent) => {
 
 // Program starts
 
+// Data
+
+// Create player & playerRenderer
+
+const player: Player = new Player(Role.Player);
+const opponent: Player = new Player(Role.Opponent);
+const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
+const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
+
+// Initialize player data
+
+player.populateRandomly();
+opponent.populateRandomly();
+
+// Render data
+
+playerRenderer.createBoard();
+opponentRenderer.createBoard();
+playerRenderer.renderShips();
+
 // DOM
 
 // Divs
@@ -186,23 +206,3 @@ startButton.addEventListener("click", () => {
 
   opponentRenderer.boardContainer.addEventListener("click", playRound);
 });
-
-// Data
-
-// Create player & playerRenderer
-
-const player: Player = new Player(Role.Player);
-const opponent: Player = new Player(Role.Opponent);
-const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
-const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
-
-// Initialize player data
-
-player.populateRandomly();
-opponent.populateRandomly();
-
-// Render data
-
-playerRenderer.createBoard();
-opponentRenderer.createBoard();
-playerRenderer.renderShips();
