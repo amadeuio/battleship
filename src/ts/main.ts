@@ -155,6 +155,7 @@ messageFooter.style.display = "none";
 
 startScreen.style.display = "none";
 gameScreen.style.display = "grid";
+playerName.textContent = "John";
 
 playButton.addEventListener("click", () => {
   const nickname = nicknameInput.value;

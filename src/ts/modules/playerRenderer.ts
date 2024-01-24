@@ -10,7 +10,8 @@ export class PlayerRenderer {
   constructor(player: Player) {
     this.player = player;
     this.boardContainer = document.querySelector("." + this.player.role) as HTMLElement;
-    this.cellSize = 47;
+    this.cellSize = this.setCellSize();
+    this.handleResize();
   }
 
   createBoard() {
@@ -197,6 +198,25 @@ export class PlayerRenderer {
           this.renderShips();
         }, 300);
       });
+  }
+
+  private handleResize() {
+    window.addEventListener("resize", () => {
+      this.setCellSize();
+      if (this.player.role === Role.Player) {
+        this.renderShips();
+      }
+    });
+  }
+
+  private setCellSize() {
+    if (window.innerWidth < 600) {
+      this.cellSize = 32;
+    } else {
+      this.cellSize = 47;
+    }
+
+    return this.cellSize;
   }
 
   removeInteract(element: HTMLElement): void {

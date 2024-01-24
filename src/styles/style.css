@@ -114,12 +114,19 @@ input[type="text"]:focus {
 
 /* Game Screen */
 
+.player-container,
+.opponent-container,
+.footer {
+  /* Testing */
+  border: 0px solid black;
+}
+
 #gameScreen {
   height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr 160px;
+  grid-template-rows: 1fr 1fr;
 }
 
 .player-container,
@@ -127,7 +134,15 @@ input[type="text"]:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
+  padding: 60px 0 30px 0;
+}
+
+.footer {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .player-name,
@@ -146,13 +161,6 @@ input[type="text"]:focus {
   margin-left: 0px;
 }
 
-.footer {
-  grid-column: span 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .player-footer,
 .opponent-footer {
   height: 100%;
@@ -166,8 +174,8 @@ input[type="text"]:focus {
 }
 
 .player-buttons-container {
-  margin-top: 40px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .drag-drop-message {
@@ -191,6 +199,38 @@ input[type="text"]:focus {
   width: 180px;
   animation: blink 0.6s infinite;
   margin-left: 20px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --cell-size: 32px;
+  }
+
+  #gameScreen {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .footer {
+    grid-column: span 1;
+  }
+
+  .opponent-footer {
+    display: none;
+    width: 0px;
+  }
+
+  .player-container {
+    order: 1;
+  }
+
+  .opponent-container {
+    order: 3;
+  }
+
+  .footer {
+    order: 2;
+  }
 }
 
 .Player,
@@ -237,7 +277,8 @@ input[type="text"]:focus {
   z-index: 3;
   position: absolute;
   touch-action: none;
-  transform-origin: 25px calc(100% - 22px);
+  /* transform-origin: 25px calc(100% - 22px); */
+  transform-origin: calc(var(--cell-size) / 2) calc(100% - calc(var(--cell-size) / 2));
 }
 
 .transition {
