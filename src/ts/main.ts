@@ -11,7 +11,7 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 let count = 0;
 function fakeHasLost() {
   count++;
-  if (count % 5 === 0) {
+  if (count % 50 === 0) {
     return true;
   } else {
     return false;

@@ -147,7 +147,6 @@ input[type="text"]:focus {
 
 .player-name,
 .opponent-name {
-  font-size: 22px;
   color: #12364c;
   margin-bottom: 20px;
 }
@@ -155,10 +154,6 @@ input[type="text"]:focus {
 .randomise,
 .start {
   width: 130px;
-}
-
-.start {
-  margin-left: 0px;
 }
 
 .player-footer,
@@ -179,7 +174,6 @@ input[type="text"]:focus {
 }
 
 .drag-drop-message {
-  font-size: 22px;
   color: #12364c;
 }
 
@@ -199,38 +193,6 @@ input[type="text"]:focus {
   width: 180px;
   animation: blink 0.6s infinite;
   margin-left: 20px;
-}
-
-@media (max-width: 600px) {
-  :root {
-    --cell-size: 32px;
-  }
-
-  #gameScreen {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr);
-  }
-
-  .footer {
-    grid-column: span 1;
-  }
-
-  .opponent-footer {
-    display: none;
-    width: 0px;
-  }
-
-  .player-container {
-    order: 1;
-  }
-
-  .opponent-container {
-    order: 3;
-  }
-
-  .footer {
-    order: 2;
-  }
 }
 
 .Player,
@@ -288,4 +250,59 @@ input[type="text"]:focus {
 .default-cursor {
   /* Has to be positioned after the ships */
   cursor: default;
+}
+
+@media (max-width: 970px), (max-width: 600px) {
+  #gameScreen {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .footer {
+    grid-column: span 1;
+  }
+
+  .opponent-footer {
+    display: none;
+  }
+
+  .player-container {
+    order: 1;
+  }
+
+  .opponent-container {
+    order: 3;
+  }
+
+  .footer {
+    order: 2;
+  }
+
+  .Opponent {
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --cell-size: 32px;
+  }
+
+  .randomise,
+  .start {
+    width: 100px;
+  }
+
+  body {
+    font-size: 20px;
+  }
+
+  .player-container,
+  .opponent-container {
+    padding: 40px 0 30px 0;
+  }
+
+  .player-buttons-container {
+    margin-top: 0px;
+  }
 }
