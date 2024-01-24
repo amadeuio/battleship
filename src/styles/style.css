@@ -217,10 +217,7 @@ input[type="text"]:focus {
   background-color: rgb(107, 107, 115);
   z-index: 3;
 }
-
-.reveal-cell {
-  background-color: transparent;
-} */
+*/
 
 .Destroyer,
 .Battleship,

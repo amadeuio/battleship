@@ -40,7 +40,6 @@ export class PlayerRenderer {
 
       if (this.player.role === Role.Opponent) {
         cell.classList.remove("default-cursor");
-        cell.classList.remove("reveal-cell");
       }
     }
 
@@ -57,7 +56,6 @@ export class PlayerRenderer {
           htmlCell.src = "images/tile_green.png";
           if (objCell.ship) {
             htmlCell.src = "images/tile_red.png";
-            htmlCell.textContent = "🔥";
           }
         }
       }
@@ -75,10 +73,8 @@ export class PlayerRenderer {
         if (objCell.hit) {
           htmlCell.src = "images/tile_green.png";
           htmlCell.classList.add("default-cursor");
-          htmlCell.classList.add("reveal-cell");
           if (objCell.ship) {
             htmlCell.src = "images/tile_red.png";
-            htmlCell.textContent = "🔥";
           }
         }
       }
