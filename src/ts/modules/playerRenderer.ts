@@ -109,7 +109,7 @@ export class PlayerRenderer {
 
     // Find pixel coordinates of ship
     const bottomValue = `${y * this.cellSize}px`;
-    const leftValue = `${x * this.cellSize - 3}px`; // -3 offsets non symetrical image
+    const leftValue = `${x * this.cellSize - 2}px`; // -2 offset image asymmetry
 
     // Position ship
     shipImg.style.bottom = bottomValue;

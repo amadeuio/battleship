@@ -277,8 +277,8 @@ input[type="text"]:focus {
   z-index: 3;
   position: absolute;
   touch-action: none;
-  /* transform-origin: 25px calc(100% - 22px); */
-  transform-origin: calc(var(--cell-size) / 2) calc(100% - calc(var(--cell-size) / 2));
+  /* Make ships rotate from bottom left, + 3px and + 1px offset image asymmetry  */
+  transform-origin: calc(var(--cell-size) / 2 + 3px) calc(100% - calc(var(--cell-size) / 2) + 1px);
 }
 
 .transition {
