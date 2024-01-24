@@ -258,6 +258,10 @@ input[type="text"]:focus {
     grid-template-rows: repeat(3, 1fr);
   }
 
+  .restart {
+    width: 150px;
+  }
+
   .footer {
     grid-column: span 1;
   }
@@ -279,7 +283,7 @@ input[type="text"]:focus {
   }
 
   .Opponent {
-    margin-bottom: 25px;
+    margin-bottom: 40px;
   }
 }
 
@@ -293,16 +297,24 @@ input[type="text"]:focus {
     width: 100px;
   }
 
+  .restart {
+    width: 120px;
+  }
+
   body {
     font-size: 20px;
   }
 
   .player-container,
   .opponent-container {
-    padding: 40px 0 30px 0;
+    padding: 30px 0 30px 0;
   }
 
   .player-buttons-container {
     margin-top: 0px;
+  }
+
+  .Opponent {
+    margin-bottom: 10px;
   }
 }

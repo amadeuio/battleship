@@ -11,7 +11,7 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 let count = 0;
 function fakeHasLost() {
   count++;
-  if (count % 50 === 0) {
+  if (count % 1 === 0) {
     return true;
   } else {
     return false;
@@ -38,7 +38,9 @@ function addRestartButton() {
     // Initialise footer
 
     playerFooter.style.display = "flex";
-    opponentFooter.style.display = "flex";
+    if (window.innerWidth > 600) {
+      opponentFooter.style.display = "flex";
+    }
     messageFooter.style.display = "none";
 
     // Initialise data
