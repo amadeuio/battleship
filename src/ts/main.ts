@@ -1,7 +1,6 @@
 import "../styles/reset.css";
 import "../styles/style.css";
 
-import { Ship, Name, Orientation } from "./modules/ship";
 import { Player, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
 
@@ -11,7 +10,7 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 let count = 0;
 function fakeHasLost() {
   count++;
-  if (count % 100 === 0) {
+  if (count % 1 === 0) {
     return true;
   } else {
     return false;
@@ -28,45 +27,38 @@ function handlePlayButton() {
   opponent.nickname = "Computer";
 }
 
-function updateGameMessage(message: string): void {
-  const messageFooter = document.querySelector(".message-footer") as HTMLElement;
+function handleRestartButton() {
+  playerFooter.style.display = "flex";
+  if (window.innerWidth > 600) {
+    opponentFooter.style.display = "flex";
+  }
+  messageFooter.style.display = "none";
 
-  messageFooter.textContent = message || "Invalid key";
+  player.populateRandomly();
+  opponent.populateRandomly();
+  player.restartBoard();
+  opponent.restartBoard();
+
+  playerRenderer.renderShips();
+  playerRenderer.renderAttacks();
+  opponentRenderer.clearShips();
+  opponentRenderer.renderAttacks();
 }
 
 function addRestartButton() {
   const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 
-  var restartButton = new Image();
+  const restartButton = new Image();
   restartButton.src = "images/btn_restart.png";
   restartButton.className = "restart button";
   messageFooter.appendChild(restartButton);
 
-  restartButton.addEventListener("click", function () {
-    console.log("Restart clicked");
+  restartButton.addEventListener("click", handleRestartButton);
+}
 
-    // Initialise footer
-
-    playerFooter.style.display = "flex";
-    if (window.innerWidth > 600) {
-      opponentFooter.style.display = "flex";
-    }
-    messageFooter.style.display = "none";
-
-    // Initialise data
-
-    player.populateRandomly();
-    opponent.populateRandomly();
-    player.restartBoard();
-    opponent.restartBoard();
-
-    // Render data
-
-    playerRenderer.renderShips();
-    playerRenderer.renderAttacks();
-    opponentRenderer.clearShips();
-    opponentRenderer.renderAttacks();
-  });
+function updateGameMessage(message: string): void {
+  const messageFooter = document.querySelector(".message-footer") as HTMLElement;
+  messageFooter.textContent = message || "Invalid key";
 }
 
 const playRound = async (event: MouseEvent) => {
@@ -172,27 +164,7 @@ nicknameInput.addEventListener("keyup", function (event) {
   }
 });
 
-// Data
-
-// Create player & playerRenderer
-
-const player: Player = new Player(Role.Player);
-const opponent: Player = new Player(Role.Opponent);
-const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
-const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
-
-// Initialize player data
-
-player.populateRandomly();
-opponent.populateRandomly();
-
-// Render data
-
-playerRenderer.createBoard();
-opponentRenderer.createBoard();
-playerRenderer.renderShips();
-
-// Start and randomise buttons
+// Game screen
 
 randomiseButton.addEventListener("click", () => {
   player.populateRandomly();
@@ -214,3 +186,23 @@ startButton.addEventListener("click", () => {
 
   opponentRenderer.boardContainer.addEventListener("click", playRound);
 });
+
+// Data
+
+// Create player & playerRenderer
+
+const player: Player = new Player(Role.Player);
+const opponent: Player = new Player(Role.Opponent);
+const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
+const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
+
+// Initialize player data
+
+player.populateRandomly();
+opponent.populateRandomly();
+
+// Render data
+
+playerRenderer.createBoard();
+opponentRenderer.createBoard();
+playerRenderer.renderShips();
