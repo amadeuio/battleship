@@ -11,11 +11,21 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 let count = 0;
 function fakeHasLost() {
   count++;
-  if (count % 1 === 0) {
+  if (count % 100 === 0) {
     return true;
   } else {
     return false;
   }
+}
+
+function handlePlayButton() {
+  startScreen.style.display = "none";
+  gameScreen.style.display = "grid";
+
+  const nickname = nicknameInput.value || "Anonymous";
+  player.nickname = nickname;
+  playerName.textContent = nickname;
+  opponent.nickname = "Computer";
 }
 
 function updateGameMessage(message: string): void {
@@ -63,7 +73,7 @@ const playRound = async (event: MouseEvent) => {
   // Player's turn
 
   // Get player's attack coordinates
-  const clickedElement = (event.target as HTMLElement).closest(".Opponent-cell") as HTMLElement;
+  const clickedElement = event.target as HTMLElement;
   const [x, y] = JSON.parse(clickedElement.id);
 
   // Add attack to opponent's object
@@ -155,27 +165,10 @@ startScreen.style.display = "flex";
 gameScreen.style.display = "none";
 messageFooter.style.display = "none";
 
-/* startScreen.style.display = "none";
-gameScreen.style.display = "grid";
-playerName.textContent = "John"; */
-
-playButton.addEventListener("click", () => {
-  const nickname = nicknameInput.value;
-  startScreen.style.display = "none";
-  gameScreen.style.display = "grid";
-  player.nickname = nickname;
-  playerName.textContent = nickname;
-  opponent.nickname = "Computer";
-});
-
+playButton.addEventListener("click", handlePlayButton);
 nicknameInput.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
-    const nickname = this.value;
-    startScreen.style.display = "none";
-    gameScreen.style.display = "grid";
-    player.nickname = nickname;
-    playerName.textContent = nickname;
-    opponent.nickname = "Computer";
+    handlePlayButton();
   }
 });
 

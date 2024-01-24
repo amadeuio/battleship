@@ -213,12 +213,6 @@ input[type="text"]:focus {
   position: relative;
 }
 
-/* .Opponent-cell {
-  background-color: rgb(107, 107, 115);
-  z-index: 3;
-}
-*/
-
 .Destroyer,
 .Battleship,
 .Submarine,
