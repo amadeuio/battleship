@@ -6,17 +6,6 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 
 // Functions
 
-// Restart button testing purposes
-let count = 0;
-function fakeHasLost() {
-  count++;
-  if (count % 100 === 0) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 function handlePlayButton() {
   startScreen.style.display = "none";
   gameScreen.style.display = "grid";
