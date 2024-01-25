@@ -25,6 +25,28 @@ function handlePlayButton() {
   player.nickname = nickname;
   playerName.textContent = nickname;
   opponent.nickname = "Computer";
+
+  document.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+      handleStartButton();
+    }
+  });
+}
+
+function handleStartButton() {
+  player.syncShipsToBoard();
+  opponent.syncShipsToBoard();
+
+  playerFooter.style.display = "none";
+  opponentFooter.style.display = "none";
+  messageFooter.style.display = "flex";
+
+  updateGameMessage("It's your turn 🙋");
+
+  opponentRenderer.boardContainer.classList.add("crosshair-cursor");
+  playerRenderer.removeInteractToAll();
+
+  opponentRenderer.boardContainer.addEventListener("click", playRound);
 }
 
 function handleRestartButton() {
@@ -180,11 +202,13 @@ gameScreen.style.display = "none";
 messageFooter.style.display = "none";
 
 playButton.addEventListener("click", handlePlayButton);
+
 nicknameInput.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     handlePlayButton();
   }
 });
+
 document.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     handlePlayButton();
@@ -198,18 +222,4 @@ randomiseButton.addEventListener("click", () => {
   playerRenderer.renderShips();
 });
 
-startButton.addEventListener("click", () => {
-  player.syncShipsToBoard();
-  opponent.syncShipsToBoard();
-
-  playerFooter.style.display = "none";
-  opponentFooter.style.display = "none";
-  messageFooter.style.display = "flex";
-
-  updateGameMessage("It's your turn 🙋");
-
-  opponentRenderer.boardContainer.classList.add("crosshair-cursor");
-  playerRenderer.removeInteractToAll();
-
-  opponentRenderer.boardContainer.addEventListener("click", playRound);
-});
+startButton.addEventListener("click", handleStartButton);
