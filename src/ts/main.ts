@@ -32,10 +32,8 @@ function handleStartButton() {
 
   updateGameMessage("It's your turn 🙋");
 
-  opponentRenderer.boardContainer.classList.add("crosshair-cursor");
   playerRenderer.removeInteractToAll();
-  //opponentRenderer.removeInteractToAll();
-
+  opponentRenderer.boardContainer.classList.add("crosshair-cursor");
   opponentRenderer.boardContainer.addEventListener("click", playRound);
 }
 
