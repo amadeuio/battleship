@@ -34,6 +34,7 @@ function handleStartButton() {
 
   opponentRenderer.boardContainer.classList.add("crosshair-cursor");
   playerRenderer.removeInteractToAll();
+  //opponentRenderer.removeInteractToAll();
 
   opponentRenderer.boardContainer.addEventListener("click", playRound);
 }
@@ -162,8 +163,8 @@ opponent.populateRandomly();
 // Render data
 
 playerRenderer.createBoard();
-opponentRenderer.createBoard();
 playerRenderer.renderShips();
+opponentRenderer.createBoard();
 
 // DOM
 

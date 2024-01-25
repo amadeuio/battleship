@@ -216,6 +216,7 @@ input[type="text"]:focus {
 .Submarine,
 .Carrier,
 .Cruiser {
+  cursor: default;
   position: absolute;
   touch-action: none;
   /* Make ships rotate from bottom left, + 3px and + 1px offset image asymmetry  */

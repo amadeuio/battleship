@@ -94,7 +94,9 @@ export class PlayerRenderer {
     shipImg.src = `images/${ship.name}.png`;
     shipImg.classList.add(ship.name, "ship");
     shipImg.draggable = false; // uses interact.js instead
-    this.addInteract(shipImg);
+    if (this.player.role === Role.Player) {
+      this.addInteract(shipImg);
+    }
     this.boardContainer.appendChild(shipImg);
 
     // Find pixel coordinates of ship
