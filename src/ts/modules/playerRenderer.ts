@@ -17,9 +17,8 @@ export class PlayerRenderer {
   createBoard() {
     for (let row = 9; row >= 0; row--) {
       for (let col = 0; col < 10; col++) {
-        let boardCell = new Image();
-        boardCell.src = "images/tile.png";
-        boardCell.className = this.player.role + "-cell";
+        let boardCell = document.createElement("div");
+        boardCell.classList.add(this.player.role + "-cell");
 
         const coordinates = [col, row];
         boardCell.id = JSON.stringify(coordinates);
@@ -36,7 +35,7 @@ export class PlayerRenderer {
     // Restore blank cells
     for (var i = 0; i < htmlCells.length; i++) {
       var cell = htmlCells[i] as HTMLImageElement;
-      cell.src = "images/tile.png";
+      cell.style.backgroundImage = 'url("images/tile.png")';
 
       if (this.player.role === Role.Opponent) {
         cell.classList.remove("default-cursor");
@@ -53,9 +52,9 @@ export class PlayerRenderer {
         const objCell = this.player.board[j];
 
         if (objCell.hit) {
-          htmlCell.src = "images/tile_green.png";
+          htmlCell.style.backgroundImage = 'url("images/tile_green.png")';
           if (objCell.ship) {
-            htmlCell.src = "images/tile_red.png";
+            htmlCell.style.backgroundImage = 'url("images/tile_red.png")';
           }
         }
       }
@@ -71,10 +70,10 @@ export class PlayerRenderer {
         const objCell = this.player.board[j];
 
         if (objCell.hit) {
-          htmlCell.src = "images/tile_green.png";
+          htmlCell.style.backgroundImage = 'url("images/tile_green.png")';
           htmlCell.classList.add("default-cursor");
           if (objCell.ship) {
-            htmlCell.src = "images/tile_red.png";
+            htmlCell.style.backgroundImage = 'url("images/tile_red.png")';
           }
         }
       }
@@ -98,18 +97,68 @@ export class PlayerRenderer {
     this.addInteract(shipImg);
     this.boardContainer.appendChild(shipImg);
 
+    // Find pixel coordinates of ship
+    const bottomValue = `${y * this.cellSize}px`;
+    const leftValue = `${x * this.cellSize - 2}px`; // -2 offset image asymmetry
+
     // Render dimensions
     shipImg.width = this.cellSize;
     shipImg.height = ship.length * this.cellSize;
     shipImg.style.transform = `translate(0px, 0px) rotate(${ship.orientation}deg)`;
 
-    // Find pixel coordinates of ship
-    const bottomValue = `${y * this.cellSize}px`;
-    const leftValue = `${x * this.cellSize - 2}px`; // -2 offset image asymmetry
-
     // Position ship
     shipImg.style.bottom = bottomValue;
     shipImg.style.left = leftValue;
+  }
+
+  renderAttackAnimation(position: [number, number]): void {
+    const [x, y] = position;
+    var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
+    const j = x + 10 * y;
+
+    const targetCell = Array.from(htmlCells).find((cell) => {
+      const cellPosition = JSON.parse(cell.id);
+      const [cellX, cellY] = cellPosition;
+
+      return cellX === x && cellY === y;
+    });
+
+    const spriteName: string = this.player.board[j].ship ? "explosion" : "splash";
+    targetCell?.appendChild(this.createSprite(spriteName));
+  }
+
+  private createSprite(spriteName: string): HTMLDivElement {
+    const spriteContainer = document.createElement("div");
+    spriteContainer.classList.add(spriteName + "-sprite");
+
+    // Define sprite properties
+    const spriteWidth = 47;
+    const totalSprites = 5;
+    let currentSpriteIndex = 0;
+    let framesToPlay = 6;
+
+    // Update the sprite's background position
+    function updateSprite() {
+      const xPos = -currentSpriteIndex * spriteWidth;
+      spriteContainer.style.backgroundPosition = `${xPos}px 0px`;
+    }
+
+    // Animate the sprite sheet
+    function animateSprite() {
+      updateSprite();
+
+      framesToPlay--;
+
+      if (framesToPlay === 0) {
+        clearInterval(animationInterval); // Stop the animation
+        spriteContainer.style.display = "none";
+      }
+
+      currentSpriteIndex = (currentSpriteIndex + 1) % totalSprites;
+    }
+
+    const animationInterval = setInterval(animateSprite, 100);
+    return spriteContainer;
   }
 
   addInteract(element: HTMLElement): void {

@@ -10,7 +10,7 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 let count = 0;
 function fakeHasLost() {
   count++;
-  if (count % 1 === 0) {
+  if (count % 100 === 0) {
     return true;
   } else {
     return false;
@@ -71,6 +71,7 @@ const playRound = async (event: MouseEvent) => {
   // Add attack to opponent's object
   try {
     opponent.createAttack([x, y]);
+    opponentRenderer.renderAttackAnimation([x, y]);
   } catch (error) {
     // Duplicate attack, stop the function
     console.log((error as Error).message);
@@ -107,7 +108,8 @@ const playRound = async (event: MouseEvent) => {
   updateGameMessage("The computer's thinking... 💻");
 
   try {
-    await player.createDelayedRandomUnrepAttack();
+    const opponentAttackCoords = await player.createDelayedRandomUnrepAttack();
+    playerRenderer.renderAttackAnimation(opponentAttackCoords);
   } catch (error) {
     console.log((error as Error).message);
     return;

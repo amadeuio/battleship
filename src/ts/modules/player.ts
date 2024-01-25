@@ -155,7 +155,7 @@ export class Player {
     }
   }
 
-  createRandomUnrepAttack(): void {
+  createRandomUnrepAttack(): [number, number] {
     let randomCoord = this.getRandomCoordinate();
 
     while (this.isInvalidAttack(randomCoord)) {
@@ -163,13 +163,14 @@ export class Player {
     }
 
     this.createAttack(randomCoord);
+    return randomCoord;
   }
 
-  async createDelayedRandomUnrepAttack(): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.createRandomUnrepAttack();
-        resolve();
+  async createDelayedRandomUnrepAttack(): Promise<[number, number]> {
+    return new Promise(async (resolve) => {
+      setTimeout(async () => {
+        const result = await this.createRandomUnrepAttack();
+        resolve(result);
       }, 1200);
     });
   }
