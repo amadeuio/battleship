@@ -61,7 +61,7 @@ function addRestartButton() {
 
   const restartButton = new Image();
   restartButton.src = "images/btn_restart.png";
-  restartButton.className = "restart button";
+  restartButton.className = "restart-button";
   messageFooter.appendChild(restartButton);
 
   restartButton.addEventListener("click", handleRestartButton);
@@ -128,7 +128,7 @@ const playRound = async (event: MouseEvent) => {
     playerRenderer.renderAttacks();
 
     // Check if player has lost
-    if (fakeHasLost()) {
+    if (player.hasLost()) {
       console.log("Player has lost!");
       opponentRenderer.boardContainer.removeEventListener("click", playRound);
       updateGameMessage("Computer wins! 💻🎉");
@@ -180,9 +180,9 @@ const opponentContainer = document.querySelector(".Opponent") as HTMLElement;
 // Inputs & Buttons
 
 const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
-const playButton = document.querySelector(".play") as HTMLElement;
-const startButton = document.querySelector(".start") as HTMLElement;
-const randomiseButton = document.querySelector(".randomise") as HTMLElement;
+const playButton = document.querySelector(".play-button") as HTMLElement;
+const startButton = document.querySelector(".start-button") as HTMLElement;
+const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
 
 // Start screen
 

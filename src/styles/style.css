@@ -24,10 +24,6 @@ body {
   background-repeat: repeat;
 }
 
-.button {
-  cursor: pointer;
-}
-
 @keyframes blink {
   0% {
     opacity: 1;
@@ -81,7 +77,8 @@ input[type="text"]:focus {
   outline: 3px solid #12364c;
 }
 
-.play {
+.play-button {
+  cursor: pointer;
   width: 180px;
   margin-top: 30px;
   animation: blink 0.6s infinite;
@@ -95,7 +92,7 @@ input[type="text"]:focus {
   width: 250px;
 }
 
-.play {
+.play-button {
   width: 180px;
 }
 
@@ -109,7 +106,7 @@ input[type="text"]:focus {
     font-size: 16px;
   }
 
-  .play {
+  .play-button {
     width: 150px;
   }
 }
@@ -146,8 +143,9 @@ input[type="text"]:focus {
   margin-bottom: 20px;
 }
 
-.randomise,
-.start {
+.randomise-button,
+.start-button {
+  cursor: pointer;
   width: 130px;
 }
 
@@ -180,7 +178,8 @@ input[type="text"]:focus {
   margin-left: 10px;
 }
 
-.restart {
+.restart-button {
+  cursor: pointer;
   width: 180px;
   animation: blink 0.6s infinite;
   margin-left: 20px;
@@ -193,10 +192,6 @@ input[type="text"]:focus {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   position: relative;
-}
-
-.crosshair-cursor {
-  cursor: crosshair;
 }
 
 .Player-cell,
@@ -231,6 +226,10 @@ input[type="text"]:focus {
   transition: 0.3s;
 }
 
+.crosshair-cursor {
+  cursor: crosshair;
+}
+
 .default-cursor {
   /* Has to be positioned after the ships */
   cursor: default;
@@ -242,7 +241,7 @@ input[type="text"]:focus {
     grid-template-rows: repeat(3, 1fr);
   }
 
-  .restart {
+  .restart-button {
     width: 150px;
   }
 
@@ -276,12 +275,12 @@ input[type="text"]:focus {
     --cell-size: 32px;
   }
 
-  .randomise,
-  .start {
+  .randomise-button,
+  .start-button {
     width: 100px;
   }
 
-  .restart {
+  .restart-button {
     width: 120px;
   }
 
@@ -322,10 +321,6 @@ input[type="text"]:focus {
 }
 
 /* z-indexes */
-
-.Player-cell,
-.Opponent-cell {
-}
 
 .ship {
   z-index: 1;
