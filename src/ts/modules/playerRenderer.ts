@@ -132,7 +132,7 @@ export class PlayerRenderer {
     spriteContainer.classList.add(spriteName + "-sprite");
 
     // Define sprite properties
-    const spriteWidth = 47;
+    const spriteWidth = this.cellSize;
     const totalSprites = 5;
     let currentSpriteIndex = 0;
     let framesToPlay = 6;
