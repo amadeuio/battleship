@@ -185,6 +185,11 @@ nicknameInput.addEventListener("keyup", function (event) {
     handlePlayButton();
   }
 });
+document.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    handlePlayButton();
+  }
+});
 
 // Game screen
 
