@@ -1,4 +1,4 @@
-import { Orientation, Ship } from "./ship";
+import { Ship } from "./ship";
 import { Player, Role } from "./player";
 import interact from "interactjs";
 
@@ -35,7 +35,7 @@ export class PlayerRenderer {
     // Restore blank cells
     for (var i = 0; i < htmlCells.length; i++) {
       var cell = htmlCells[i] as HTMLImageElement;
-      cell.style.backgroundImage = 'url("images/tile.png")';
+      cell.style.backgroundImage = 'url("/images/tile.png")';
 
       if (this.player.role === Role.Opponent) {
         cell.classList.remove("default-cursor");
@@ -52,9 +52,9 @@ export class PlayerRenderer {
         const objCell = this.player.board[j];
 
         if (objCell.hit) {
-          htmlCell.style.backgroundImage = 'url("images/tile_green.png")';
+          htmlCell.style.backgroundImage = 'url("/images/tile_green.png")';
           if (objCell.ship) {
-            htmlCell.style.backgroundImage = 'url("images/tile_red.png")';
+            htmlCell.style.backgroundImage = 'url("/images/tile_red.png")';
           }
         }
       }
@@ -70,10 +70,10 @@ export class PlayerRenderer {
         const objCell = this.player.board[j];
 
         if (objCell.hit) {
-          htmlCell.style.backgroundImage = 'url("images/tile_green.png")';
+          htmlCell.style.backgroundImage = 'url("/images/tile_green.png")';
           htmlCell.classList.add("default-cursor");
           if (objCell.ship) {
-            htmlCell.style.backgroundImage = 'url("images/tile_red.png")';
+            htmlCell.style.backgroundImage = 'url("/images/tile_red.png")';
           }
         }
       }
@@ -91,7 +91,7 @@ export class PlayerRenderer {
 
     // Create ship div
     let shipImg = new Image();
-    shipImg.src = `images/${ship.name}.png`;
+    shipImg.src = `/images/${ship.name}.png`;
     shipImg.classList.add(ship.name, "ship");
     shipImg.draggable = false; // uses interact.js instead
     if (this.player.role === Role.Player) {

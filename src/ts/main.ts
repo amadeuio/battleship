@@ -59,7 +59,7 @@ function addRestartButton() {
   const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 
   const restartButton = new Image();
-  restartButton.src = "images/btn_restart.png";
+  restartButton.src = "../images/btn_restart.png";
   restartButton.className = "restart-button";
   messageFooter.appendChild(restartButton);
 
