@@ -4,6 +4,8 @@ import "../styles/style.css";
 import { Player, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
 
+import restartButtonImage from "/images/btn_restart.png";
+
 // Functions
 
 function handlePlayButton() {
@@ -15,11 +17,11 @@ function handlePlayButton() {
   playerName.textContent = nickname;
   opponent.nickname = "Computer";
 
-  document.addEventListener("keyup", function (event) {
+  /* document.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
       handleStartButton();
     }
-  });
+  }); */
 }
 
 function handleStartButton() {
@@ -59,7 +61,7 @@ function addRestartButton() {
   const messageFooter = document.querySelector(".message-footer") as HTMLElement;
 
   const restartButton = new Image();
-  restartButton.src = "../images/btn_restart.png";
+  restartButton.src = restartButtonImage;
   restartButton.className = "restart-button";
   messageFooter.appendChild(restartButton);
 

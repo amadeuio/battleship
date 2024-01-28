@@ -1,6 +1,14 @@
 import { Ship } from "./ship";
 import { Player, Role } from "./player";
 import interact from "interactjs";
+import tile from "/images/tile.png";
+import tileGreen from "/images/tile_green.png";
+import tileRed from "/images/tile_red.png";
+import Carrier from "/images/Carrier.png";
+import Battleship from "/images/Battleship.png";
+import Cruiser from "/images/Cruiser.png";
+import Submarine from "/images/Submarine.png";
+import Destroyer from "/images/Destroyer.png";
 
 export class PlayerRenderer {
   player: Player;
@@ -13,6 +21,14 @@ export class PlayerRenderer {
     this.cellSize = this.setCellSize();
     this.handleResize();
   }
+
+  static shipImages = {
+    Carrier,
+    Battleship,
+    Cruiser,
+    Submarine,
+    Destroyer,
+  };
 
   createBoard() {
     for (let row = 9; row >= 0; row--) {
@@ -35,7 +51,7 @@ export class PlayerRenderer {
     // Restore blank cells
     for (var i = 0; i < htmlCells.length; i++) {
       var cell = htmlCells[i] as HTMLImageElement;
-      cell.style.backgroundImage = 'url("/images/tile.png")';
+      cell.style.backgroundImage = `url(${tile})`;
 
       if (this.player.role === Role.Opponent) {
         cell.classList.remove("default-cursor");
@@ -52,9 +68,9 @@ export class PlayerRenderer {
         const objCell = this.player.board[j];
 
         if (objCell.hit) {
-          htmlCell.style.backgroundImage = 'url("/images/tile_green.png")';
+          htmlCell.style.backgroundImage = `url(${tileGreen})`;
           if (objCell.ship) {
-            htmlCell.style.backgroundImage = 'url("/images/tile_red.png")';
+            htmlCell.style.backgroundImage = `url(${tileRed})`;
           }
         }
       }
@@ -70,10 +86,10 @@ export class PlayerRenderer {
         const objCell = this.player.board[j];
 
         if (objCell.hit) {
-          htmlCell.style.backgroundImage = 'url("/images/tile_green.png")';
+          htmlCell.style.backgroundImage = `url(${tileGreen})`;
           htmlCell.classList.add("default-cursor");
           if (objCell.ship) {
-            htmlCell.style.backgroundImage = 'url("/images/tile_red.png")';
+            htmlCell.style.backgroundImage = `url(${tileRed})`;
           }
         }
       }
@@ -91,7 +107,7 @@ export class PlayerRenderer {
 
     // Create ship div
     let shipImg = new Image();
-    shipImg.src = `/images/${ship.name}.png`;
+    shipImg.src = PlayerRenderer.shipImages[ship.name];
     shipImg.classList.add(ship.name, "ship");
     shipImg.draggable = false; // uses interact.js instead
     if (this.player.role === Role.Player) {
