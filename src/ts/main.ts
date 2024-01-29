@@ -151,7 +151,7 @@ const opponent: Player = new Player(Role.Opponent);
 const playerRenderer: PlayerRenderer = new PlayerRenderer(player);
 const opponentRenderer: PlayerRenderer = new PlayerRenderer(opponent);
 
-// Initialize player data
+// Initialize data
 
 player.populateRandomly();
 opponent.populateRandomly();
