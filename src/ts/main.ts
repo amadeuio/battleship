@@ -1,10 +1,10 @@
 import "../styles/reset.css";
 import "../styles/style.css";
 
+import restartButtonImage from "/images/btn_restart.png";
+
 import { Player, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
-
-import restartButtonImage from "/images/btn_restart.png";
 
 // Functions
 
@@ -17,11 +17,11 @@ function handlePlayButton() {
   playerName.textContent = nickname;
   opponent.nickname = "Computer";
 
-  /* document.addEventListener("keyup", function (event) {
+  document.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
       handleStartButton();
     }
-  }); */
+  });
 }
 
 function handleStartButton() {
@@ -86,7 +86,6 @@ const playRound = async (event: MouseEvent) => {
     opponentRenderer.renderAttackAnimation([x, y]);
   } catch (error) {
     // Duplicate attack, stop the function
-    console.log((error as Error).message);
     updateGameMessage((error as Error).message);
     return;
   }
@@ -102,13 +101,11 @@ const playRound = async (event: MouseEvent) => {
   const hitShip = opponent.findShipByCoord([x, y]);
   if (hitShip && hitShip.sunk) {
     opponentRenderer.renderShip(hitShip);
-    console.log(`You have taken down the ${hitShip.name}!`);
     updateGameMessage(`You have taken down the ${hitShip.name}!`);
   }
 
   // Check if opponent has lost
   if (opponent.hasLost()) {
-    console.log("Computer has lost!");
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
     addRestartButton();
@@ -130,7 +127,6 @@ const playRound = async (event: MouseEvent) => {
 
     // Check if player has lost
     if (player.hasLost()) {
-      console.log("Player has lost!");
       opponentRenderer.boardContainer.removeEventListener("click", playRound);
       updateGameMessage("Computer wins! 💻🎉");
       addRestartButton();
