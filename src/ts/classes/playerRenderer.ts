@@ -40,7 +40,7 @@ export class PlayerRenderer {
     Destroyer,
   };
 
-  createBoard() {
+  createBoard(): void {
     for (let row = 9; row >= 0; row--) {
       for (let col = 0; col < 10; col++) {
         let htmlCell: HTMLCell = document.createElement("div");
@@ -55,7 +55,7 @@ export class PlayerRenderer {
     }
   }
 
-  renderAttacks() {
+  renderAttacks(): void {
     // Restore blank cells
     this.htmlCells.forEach((htmlCell) => {
       htmlCell.style.backgroundImage = `url(${tile})`;
@@ -99,7 +99,7 @@ export class PlayerRenderer {
     }
   }
 
-  renderShip(ship: Ship) {
+  renderShip(ship: Ship): void {
     const [x, y]: [number, number] = ship.position;
 
     // Remove existing ship with the same name
@@ -159,13 +159,13 @@ export class PlayerRenderer {
     let framesToPlay = 6;
 
     // Update the sprite's background position
-    function updateSprite() {
+    function updateSprite(): void {
       const xPos = -currentSpriteIndex * spriteWidth;
       spriteContainer.style.backgroundPosition = `${xPos}px 0px`;
     }
 
     // Animate the sprite sheet
-    function animateSprite() {
+    function animateSprite(): void {
       updateSprite();
 
       framesToPlay--;
@@ -253,29 +253,29 @@ export class PlayerRenderer {
     interact(htmlShip).unset();
   }
 
-  addInteractToAll() {
+  addInteractToAll(): void {
     this.htmlShips.forEach((htmlShip) => {
       this.addInteract(htmlShip);
     });
   }
 
-  removeInteractToAll() {
+  removeInteractToAll(): void {
     this.htmlShips.forEach((htmlShip) => {
       this.removeInteract(htmlShip);
     });
   }
 
-  renderShips() {
+  renderShips(): void {
     this.player.ships.forEach((ship) => this.renderShip(ship));
   }
 
-  clearShips() {
+  clearShips(): void {
     this.htmlShips.forEach((htmlShip) => {
       htmlShip.remove();
     });
   }
 
-  private handleResize() {
+  private handleResize(): void {
     window.addEventListener("resize", () => {
       this.setCellSize();
       if (this.player.role === Role.Player) {
@@ -284,7 +284,7 @@ export class PlayerRenderer {
     });
   }
 
-  private setCellSize() {
+  private setCellSize(): number {
     if (window.innerWidth < 600) {
       this.cellSize = 32;
     } else {
