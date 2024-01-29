@@ -14,12 +14,12 @@ import interact from "interactjs";
 
 export class PlayerRenderer {
   player: Player;
-  boardContainer: HTMLElement;
+  htmlBoard: HTMLElement;
   cellSize: number;
 
   constructor(player: Player) {
     this.player = player;
-    this.boardContainer = document.querySelector("." + this.player.role) as HTMLElement;
+    this.htmlBoard = document.querySelector("." + this.player.role) as HTMLElement;
     this.cellSize = this.setCellSize();
     this.handleResize();
   }
@@ -41,13 +41,13 @@ export class PlayerRenderer {
         const coordinates = [col, row];
         boardCell.id = JSON.stringify(coordinates);
 
-        this.boardContainer.appendChild(boardCell);
+        this.htmlBoard.appendChild(boardCell);
       }
     }
   }
 
   renderAttacks() {
-    var htmlCells: HTMLCollectionOf<Element> = this.boardContainer.getElementsByClassName(
+    var htmlCells: HTMLCollectionOf<Element> = this.htmlBoard.getElementsByClassName(
       this.player.role + "-cell"
     ) as HTMLCollectionOf<HTMLDivElement>;
 
@@ -101,7 +101,7 @@ export class PlayerRenderer {
     const [x, y] = ship.position;
 
     // Remove existing ship with the same name
-    const existingShip = this.boardContainer.querySelector(`.${ship.name}`);
+    const existingShip = this.htmlBoard.querySelector(`.${ship.name}`);
     if (existingShip) {
       existingShip.remove();
     }
@@ -114,7 +114,7 @@ export class PlayerRenderer {
     if (this.player.role === Role.Player) {
       this.addInteract(shipImg);
     }
-    this.boardContainer.appendChild(shipImg);
+    this.htmlBoard.appendChild(shipImg);
 
     // Find pixel coordinates of ship
     const bottomValue = `${y * this.cellSize}px`;
@@ -132,7 +132,7 @@ export class PlayerRenderer {
 
   renderAttackAnimation(position: [number, number]): void {
     const [x, y] = position;
-    var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
+    var htmlCells = this.htmlBoard.getElementsByClassName(this.player.role + "-cell");
     const j = x + 10 * y;
 
     const targetCell = Array.from(htmlCells).find((cell) => {
@@ -274,7 +274,7 @@ export class PlayerRenderer {
   }
 
   private getHTMLShips(): NodeListOf<HTMLDivElement> {
-    return this.boardContainer.querySelectorAll(".ship");
+    return this.htmlBoard.querySelectorAll(".ship");
   }
 
   private handleResize() {

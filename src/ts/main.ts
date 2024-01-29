@@ -34,8 +34,8 @@ function handleStartButton(): void {
   updateGameMessage("It's your turn 🙋");
 
   playerRenderer.removeInteractToAll();
-  opponentRenderer.boardContainer.classList.add("crosshair-cursor");
-  opponentRenderer.boardContainer.addEventListener("click", playRound);
+  opponentRenderer.htmlBoard.classList.add("crosshair-cursor");
+  opponentRenderer.htmlBoard.addEventListener("click", playRound);
 }
 
 function handleRestartButton(): void {
@@ -101,7 +101,7 @@ const playRound = async (event: MouseEvent): Promise<void> => {
   }
 
   if (opponent.hasLost()) {
-    opponentRenderer.boardContainer.removeEventListener("click", playRound);
+    opponentRenderer.htmlBoard.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
     addRestartButton();
     return;
@@ -111,7 +111,7 @@ const playRound = async (event: MouseEvent): Promise<void> => {
 
   // Remove crosshair cursor and disable the click event listener on opponent's board
   opponentContainer?.classList.remove("crosshair-cursor");
-  opponentRenderer.boardContainer.removeEventListener("click", playRound);
+  opponentRenderer.htmlBoard.removeEventListener("click", playRound);
 
   updateGameMessage("The computer's thinking... 💻");
 
@@ -125,7 +125,7 @@ const playRound = async (event: MouseEvent): Promise<void> => {
     playerRenderer.renderAttacks();
 
     if (player.hasLost()) {
-      opponentRenderer.boardContainer.removeEventListener("click", playRound);
+      opponentRenderer.htmlBoard.removeEventListener("click", playRound);
       updateGameMessage("Computer wins! 💻🎉");
       addRestartButton();
       return;
@@ -134,7 +134,7 @@ const playRound = async (event: MouseEvent): Promise<void> => {
     // Re-enable click event listener and crosshair cursor, signaling it's the player's turn again
     updateGameMessage("It's your turn 🙋");
     opponentContainer?.classList.add("crosshair-cursor");
-    opponentRenderer.boardContainer.addEventListener("click", playRound);
+    opponentRenderer.htmlBoard.addEventListener("click", playRound);
   }
 };
 
