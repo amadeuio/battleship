@@ -231,13 +231,9 @@ export class PlayerRenderer {
     });
   }
 
-  private removeInteract(htmlShip: HTMLImageElement): void {
-    interact(htmlShip).unset();
-  }
-
   removeInteractToAll(): void {
     this.htmlShips.forEach((htmlShip) => {
-      this.removeInteract(htmlShip);
+      interact(htmlShip).unset();
     });
   }
 
