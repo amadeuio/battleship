@@ -188,12 +188,6 @@ messageFooter.style.display = "none";
 
 playButton.addEventListener("click", handlePlayButton);
 
-nicknameInput.addEventListener("keyup", function (event: KeyboardEvent) {
-  if (event.key === "Enter") {
-    handlePlayButton();
-  }
-});
-
 document.addEventListener("keyup", function (event: KeyboardEvent) {
   if (event.key === "Enter") {
     handlePlayButton();
