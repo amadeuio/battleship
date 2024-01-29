@@ -5,7 +5,7 @@ import restartButtonImage from "/images/btn_restart.png";
 
 import { Ship } from "./classes/ship";
 import { Player, Role } from "./classes/player";
-import { PlayerRenderer, HTMLBoard } from "./classes/playerRenderer";
+import { PlayerRenderer } from "./classes/playerRenderer";
 
 // Functions
 
@@ -110,7 +110,7 @@ const playRound = async (event: MouseEvent): Promise<void> => {
   // Opponent's turn
 
   // Remove crosshair cursor and disable the click event listener on opponent's board
-  opponentContainer?.classList.remove("crosshair-cursor");
+  opponentRenderer.htmlBoard.classList.remove("crosshair-cursor");
   opponentRenderer.htmlBoard.removeEventListener("click", playRound);
 
   updateGameMessage("The computer's thinking... 💻");
@@ -133,7 +133,7 @@ const playRound = async (event: MouseEvent): Promise<void> => {
 
     // Re-enable click event listener and crosshair cursor, signaling it's the player's turn again
     updateGameMessage("It's your turn 🙋");
-    opponentContainer?.classList.add("crosshair-cursor");
+    opponentRenderer.htmlBoard.classList.add("crosshair-cursor");
     opponentRenderer.htmlBoard.addEventListener("click", playRound);
   }
 };
@@ -170,7 +170,6 @@ const playerName: HTMLDivElement = document.querySelector(".player-name") as HTM
 const playerFooter: HTMLDivElement = document.querySelector(".player-footer") as HTMLDivElement;
 const opponentFooter: HTMLDivElement = document.querySelector(".opponent-footer") as HTMLDivElement;
 const messageFooter: HTMLDivElement = document.querySelector(".message-footer") as HTMLDivElement;
-const opponentContainer: HTMLBoard = document.querySelector(".Opponent") as HTMLBoard;
 
 // Inputs & Buttons
 
