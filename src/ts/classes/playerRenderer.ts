@@ -65,6 +65,7 @@ export class PlayerRenderer {
       }
     });
 
+    // Iterate through board array and style each htmlCell accordingly for player
     if (this.player.role === Role.Player) {
       for (let i = 0; i < this.player.board.length; i++) {
         const htmlCell: HTMLCell = this.htmlCells[i];
@@ -81,6 +82,7 @@ export class PlayerRenderer {
       }
     }
 
+    // Iterate through board array and style each htmlCell accordingly for opponent
     if (this.player.role === Role.Opponent) {
       for (let i = 0; i < this.player.board.length; i++) {
         const htmlCell: HTMLCell = this.htmlCells[i];
@@ -103,6 +105,7 @@ export class PlayerRenderer {
     const [x, y]: [number, number] = position;
     const j: number = x + 10 * y;
 
+    // htmlCell that corresponds with position
     const targetCell: HTMLCell | undefined = this.htmlCells.find((htmlCell) => {
       const cellPosition: [number, number] = JSON.parse(htmlCell.id);
       const [cellX, cellY] = cellPosition;
@@ -164,6 +167,7 @@ export class PlayerRenderer {
     const draggedShipName: string = htmlShip.classList.item(0) as string;
     const draggedShipObj: Ship = this.player.findShipByName(draggedShipName) as Ship;
 
+    // Add drag, drop and click capabilites to htmlShip
     interact(htmlShip)
       .draggable({
         inertia: true,
@@ -177,7 +181,7 @@ export class PlayerRenderer {
 
         listeners: {
           move: (event) => {
-            htmlShip.classList.remove("transition");
+            htmlShip.classList.remove("transition"); // Smooth movement to not happen during move
 
             x += event.dx;
             y += event.dy;
@@ -241,7 +245,6 @@ export class PlayerRenderer {
     const spriteContainer: HTMLDivElement = document.createElement("div");
     spriteContainer.classList.add(spriteName + "-sprite");
 
-    // Define sprite properties
     const spriteWidth = this.cellSize;
     const totalSprites = 5;
     let currentSpriteIndex = 0;
