@@ -232,7 +232,6 @@ input[type="text"]:focus {
 }
 
 .default-cursor {
-  /* Has to be positioned after the ships */
   cursor: default;
 }
 
