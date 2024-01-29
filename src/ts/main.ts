@@ -3,9 +3,9 @@ import "../styles/style.css";
 
 import restartButtonImage from "/images/btn_restart.png";
 
-import { Ship } from "./modules/ship";
-import { Player, Role } from "./modules/player";
-import { PlayerRenderer } from "./modules/playerRenderer";
+import { Ship } from "./classes/ship";
+import { Player, Role } from "./classes/player";
+import { PlayerRenderer } from "./classes/playerRenderer";
 
 // Functions
 
