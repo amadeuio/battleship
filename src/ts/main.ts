@@ -3,6 +3,7 @@ import "../styles/style.css";
 
 import restartButtonImage from "/images/btn_restart.png";
 
+import { Ship } from "./modules/ship";
 import { Player, Role } from "./modules/player";
 import { PlayerRenderer } from "./modules/playerRenderer";
 
@@ -77,7 +78,9 @@ const playRound = async (event: MouseEvent): Promise<void> => {
   // Player's turn
 
   // Get player's attack coordinates
-  const clickedElement = event.target as HTMLDivElement;
+  const clickedElement: HTMLDivElement | HTMLImageElement = event.target as
+    | HTMLDivElement
+    | HTMLImageElement;
   if (!clickedElement.id) {
     console.log("Clicked on a sunk boat.");
     return;
@@ -102,7 +105,7 @@ const playRound = async (event: MouseEvent): Promise<void> => {
   opponentRenderer.boardContainer.removeEventListener("click", playRound);
 
   // Check if a ship has been sunk, and render it if so
-  const hitShip = opponent.findShipByCoord([x, y]);
+  const hitShip: Ship | undefined = opponent.findShipByCoord([x, y]);
   if (hitShip && hitShip.sunk) {
     opponentRenderer.renderShip(hitShip);
     updateGameMessage(`You have taken down the ${hitShip.name}!`);
