@@ -99,6 +99,21 @@ export class PlayerRenderer {
     }
   }
 
+  renderAttackAnimation(position: [number, number]): void {
+    const [x, y]: [number, number] = position;
+    const j: number = x + 10 * y;
+
+    const targetCell: HTMLCell | undefined = this.htmlCells.find((htmlCell) => {
+      const cellPosition: [number, number] = JSON.parse(htmlCell.id);
+      const [cellX, cellY] = cellPosition;
+
+      return cellX === x && cellY === y;
+    }) as HTMLCell;
+
+    const spriteName: string = this.player.board[j].ship ? "explosion" : "splash";
+    targetCell?.appendChild(this.createSprite(spriteName));
+  }
+
   renderShip(ship: Ship): void {
     const [x, y]: [number, number] = ship.position;
 
@@ -133,53 +148,14 @@ export class PlayerRenderer {
     htmlShip.style.left = leftValue;
   }
 
-  renderAttackAnimation(position: [number, number]): void {
-    const [x, y]: [number, number] = position;
-    const j: number = x + 10 * y;
-
-    const targetCell: HTMLCell | undefined = this.htmlCells.find((htmlCell) => {
-      const cellPosition: [number, number] = JSON.parse(htmlCell.id);
-      const [cellX, cellY] = cellPosition;
-
-      return cellX === x && cellY === y;
-    }) as HTMLCell;
-
-    const spriteName: string = this.player.board[j].ship ? "explosion" : "splash";
-    targetCell?.appendChild(this.createSprite(spriteName));
+  renderShips(): void {
+    this.player.ships.forEach((ship) => this.renderShip(ship));
   }
 
-  private createSprite(spriteName: string): HTMLDivElement {
-    const spriteContainer: HTMLDivElement = document.createElement("div");
-    spriteContainer.classList.add(spriteName + "-sprite");
-
-    // Define sprite properties
-    const spriteWidth = this.cellSize;
-    const totalSprites = 5;
-    let currentSpriteIndex = 0;
-    let framesToPlay = 6;
-
-    // Update the sprite's background position
-    function updateSprite(): void {
-      const xPos = -currentSpriteIndex * spriteWidth;
-      spriteContainer.style.backgroundPosition = `${xPos}px 0px`;
-    }
-
-    // Animate the sprite sheet
-    function animateSprite(): void {
-      updateSprite();
-
-      framesToPlay--;
-
-      if (framesToPlay === 0) {
-        clearInterval(animationInterval); // Stop the animation
-        spriteContainer.style.display = "none";
-      }
-
-      currentSpriteIndex = (currentSpriteIndex + 1) % totalSprites;
-    }
-
-    const animationInterval = setInterval(animateSprite, 100);
-    return spriteContainer;
+  clearShips(): void {
+    this.htmlShips.forEach((htmlShip) => {
+      htmlShip.remove();
+    });
   }
 
   addInteract(htmlShip: HTMLImageElement): void {
@@ -249,14 +225,14 @@ export class PlayerRenderer {
       });
   }
 
-  private removeInteract(htmlShip: HTMLImageElement): void {
-    interact(htmlShip).unset();
-  }
-
   addInteractToAll(): void {
     this.htmlShips.forEach((htmlShip) => {
       this.addInteract(htmlShip);
     });
+  }
+
+  private removeInteract(htmlShip: HTMLImageElement): void {
+    interact(htmlShip).unset();
   }
 
   removeInteractToAll(): void {
@@ -265,23 +241,38 @@ export class PlayerRenderer {
     });
   }
 
-  renderShips(): void {
-    this.player.ships.forEach((ship) => this.renderShip(ship));
-  }
+  private createSprite(spriteName: string): HTMLDivElement {
+    const spriteContainer: HTMLDivElement = document.createElement("div");
+    spriteContainer.classList.add(spriteName + "-sprite");
 
-  clearShips(): void {
-    this.htmlShips.forEach((htmlShip) => {
-      htmlShip.remove();
-    });
-  }
+    // Define sprite properties
+    const spriteWidth = this.cellSize;
+    const totalSprites = 5;
+    let currentSpriteIndex = 0;
+    let framesToPlay = 6;
 
-  private handleResize(): void {
-    window.addEventListener("resize", () => {
-      this.setCellSize();
-      if (this.player.role === Role.Player) {
-        this.renderShips();
+    // Update the sprite's background position
+    function updateSprite(): void {
+      const xPos = -currentSpriteIndex * spriteWidth;
+      spriteContainer.style.backgroundPosition = `${xPos}px 0px`;
+    }
+
+    // Animate the sprite sheet
+    function animateSprite(): void {
+      updateSprite();
+
+      framesToPlay--;
+
+      if (framesToPlay === 0) {
+        clearInterval(animationInterval); // Stop the animation
+        spriteContainer.style.display = "none";
       }
-    });
+
+      currentSpriteIndex = (currentSpriteIndex + 1) % totalSprites;
+    }
+
+    const animationInterval = setInterval(animateSprite, 100);
+    return spriteContainer;
   }
 
   private setCellSize(): number {
@@ -292,5 +283,14 @@ export class PlayerRenderer {
     }
 
     return this.cellSize;
+  }
+
+  private handleResize(): void {
+    window.addEventListener("resize", () => {
+      this.setCellSize();
+      if (this.player.role === Role.Player) {
+        this.renderShips();
+      }
+    });
   }
 }
