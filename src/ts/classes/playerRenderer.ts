@@ -46,21 +46,21 @@ export class PlayerRenderer {
     }
   }
 
-  // Takes player.board list and renders it on screen
   renderAttacks() {
-    var htmlCells = this.boardContainer.getElementsByClassName(this.player.role + "-cell");
+    var htmlCells: HTMLCollectionOf<Element> = this.boardContainer.getElementsByClassName(
+      this.player.role + "-cell"
+    ) as HTMLCollectionOf<HTMLDivElement>;
 
     // Restore blank cells
     for (var i = 0; i < htmlCells.length; i++) {
-      var cell = htmlCells[i] as HTMLImageElement;
-      cell.style.backgroundImage = `url(${tile})`;
+      var htmlCell = htmlCells[i] as HTMLDivElement;
+      htmlCell.style.backgroundImage = `url(${tile})`;
 
       if (this.player.role === Role.Opponent) {
-        cell.classList.remove("default-cursor");
+        htmlCell.classList.remove("default-cursor");
       }
     }
 
-    // Render player attacks on board
     if (this.player.role === Role.Player) {
       for (let i = 0; i < this.player.board.length; i++) {
         const htmlCell = htmlCells[i] as HTMLImageElement;
@@ -78,12 +78,11 @@ export class PlayerRenderer {
       }
     }
 
-    // Render opponent attacks on board
     if (this.player.role === Role.Opponent) {
       for (let i = 0; i < this.player.board.length; i++) {
         const htmlCell = htmlCells[i] as HTMLImageElement;
         const [x, y] = JSON.parse(htmlCell.id);
-        const j = x + 10 * y; // transform coords
+        const j = x + 10 * y;
 
         const objCell = this.player.board[j];
 
