@@ -14,12 +14,14 @@ import interact from "interactjs";
 
 export class PlayerRenderer {
   player: Player;
-  htmlBoard: HTMLElement;
+  htmlBoard: HTMLDivElement;
+  htmlCells: HTMLDivElement[];
   cellSize: number;
 
   constructor(player: Player) {
     this.player = player;
-    this.htmlBoard = document.querySelector("." + this.player.role) as HTMLElement;
+    this.htmlBoard = document.querySelector("." + this.player.role) as HTMLDivElement;
+    this.htmlCells = [];
     this.cellSize = this.setCellSize();
     this.handleResize();
   }
@@ -35,35 +37,31 @@ export class PlayerRenderer {
   createBoard() {
     for (let row = 9; row >= 0; row--) {
       for (let col = 0; col < 10; col++) {
-        let boardCell = document.createElement("div");
-        boardCell.classList.add(this.player.role + "-cell");
+        let htmlCell = document.createElement("div");
+        htmlCell.classList.add(this.player.role + "-cell");
 
         const coordinates = [col, row];
-        boardCell.id = JSON.stringify(coordinates);
+        htmlCell.id = JSON.stringify(coordinates);
 
-        this.htmlBoard.appendChild(boardCell);
+        this.htmlCells.push(htmlCell);
+        this.htmlBoard.appendChild(htmlCell);
       }
     }
   }
 
   renderAttacks() {
-    var htmlCells: HTMLCollectionOf<Element> = this.htmlBoard.getElementsByClassName(
-      this.player.role + "-cell"
-    ) as HTMLCollectionOf<HTMLDivElement>;
-
     // Restore blank cells
-    for (var i = 0; i < htmlCells.length; i++) {
-      var htmlCell = htmlCells[i] as HTMLDivElement;
+    this.htmlCells.forEach((htmlCell) => {
       htmlCell.style.backgroundImage = `url(${tile})`;
 
       if (this.player.role === Role.Opponent) {
         htmlCell.classList.remove("default-cursor");
       }
-    }
+    });
 
     if (this.player.role === Role.Player) {
       for (let i = 0; i < this.player.board.length; i++) {
-        const htmlCell = htmlCells[i] as HTMLImageElement;
+        const htmlCell = this.htmlCells[i] as HTMLImageElement;
         const [x, y] = JSON.parse(htmlCell.id);
         const j = x + 10 * y; // transform coords
 
@@ -80,7 +78,7 @@ export class PlayerRenderer {
 
     if (this.player.role === Role.Opponent) {
       for (let i = 0; i < this.player.board.length; i++) {
-        const htmlCell = htmlCells[i] as HTMLImageElement;
+        const htmlCell = this.htmlCells[i] as HTMLImageElement;
         const [x, y] = JSON.parse(htmlCell.id);
         const j = x + 10 * y;
 
@@ -132,11 +130,10 @@ export class PlayerRenderer {
 
   renderAttackAnimation(position: [number, number]): void {
     const [x, y] = position;
-    var htmlCells = this.htmlBoard.getElementsByClassName(this.player.role + "-cell");
     const j = x + 10 * y;
 
-    const targetCell = Array.from(htmlCells).find((cell) => {
-      const cellPosition = JSON.parse(cell.id);
+    const targetCell = this.htmlCells.find((htmlCell) => {
+      const cellPosition = JSON.parse(htmlCell.id);
       const [cellX, cellY] = cellPosition;
 
       return cellX === x && cellY === y;
