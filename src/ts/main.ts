@@ -100,7 +100,7 @@ const playRound = async (event: MouseEvent): Promise<void> => {
     updateGameMessage(`You have taken down the ${hitShip.name}!`);
   }
 
-  if (!opponent.hasLost()) {
+  if (opponent.hasLost()) {
     opponentRenderer.htmlBoard.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
     addRestartButton();

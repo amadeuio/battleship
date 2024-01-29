@@ -180,14 +180,14 @@ export class PlayerRenderer {
     return spriteContainer;
   }
 
-  addInteract(element: HTMLElement): void {
+  addInteract(htmlShip: HTMLImageElement): void {
     var x = 0;
     var y = 0;
 
-    const draggedShipName = element.classList.item(0) as string;
+    const draggedShipName = htmlShip.classList.item(0) as string;
     const draggedShipObj = this.player.findShipByName(draggedShipName) as Ship;
 
-    interact(element)
+    interact(htmlShip)
       .draggable({
         inertia: true,
         modifiers: [
@@ -200,7 +200,7 @@ export class PlayerRenderer {
 
         listeners: {
           move: (event) => {
-            element.classList.remove("transition");
+            htmlShip.classList.remove("transition");
 
             x += event.dx;
             y += event.dy;
@@ -212,7 +212,7 @@ export class PlayerRenderer {
             const stackingElements = document.elementsFromPoint(event.clientX, event.clientY);
 
             // Mouse grab position relative to ship
-            var divRect = element.getBoundingClientRect();
+            var divRect = htmlShip.getBoundingClientRect();
             var xDelta = Math.floor((event.clientX - divRect.left) / this.cellSize);
             var yDelta = Math.floor((divRect.bottom - event.clientY) / this.cellSize);
 
@@ -234,7 +234,7 @@ export class PlayerRenderer {
       })
 
       .on("tap", (event) => {
-        element.classList.add("transition");
+        htmlShip.classList.add("transition");
 
         this.player.switchShipOrientation(draggedShipObj);
         event.target.style.transform = `translate(0px, 0px) rotate(${draggedShipObj.orientation}deg)`;
@@ -247,19 +247,19 @@ export class PlayerRenderer {
       });
   }
 
-  private removeInteract(element: HTMLElement): void {
-    interact(element).unset();
+  private removeInteract(htmlShip: HTMLImageElement): void {
+    interact(htmlShip).unset();
   }
 
   addInteractToAll() {
-    this.htmlShips.forEach((HTMLShip) => {
-      this.addInteract(HTMLShip);
+    this.htmlShips.forEach((htmlShip) => {
+      this.addInteract(htmlShip);
     });
   }
 
   removeInteractToAll() {
-    this.htmlShips.forEach((HTMLShip) => {
-      this.removeInteract(HTMLShip);
+    this.htmlShips.forEach((htmlShip) => {
+      this.removeInteract(htmlShip);
     });
   }
 
