@@ -77,7 +77,6 @@ function updateGameMessage(message: string): void {
 const playRound = async (event: MouseEvent): Promise<void> => {
   // Player's turn
 
-  // Get player's attack coordinates
   const clickedElement: HTMLDivElement | HTMLImageElement = event.target as
     | HTMLDivElement
     | HTMLImageElement;
@@ -85,33 +84,24 @@ const playRound = async (event: MouseEvent): Promise<void> => {
     console.log("Clicked on a sunk boat.");
     return;
   }
-  const [x, y]: [number, number] = JSON.parse(clickedElement.id);
+  const [x, y]: [number, number] = JSON.parse(clickedElement.id); // Attack coordinates
 
-  // Add attack to opponent's object
   try {
     opponent.createAttack([x, y]);
     opponentRenderer.renderAttackAnimation([x, y]);
   } catch (error) {
-    // Duplicate attack, stop the function
-    updateGameMessage((error as Error).message);
+    updateGameMessage((error as Error).message); // Duplicate attack
     return;
   }
 
-  // Render updated attacks object
   opponentRenderer.renderAttacks();
 
-  // Remove crosshair cursor and disable the click event listener on opponent's board
-  opponentContainer?.classList.remove("crosshair-cursor");
-  opponentRenderer.boardContainer.removeEventListener("click", playRound);
-
-  // Check if a ship has been sunk, and render it if so
   const hitShip: Ship | undefined = opponent.findShipByCoord([x, y]);
   if (hitShip && hitShip.sunk) {
     opponentRenderer.renderShip(hitShip);
     updateGameMessage(`You have taken down the ${hitShip.name}!`);
   }
 
-  // Check if opponent has lost
   if (opponent.hasLost()) {
     opponentRenderer.boardContainer.removeEventListener("click", playRound);
     updateGameMessage("You win! 🙋🎉");
@@ -120,6 +110,10 @@ const playRound = async (event: MouseEvent): Promise<void> => {
   }
 
   // Opponent's turn
+
+  // Remove crosshair cursor and disable the click event listener on opponent's board
+  opponentContainer?.classList.remove("crosshair-cursor");
+  opponentRenderer.boardContainer.removeEventListener("click", playRound);
 
   updateGameMessage("The computer's thinking... 💻");
 
@@ -132,7 +126,6 @@ const playRound = async (event: MouseEvent): Promise<void> => {
   } finally {
     playerRenderer.renderAttacks();
 
-    // Check if player has lost
     if (player.hasLost()) {
       opponentRenderer.boardContainer.removeEventListener("click", playRound);
       updateGameMessage("Computer wins! 💻🎉");
