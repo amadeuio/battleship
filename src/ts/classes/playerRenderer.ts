@@ -16,12 +16,14 @@ export class PlayerRenderer {
   player: Player;
   htmlBoard: HTMLDivElement;
   htmlCells: HTMLDivElement[];
+  htmlShips: HTMLImageElement[];
   cellSize: number;
 
   constructor(player: Player) {
     this.player = player;
     this.htmlBoard = document.querySelector("." + this.player.role) as HTMLDivElement;
     this.htmlCells = [];
+    this.htmlShips = [];
     this.cellSize = this.setCellSize();
     this.handleResize();
   }
@@ -105,27 +107,28 @@ export class PlayerRenderer {
     }
 
     // Create ship div
-    let shipImg = new Image();
-    shipImg.src = PlayerRenderer.shipImages[ship.name];
-    shipImg.classList.add(ship.name, "ship");
-    shipImg.draggable = false; // uses interact.js instead
+    let htmlShip = new Image();
+    htmlShip.src = PlayerRenderer.shipImages[ship.name];
+    htmlShip.classList.add(ship.name, "ship");
+    htmlShip.draggable = false; // uses interact.js instead
     if (this.player.role === Role.Player) {
-      this.addInteract(shipImg);
+      this.addInteract(htmlShip);
     }
-    this.htmlBoard.appendChild(shipImg);
+    this.htmlShips.push(htmlShip);
+    this.htmlBoard.appendChild(htmlShip);
 
     // Find pixel coordinates of ship
     const bottomValue = `${y * this.cellSize}px`;
     const leftValue = `${x * this.cellSize - 2}px`; // -2 offset image asymmetry
 
     // Render dimensions
-    shipImg.width = this.cellSize;
-    shipImg.height = ship.length * this.cellSize;
-    shipImg.style.transform = `translate(0px, 0px) rotate(${ship.orientation}deg)`;
+    htmlShip.width = this.cellSize;
+    htmlShip.height = ship.length * this.cellSize;
+    htmlShip.style.transform = `translate(0px, 0px) rotate(${ship.orientation}deg)`;
 
     // Position ship
-    shipImg.style.bottom = bottomValue;
-    shipImg.style.left = leftValue;
+    htmlShip.style.bottom = bottomValue;
+    htmlShip.style.left = leftValue;
   }
 
   renderAttackAnimation(position: [number, number]): void {
@@ -249,13 +252,13 @@ export class PlayerRenderer {
   }
 
   addInteractToAll() {
-    this.getHTMLShips().forEach((HTMLShip) => {
+    this.htmlShips.forEach((HTMLShip) => {
       this.addInteract(HTMLShip);
     });
   }
 
   removeInteractToAll() {
-    this.getHTMLShips().forEach((HTMLShip) => {
+    this.htmlShips.forEach((HTMLShip) => {
       this.removeInteract(HTMLShip);
     });
   }
@@ -265,13 +268,9 @@ export class PlayerRenderer {
   }
 
   clearShips() {
-    this.getHTMLShips().forEach((HTMLShip) => {
-      HTMLShip.remove();
+    this.htmlShips.forEach((htmlShip) => {
+      htmlShip.remove();
     });
-  }
-
-  private getHTMLShips(): NodeListOf<HTMLDivElement> {
-    return this.htmlBoard.querySelectorAll(".ship");
   }
 
   private handleResize() {
