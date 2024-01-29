@@ -78,6 +78,10 @@ const playRound = async (event: MouseEvent): Promise<void> => {
 
   // Get player's attack coordinates
   const clickedElement = event.target as HTMLDivElement;
+  if (!clickedElement.id) {
+    console.log("Clicked on a sunk boat.");
+    return;
+  }
   const [x, y]: [number, number] = JSON.parse(clickedElement.id);
 
   // Add attack to opponent's object
