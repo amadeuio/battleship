@@ -8,23 +8,23 @@ import { PlayerRenderer } from "./modules/playerRenderer";
 
 // Functions
 
-function handlePlayButton() {
+function handlePlayButton(): void {
   startScreen.style.display = "none";
   gameScreen.style.display = "grid";
 
-  const nickname = nicknameInput.value || "Anonymous";
+  const nickname: string = nicknameInput.value || "Anonymous";
   player.nickname = nickname;
   playerName.textContent = nickname;
   opponent.nickname = "Computer";
 
-  document.addEventListener("keyup", function (event) {
+  document.addEventListener("keyup", function (event: KeyboardEvent) {
     if (event.key === "Enter") {
       handleStartButton();
     }
   });
 }
 
-function handleStartButton() {
+function handleStartButton(): void {
   player.syncShipsToBoard();
   opponent.syncShipsToBoard();
 
@@ -39,7 +39,7 @@ function handleStartButton() {
   opponentRenderer.boardContainer.addEventListener("click", playRound);
 }
 
-function handleRestartButton() {
+function handleRestartButton(): void {
   playerFooter.style.display = "flex";
   if (window.innerWidth > 600) {
     opponentFooter.style.display = "flex";
@@ -57,10 +57,10 @@ function handleRestartButton() {
   opponentRenderer.renderAttacks();
 }
 
-function addRestartButton() {
-  const messageFooter = document.querySelector(".message-footer") as HTMLElement;
+function addRestartButton(): void {
+  const messageFooter: HTMLDivElement = document.querySelector(".message-footer") as HTMLDivElement;
 
-  const restartButton = new Image();
+  const restartButton: HTMLImageElement = new Image();
   restartButton.src = restartButtonImage;
   restartButton.className = "restart-button";
   messageFooter.appendChild(restartButton);
@@ -69,16 +69,16 @@ function addRestartButton() {
 }
 
 function updateGameMessage(message: string): void {
-  const messageFooter = document.querySelector(".message-footer") as HTMLElement;
+  const messageFooter: HTMLDivElement = document.querySelector(".message-footer") as HTMLDivElement;
   messageFooter.textContent = message || "Invalid key";
 }
 
-const playRound = async (event: MouseEvent) => {
+const playRound = async (event: MouseEvent): Promise<void> => {
   // Player's turn
 
   // Get player's attack coordinates
-  const clickedElement = event.target as HTMLElement;
-  const [x, y] = JSON.parse(clickedElement.id);
+  const clickedElement = event.target as HTMLDivElement;
+  const [x, y]: [number, number] = JSON.parse(clickedElement.id);
 
   // Add attack to opponent's object
   try {
@@ -117,7 +117,7 @@ const playRound = async (event: MouseEvent) => {
   updateGameMessage("The computer's thinking... 💻");
 
   try {
-    const opponentAttackCoords = await player.createDelayedRandomUnrepAttack();
+    const opponentAttackCoords: [number, number] = await player.createDelayedRandomUnrepAttack();
     playerRenderer.renderAttackAnimation(opponentAttackCoords);
   } catch (error) {
     console.log((error as Error).message);
@@ -166,20 +166,22 @@ opponentRenderer.createBoard();
 
 // Divs
 
-const startScreen = document.getElementById("startScreen") as HTMLElement;
-const gameScreen = document.getElementById("gameScreen") as HTMLElement;
-const playerName = document.querySelector(".player-name") as HTMLElement;
-const playerFooter = document.querySelector(".player-footer") as HTMLElement;
-const opponentFooter = document.querySelector(".opponent-footer") as HTMLElement;
-const messageFooter = document.querySelector(".message-footer") as HTMLElement;
-const opponentContainer = document.querySelector(".Opponent") as HTMLElement;
+const startScreen: HTMLDivElement = document.getElementById("startScreen") as HTMLDivElement;
+const gameScreen: HTMLDivElement = document.getElementById("gameScreen") as HTMLDivElement;
+const playerName: HTMLDivElement = document.querySelector(".player-name") as HTMLDivElement;
+const playerFooter: HTMLDivElement = document.querySelector(".player-footer") as HTMLDivElement;
+const opponentFooter: HTMLDivElement = document.querySelector(".opponent-footer") as HTMLDivElement;
+const messageFooter: HTMLDivElement = document.querySelector(".message-footer") as HTMLDivElement;
+const opponentContainer: HTMLDivElement = document.querySelector(".Opponent") as HTMLDivElement;
 
 // Inputs & Buttons
 
-const nicknameInput = document.getElementById("nickname") as HTMLInputElement;
-const playButton = document.querySelector(".play-button") as HTMLElement;
-const startButton = document.querySelector(".start-button") as HTMLElement;
-const randomiseButton = document.querySelector(".randomise-button") as HTMLElement;
+const nicknameInput: HTMLInputElement = document.getElementById("nickname") as HTMLInputElement;
+const playButton: HTMLButtonElement = document.querySelector(".play-button") as HTMLButtonElement;
+const startButton: HTMLButtonElement = document.querySelector(".start-button") as HTMLButtonElement;
+const randomiseButton: HTMLButtonElement = document.querySelector(
+  ".randomise-button"
+) as HTMLButtonElement;
 
 // Start screen
 
@@ -189,13 +191,13 @@ messageFooter.style.display = "none";
 
 playButton.addEventListener("click", handlePlayButton);
 
-nicknameInput.addEventListener("keyup", function (event) {
+nicknameInput.addEventListener("keyup", function (event: KeyboardEvent) {
   if (event.key === "Enter") {
     handlePlayButton();
   }
 });
 
-document.addEventListener("keyup", function (event) {
+document.addEventListener("keyup", function (event: KeyboardEvent) {
   if (event.key === "Enter") {
     handlePlayButton();
   }
