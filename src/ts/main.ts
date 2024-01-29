@@ -14,9 +14,7 @@ function handlePlayButton(): void {
   gameScreen.style.display = "grid";
 
   const nickname: string = nicknameInput.value || "Anonymous";
-  player.nickname = nickname;
   playerName.textContent = nickname;
-  opponent.nickname = "Computer";
 
   document.addEventListener("keyup", function (event: KeyboardEvent) {
     if (event.key === "Enter") {

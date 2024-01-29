@@ -12,14 +12,12 @@ export enum Role {
 
 export class Player {
   role: Role;
-  nickname: string;
   board: Cell[];
   ships: Ship[];
   death: boolean;
 
   constructor(role: Role) {
     this.role = role;
-    this.nickname = "John";
     this.board = Array.from({ length: 100 }, () => ({ ship: null, hit: false }));
     this.ships = [];
     this.death = false;
