@@ -227,8 +227,6 @@ export class PlayerRenderer {
 
             this.player.moveToClosestValidPosition(draggedShipObj, [x - xDelta, y - yDelta]);
             this.renderShips();
-
-            console.log(draggedShipObj.coordinates);
           },
         },
       })
