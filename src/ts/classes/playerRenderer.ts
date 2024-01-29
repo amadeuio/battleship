@@ -1,6 +1,3 @@
-import { Ship } from "./ship";
-import { Player, Role } from "./player";
-import interact from "interactjs";
 import tile from "/images/tile.png";
 import tileGreen from "/images/tile_green.png";
 import tileRed from "/images/tile_red.png";
@@ -9,6 +6,11 @@ import Battleship from "/images/Battleship.png";
 import Cruiser from "/images/Cruiser.png";
 import Submarine from "/images/Submarine.png";
 import Destroyer from "/images/Destroyer.png";
+
+import { Ship } from "./ship";
+import { Player, Role } from "./player";
+
+import interact from "interactjs";
 
 export class PlayerRenderer {
   player: Player;
