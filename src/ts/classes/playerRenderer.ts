@@ -288,7 +288,7 @@ export class PlayerRenderer {
     window.addEventListener("resize", () => {
       this.setCellSize();
       if (this.player.role === Role.Player) {
-        this.renderShips();
+        this.renderShips(); // Render player ships with updated cellSize if resize happens
       }
     });
   }
