@@ -59,33 +59,29 @@ export class Player {
     }
   }
 
-  syncShipsToBoard() {
-    this.ships.forEach((ship) => {
-      ship.coordinates.forEach(([x, y]) => {
-        const index = x + y * 10;
-        this.board[index] = { ship: ship.name, hit: false };
-      });
-    });
-  }
+  createAttack(position: [number, number]): void {
+    const [x, y] = position;
 
-  restartBoard(): void {
-    this.board = Array.from({ length: 100 }, () => ({ ship: null, hit: false }));
-  }
-
-  populateRandomly(): void {
-    this.ships = [];
-
-    const shipNames = [Name.Battleship, Name.Carrier, Name.Cruiser, Name.Destroyer, Name.Submarine];
-
-    for (const shipName of shipNames) {
-      const newShip = new Ship(shipName, this.getRandomCoordinate(), this.getRandomOrientation());
-
-      while (this.isInvalidPlacement(newShip)) {
-        newShip.position = this.getRandomCoordinate();
-      }
-
-      this.placeShip(newShip);
+    if (this.isInvalidAttack(position)) {
+      throw new Error("Duplicate attack. Choose another one 🔄");
     }
+
+    // Add attack to board
+    this.board[x + y * 10].hit = true;
+
+    // Add attack to ships
+    if (this.findShipByCoord(position)) {
+      (this.findShipByCoord(position) as Ship).hit();
+    }
+  }
+
+  async createDelayedRandomUnrepAttack(): Promise<[number, number]> {
+    return new Promise(async (resolve) => {
+      setTimeout(async () => {
+        const result = await this.createRandomUnrepAttack();
+        resolve(result);
+      }, 1200);
+    });
   }
 
   // Experimental method
@@ -139,40 +135,37 @@ export class Player {
     return false;
   }
 
-  createAttack(position: [number, number]): void {
-    const [x, y] = position;
+  hasLost(): boolean {
+    return this.ships.every((ship) => ship.sunk);
+  }
 
-    if (this.isInvalidAttack(position)) {
-      throw new Error("Duplicate attack. Choose another one 🔄");
-    }
+  populateRandomly(): void {
+    this.ships = [];
 
-    // Add attack to board
-    this.board[x + y * 10].hit = true;
+    const shipNames = [Name.Battleship, Name.Carrier, Name.Cruiser, Name.Destroyer, Name.Submarine];
 
-    // Add attack to ships
-    if (this.findShipByCoord(position)) {
-      (this.findShipByCoord(position) as Ship).hit();
+    for (const shipName of shipNames) {
+      const newShip = new Ship(shipName, this.getRandomCoordinate(), this.getRandomOrientation());
+
+      while (this.isInvalidPlacement(newShip)) {
+        newShip.position = this.getRandomCoordinate();
+      }
+
+      this.placeShip(newShip);
     }
   }
 
-  createRandomUnrepAttack(): [number, number] {
-    let randomCoord = this.getRandomCoordinate();
-
-    while (this.isInvalidAttack(randomCoord)) {
-      randomCoord = this.getRandomCoordinate();
-    }
-
-    this.createAttack(randomCoord);
-    return randomCoord;
-  }
-
-  async createDelayedRandomUnrepAttack(): Promise<[number, number]> {
-    return new Promise(async (resolve) => {
-      setTimeout(async () => {
-        const result = await this.createRandomUnrepAttack();
-        resolve(result);
-      }, 1200);
+  syncShipsToBoard() {
+    this.ships.forEach((ship) => {
+      ship.coordinates.forEach(([x, y]) => {
+        const index = x + y * 10;
+        this.board[index] = { ship: ship.name, hit: false };
+      });
     });
+  }
+
+  restartBoard(): void {
+    this.board = Array.from({ length: 100 }, () => ({ ship: null, hit: false }));
   }
 
   findShipByCoord(position: [number, number]): Ship | undefined {
@@ -185,11 +178,7 @@ export class Player {
     return this.ships.find((ship) => ship.name === name);
   }
 
-  hasLost(): boolean {
-    return this.ships.every((ship) => ship.sunk);
-  }
-
-  isInvalidPlacement(candidateShip: Ship): boolean {
+  private isInvalidPlacement(candidateShip: Ship): boolean {
     // Flat array with coordinates of all ships except candidate
     const existingCoordinates = this.ships
       .filter((ship) => ship !== candidateShip)
@@ -207,9 +196,20 @@ export class Player {
     return hasOverlap || isOutOfBounds;
   }
 
-  isInvalidAttack(position: [number, number]): boolean {
+  private isInvalidAttack(position: [number, number]): boolean {
     const [x, y] = position;
     return this.board[x + y * 10].hit;
+  }
+
+  private createRandomUnrepAttack(): [number, number] {
+    let randomCoord = this.getRandomCoordinate();
+
+    while (this.isInvalidAttack(randomCoord)) {
+      randomCoord = this.getRandomCoordinate();
+    }
+
+    this.createAttack(randomCoord);
+    return randomCoord;
   }
 
   private getRandomCoordinate(): [number, number] {
