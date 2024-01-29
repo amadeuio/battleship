@@ -8,20 +8,24 @@ import Submarine from "/images/Submarine.png";
 import Destroyer from "/images/Destroyer.png";
 
 import { Ship } from "./ship";
-import { Player, Role } from "./player";
+import { Cell, Player, Role } from "./player";
 
 import interact from "interactjs";
 
+export type HTMLBoard = HTMLDivElement;
+export type HTMLCell = HTMLDivElement;
+export type HTMLShip = HTMLImageElement;
+
 export class PlayerRenderer {
   player: Player;
-  htmlBoard: HTMLDivElement;
-  htmlCells: HTMLDivElement[];
-  htmlShips: HTMLImageElement[];
+  htmlBoard: HTMLBoard;
+  htmlCells: HTMLCell[];
+  htmlShips: HTMLShip[];
   cellSize: number;
 
   constructor(player: Player) {
     this.player = player;
-    this.htmlBoard = document.querySelector("." + this.player.role) as HTMLDivElement;
+    this.htmlBoard = document.querySelector("." + this.player.role) as HTMLBoard;
     this.htmlCells = [];
     this.htmlShips = [];
     this.cellSize = this.setCellSize();
@@ -39,7 +43,7 @@ export class PlayerRenderer {
   createBoard() {
     for (let row = 9; row >= 0; row--) {
       for (let col = 0; col < 10; col++) {
-        let htmlCell = document.createElement("div");
+        let htmlCell: HTMLCell = document.createElement("div");
         htmlCell.classList.add(this.player.role + "-cell");
 
         const coordinates = [col, row];
@@ -63,11 +67,10 @@ export class PlayerRenderer {
 
     if (this.player.role === Role.Player) {
       for (let i = 0; i < this.player.board.length; i++) {
-        const htmlCell = this.htmlCells[i] as HTMLImageElement;
-        const [x, y] = JSON.parse(htmlCell.id);
-        const j = x + 10 * y; // transform coords
-
-        const objCell = this.player.board[j];
+        const htmlCell: HTMLCell = this.htmlCells[i];
+        const [x, y]: [number, number] = JSON.parse(htmlCell.id);
+        const j: number = x + 10 * y; // transform coords
+        const objCell: Cell = this.player.board[j];
 
         if (objCell.hit) {
           htmlCell.style.backgroundImage = `url(${tileGreen})`;
@@ -80,11 +83,10 @@ export class PlayerRenderer {
 
     if (this.player.role === Role.Opponent) {
       for (let i = 0; i < this.player.board.length; i++) {
-        const htmlCell = this.htmlCells[i] as HTMLImageElement;
-        const [x, y] = JSON.parse(htmlCell.id);
-        const j = x + 10 * y;
-
-        const objCell = this.player.board[j];
+        const htmlCell: HTMLCell = this.htmlCells[i];
+        const [x, y]: [number, number] = JSON.parse(htmlCell.id);
+        const j: number = x + 10 * y;
+        const objCell: Cell = this.player.board[j];
 
         if (objCell.hit) {
           htmlCell.style.backgroundImage = `url(${tileGreen})`;
@@ -98,16 +100,16 @@ export class PlayerRenderer {
   }
 
   renderShip(ship: Ship) {
-    const [x, y] = ship.position;
+    const [x, y]: [number, number] = ship.position;
 
     // Remove existing ship with the same name
-    const existingShip = this.htmlBoard.querySelector(`.${ship.name}`);
+    const existingShip: HTMLShip | null = this.htmlBoard.querySelector(`.${ship.name}`);
     if (existingShip) {
       existingShip.remove();
     }
 
     // Create ship div
-    let htmlShip = new Image();
+    let htmlShip: HTMLShip = new Image();
     htmlShip.src = PlayerRenderer.shipImages[ship.name];
     htmlShip.classList.add(ship.name, "ship");
     htmlShip.draggable = false; // uses interact.js instead
@@ -118,8 +120,8 @@ export class PlayerRenderer {
     this.htmlBoard.appendChild(htmlShip);
 
     // Find pixel coordinates of ship
-    const bottomValue = `${y * this.cellSize}px`;
-    const leftValue = `${x * this.cellSize - 2}px`; // -2 offset image asymmetry
+    const bottomValue: string = `${y * this.cellSize}px`;
+    const leftValue: string = `${x * this.cellSize - 2}px`; // -2 offset image asymmetry
 
     // Render dimensions
     htmlShip.width = this.cellSize;
@@ -132,22 +134,22 @@ export class PlayerRenderer {
   }
 
   renderAttackAnimation(position: [number, number]): void {
-    const [x, y] = position;
-    const j = x + 10 * y;
+    const [x, y]: [number, number] = position;
+    const j: number = x + 10 * y;
 
-    const targetCell = this.htmlCells.find((htmlCell) => {
-      const cellPosition = JSON.parse(htmlCell.id);
+    const targetCell: HTMLCell | undefined = this.htmlCells.find((htmlCell) => {
+      const cellPosition: [number, number] = JSON.parse(htmlCell.id);
       const [cellX, cellY] = cellPosition;
 
       return cellX === x && cellY === y;
-    });
+    }) as HTMLCell;
 
     const spriteName: string = this.player.board[j].ship ? "explosion" : "splash";
     targetCell?.appendChild(this.createSprite(spriteName));
   }
 
   private createSprite(spriteName: string): HTMLDivElement {
-    const spriteContainer = document.createElement("div");
+    const spriteContainer: HTMLDivElement = document.createElement("div");
     spriteContainer.classList.add(spriteName + "-sprite");
 
     // Define sprite properties
@@ -181,11 +183,10 @@ export class PlayerRenderer {
   }
 
   addInteract(htmlShip: HTMLImageElement): void {
-    var x = 0;
-    var y = 0;
+    var [x, y]: [number, number] = [0, 0];
 
-    const draggedShipName = htmlShip.classList.item(0) as string;
-    const draggedShipObj = this.player.findShipByName(draggedShipName) as Ship;
+    const draggedShipName: string = htmlShip.classList.item(0) as string;
+    const draggedShipObj: Ship = this.player.findShipByName(draggedShipName) as Ship;
 
     interact(htmlShip)
       .draggable({
@@ -209,21 +210,24 @@ export class PlayerRenderer {
           },
 
           end: (event) => {
-            const stackingElements = document.elementsFromPoint(event.clientX, event.clientY);
+            const stackingElements: Element[] = document.elementsFromPoint(
+              event.clientX,
+              event.clientY
+            );
 
             // Mouse grab position relative to ship
-            var divRect = htmlShip.getBoundingClientRect();
-            var xDelta = Math.floor((event.clientX - divRect.left) / this.cellSize);
-            var yDelta = Math.floor((divRect.bottom - event.clientY) / this.cellSize);
+            const divRect = htmlShip.getBoundingClientRect();
+            const xDelta: number = Math.floor((event.clientX - divRect.left) / this.cellSize);
+            const yDelta: number = Math.floor((divRect.bottom - event.clientY) / this.cellSize);
 
-            var dropCell = stackingElements[1] as HTMLElement;
+            let dropCell: HTMLCell = stackingElements[1] as HTMLCell;
 
             // Edge case: Placement on top of an existing ship
             if (!dropCell.id) {
-              dropCell = stackingElements[2] as HTMLElement;
+              dropCell = stackingElements[2] as HTMLCell;
             }
 
-            const [x, y] = JSON.parse(dropCell.id);
+            const [x, y]: [number, number] = JSON.parse(dropCell.id);
 
             this.player.moveToClosestValidPosition(draggedShipObj, [x - xDelta, y - yDelta]);
             this.renderShips();

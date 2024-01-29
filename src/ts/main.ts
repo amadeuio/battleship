@@ -5,7 +5,7 @@ import restartButtonImage from "/images/btn_restart.png";
 
 import { Ship } from "./classes/ship";
 import { Player, Role } from "./classes/player";
-import { PlayerRenderer } from "./classes/playerRenderer";
+import { PlayerRenderer, HTMLBoard } from "./classes/playerRenderer";
 
 // Functions
 
@@ -170,7 +170,7 @@ const playerName: HTMLDivElement = document.querySelector(".player-name") as HTM
 const playerFooter: HTMLDivElement = document.querySelector(".player-footer") as HTMLDivElement;
 const opponentFooter: HTMLDivElement = document.querySelector(".opponent-footer") as HTMLDivElement;
 const messageFooter: HTMLDivElement = document.querySelector(".message-footer") as HTMLDivElement;
-const opponentContainer: HTMLDivElement = document.querySelector(".Opponent") as HTMLDivElement;
+const opponentContainer: HTMLBoard = document.querySelector(".Opponent") as HTMLBoard;
 
 // Inputs & Buttons
 
