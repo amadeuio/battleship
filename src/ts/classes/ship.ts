@@ -64,7 +64,6 @@ export class Ship {
     return coordinates;
   }
 
-  // Hack
   clone(): Ship {
     // Create a new instance with the same properties
     const clonedShip = new Ship(this.name, this.position, this.orientation);
@@ -73,21 +72,3 @@ export class Ship {
     return clonedShip;
   }
 }
-
-/* 
-
-Example object:
-
-const destroyerShip = new Ship(Name.Destroyer, [4, 0], Orientation.Horizontal);
-
-{
-  name: 'Destroyer',
-  length: 2,
-  position: [ 4, 0 ],
-  orientation: 'Horizontal',
-  hits: 0,
-  sunk: false,
-  coordinates: [ [ 4, 0 ], [ 5, 0 ] ]
-} 
-
-*/
