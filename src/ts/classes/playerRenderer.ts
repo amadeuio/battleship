@@ -161,7 +161,7 @@ export class PlayerRenderer {
     });
   }
 
-  addInteract(htmlShip: HTMLImageElement): void {
+  addInteract(htmlShip: HTMLShip): void {
     var [x, y]: [number, number] = [0, 0];
 
     const draggedShipName: string = htmlShip.classList.item(0) as string;
