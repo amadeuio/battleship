@@ -12,9 +12,9 @@ import { Cell, Player, Role } from "./player";
 
 import interact from "interactjs";
 
-export type HTMLBoard = HTMLDivElement;
-export type HTMLCell = HTMLDivElement;
-export type HTMLShip = HTMLImageElement;
+type HTMLBoard = HTMLDivElement;
+type HTMLCell = HTMLDivElement;
+type HTMLShip = HTMLImageElement;
 
 export class PlayerRenderer {
   player: Player;
