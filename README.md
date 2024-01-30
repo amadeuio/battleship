@@ -4,9 +4,9 @@
 
 # Battleship ⚓
 
-<p align="center">
+<!-- <p align="center">
   <img src="screenshots/screen1.png" width="650px" alt="screenshot">
-</p>
+</p> -->
 <h2 align="center">
   <a href="https://amadeu-io.github.io/battleship">👉 Demo</a>
 </h2>
