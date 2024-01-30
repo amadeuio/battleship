@@ -76,8 +76,8 @@ export class Player {
   async createDelayedRandomUnrepAttack(): Promise<[number, number]> {
     return new Promise(async (resolve) => {
       setTimeout(async () => {
-        const result = await this.createRandomUnrepAttack();
-        resolve(result);
+        const attackResult = this.createRandomUnrepAttack();
+        resolve(attackResult);
       }, 1200);
     });
   }
