@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battleship</title>
+    <script type="module" crossorigin src="/battleship/assets/index-pQ9h3ZQy.js"></script>
+    <link rel="stylesheet" crossorigin href="/battleship/assets/index-uPcWVHSa.css">
+  </head>
+  <body>
+    <!-- Start screen -->
+    <div id="startScreen">
+      <img class="title" src="/battleship/images/game_title.png" alt="Title" />
+      <div class="nickname-play-container">
+        <div class="nickname-container">
+          <label for="nickname">Enter Name</label>
+          <input type="text" id="nickname" name="nickname" />
+        </div>
+        <img class="play-button" src="/battleship/images/btn_play.png" alt="Play button" />
+      </div>
+    </div>
+
+    <!-- Game screen -->
+    <div id="gameScreen">
+      <div class="player-container">
+        <div class="player-name"></div>
+        <div class="Player"></div>
+      </div>
+
+      <div class="opponent-container">
+        <div class="opponent-name">Computer</div>
+        <div class="Opponent"></div>
+      </div>
+
+      <div class="footer">
+        <div class="player-footer">
+          <div class="player-buttons-container">
+            <img class="randomise-button" src="/battleship/images/btn_shuffle.png" />
+            <img class="start-button" src="/battleship/images/btn_startwar.png" />
+          </div>
+          <div class="drag-drop-message">Drag or click on ships</div>
+        </div>
+        <div class="opponent-footer"></div>
+        <div class="message-footer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>
