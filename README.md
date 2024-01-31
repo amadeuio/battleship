@@ -2,7 +2,7 @@
 [![learned on](https://img.shields.io/badge/learned_on-the_odin_project-d19900)](https://www.theodinproject.com/lessons/node-path-javascript-battleship)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
-# Battleship ⚓
+# Battleship
 
 Battleship game web app.
 
@@ -109,7 +109,7 @@ Represents each player.
 
 - `switchShipOrientation(ship)`: Switches the orientation of a ship, if the switch results in an invalid placement, moves the ship to a close valid position by calling `moveToClosestValidPosition`
 
-- `syncShipsToBoard()`: Updates the `board` according to `ships`
+- `syncShipsToBoard()`: Updates the `board` with the data in `ships`
 
 - `createAttack(position)`: Adds an attack to both `ships` and `board`
 
