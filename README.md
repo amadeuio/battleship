@@ -35,7 +35,7 @@ The app has been built to be very easy to use
 
 **Visual UI**
 
-- Animations and disctintive colors for the different game events
+- Animations and disctintive colors for the different game events ensures the user understands what's going on
 
 ## Tech Stack
 
@@ -50,7 +50,7 @@ The app has been built to be very easy to use
   - `/src/styles`: CSS styles.
   - `/src/ts/classes`: TypeScript classes.
   - `/src/ts/main.ts`: App functionality, DOM and object manipulation.
-- `/docs`: Distribution files generated during the build, used by GitHub pages.
+- `/docs`: Distribution files generated during the build, GitHub pages is reading the root of this directory.
 
 - `/public`: Images, sprites and font.
 
@@ -64,7 +64,7 @@ The project utilizes several TypeScript classes to organize data and encapsulate
 
 Represents each individual ship.
 
-**Properties:**
+**Properties**
 
 - `name`
 - `length`
@@ -74,7 +74,7 @@ Represents each individual ship.
 - `sunk`
 - `coordinates`: Computed property
 
-**Methods:**
+**Methods**
 
 - `hit()`: Increments the number of hits on the ship
 
@@ -88,34 +88,60 @@ Represents each individual ship.
 
 Represents each player (player and opponent).
 
-**Properties:**
+**Properties**
 
 - `role`: Role of the player.
 - `board`: Array of `{ ship: null, hit: false }` objects representing each cell of the player's game board.
-- `ships`: Array to store the player's `Ship`s.
+- `ships`: Array of `Ship`s.
 - `death`: Boolean flag indicating whether the player has been defeated.
 
-**Main Methods:**
+**Main Methods**
 
-- `placeShip(ship)`: Places a ship on the player's ships array.
+- `placeShip(ship)`: Adds a ship on `ships`.
 
-- `moveShip(ship, newPosition)`: Changes the position of a ship if valid.
+- `moveShip(ship, newPosition)`: Changes the position of a ship in `ships` if valid.
 
-- `switchShipOrientation(ship)`: Switches the orientation of a ship if valid.
+- `switchShipOrientation(ship)`: Switches the orientation of a ship if `ships` if valid, if not, it places the ship in a close valid position.
 
-- `createAttack(position)`: Creates an attack at the specified position. Updates both the ships and board array.
+- `syncShipsToBoard()`: Updates the `board` with the data in `ships`.
 
-- `async createDelayedRandomUnrepAttack()`: Creates a delayed random unrepeated attack, used by the computer. The delay improves UX.
+- `createAttack(position)`: Adds the attack on both `ships` and `board`.
 
-- `moveToClosestValidPosition(ship, desiredPosition)`: It's `moveShip` on steroids. If the desired position is not valid, it starts exporing close positions using an exploration range and it places the ship as soon as it finds a valid one. It also returns a boolean indicating if the placement was sucessful.
+- `async createDelayedRandomUnrepAttack()`: Creates a delayed random unrepeated attack used by the computer. The delay improves the UX by giving the impression the computer is 'thinking'.
 
-- `hasLost()`: Returns `true` if all the player's ships are sunk.
+- `moveToClosestValidPosition(ship, desiredPosition)`: It's `moveShip` on steroids. If the desired position is not valid, it starts exporing close positions and places the ship as soon as it finds one. It also returns a boolean indicating if the placement was sucessful, used in other methods to make sure the position is never updated if the return is `false`, as it could result in an invalid placement.
 
-- `populateRandomly()`: Randomly populates the player's board with ships, ensuring valid placements.
+- `populateRandomly()`: Randomly populates the player's `ships` with only valid placements.
 
-- `syncShipsToBoard()`: Synchronizes the player's ships array with it's board array.
+- `isInvalidPlacement(candidateShip)`: Checks if a ship is in an invalid position (i.e. overlaps with other ships or goes out of bounds). This method is crucial for the correct functioning of `moveToClosestValidPosition` and `populateRandomly`.
 
-- `isInvalidPlacement(candidateShip)`: Checks if a ship is in a valid position i.e overlaps with existing ships or goes out of bounds. This method is curucial for the correct functioning of `moveToClosestValidPosition` and `populateRandomly`.
+### 3. `playerRenderer` Class:
+
+Serves as a bridge between `player` and the UI.
+
+**Properties**
+
+- `player`
+- `htmlBoard`
+- `htmlCells`
+- `htmlShips`
+- `cellSize`
+
+**Main Methods**
+
+- `createBoard()`: Creates 100 `htmlCells` appended to the `htmlBoard`.
+
+- `renderAttacks()`: Renders the state of `player.board` on `htmlBoard`, using the right tile for each cell based on it's hit status.
+
+- `renderAttackAnimation(position)`: Renders an attack animation at the specified position by appending a sprite to the corresponding HTML cell.
+
+- `renderShip(ship)`: Renders a `ship` on the board by using an HTML ship image.
+
+- `addInteract(htmlShip)`: Adds drag-and-drop and click interaction to a specified HTML ship element using the `interact.js` library. It reads and updates the result of the interaction in `player`, ensuring it's always in sync with the UI.
+
+- `removeInteractToAll()`: Removes interaction from all HTML ship elements on the board. Crucial for when the game starts.
+
+- `setCellSize()`: Sets and returns the cell size based on the window width for responsive design.
 
 ## Run Locally
 
