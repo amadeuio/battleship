@@ -31,7 +31,7 @@ The app has been built to be very user friendly.
 
 **Quick Start**
 
-- Start playing in seconds with just two Enter key presses if you don't care about customizing ship placement
+- Start playing in seconds with just two Enter key presses using the initial random ship shuffle
 
 **Visual UI**
 
@@ -39,7 +39,7 @@ The app has been built to be very user friendly.
 
 **Responsiveness**
 
-- The game adapts to various screen sizes: desktop, tablet and mobile.
+- Adapts to various screen sizes: desktop, tablet and mobile.
 
 ## Tech Stack
 
