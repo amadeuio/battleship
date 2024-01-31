@@ -105,7 +105,7 @@ Represents each player.
 
 - `moveShip(ship, newPosition)`: Changes the position of a ship, if valid
 
-- `moveToClosestValidPosition(ship, desiredPosition)`: It's `moveShip` on steroids. If the desired position is not valid, it expores close positions and places the ship as soon as it finds one. It also returns a boolean indicating if the valid position was found.
+- `moveToClosestValidPosition(ship, desiredPosition)`: It's `moveShip` on steroids. If the desired position is not valid, it explores close positions and places the ship as soon as it finds one. It also returns a boolean indicating if the valid position was found.
 
 - `switchShipOrientation(ship)`: Switches the orientation of a ship, if the switch results in an invalid placement, moves the ship to a close valid position by calling `moveToClosestValidPosition`
 
