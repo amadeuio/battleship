@@ -39,7 +39,7 @@ The app has been built to be very user friendly.
 
 **Responsiveness**
 
-- The game adapts to various screen sizes: desktop, tablet and mobile
+- The game adapts to various screen sizes: desktop, tablet and mobile.
 
 ## Tech Stack
 
@@ -179,3 +179,7 @@ Start the server
 - [GPT](https://chat.openai.com/)
 - [readme.so](https://readme.so/)
 - [shields.io](https://shields.io/)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
