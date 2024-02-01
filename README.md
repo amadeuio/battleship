@@ -135,7 +135,7 @@ Serves as a bridge between `player` and the UI.
 
 - `createBoard()`: Creates a 10x10 board of `htmlCells` appended to `htmlBoard`
 
-- `renderAttacks()`: Renders the state of `player.board` on `htmlBoard`, setting the right tile for each cell based on it's hit status
+- `renderAttacks()`: Renders the state of `player.board` on `htmlBoard`, setting the right color for each cell based on its hit status
 
 - `renderAttackAnimation(position)`: Renders an attack animation at the specified position
 
