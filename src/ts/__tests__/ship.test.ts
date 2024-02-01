@@ -63,10 +63,10 @@ describe("Ship Class", () => {
     ship.hit();
     const clonedShip = ship.clone();
 
-    // Verify that the cloned ship has the same properties as the original ship
+    // Verify they have equal properties
     expect(clonedShip).toEqual(ship);
 
-    // Ensure that a new instance is created when cloning (reference inequality)
+    // Verify the clone is a different instance (reference inequality)
     expect(clonedShip).not.toBe(ship);
   });
 });
