@@ -46,7 +46,7 @@ The app has been built to be very user friendly.
 - **Languages:** TypeScript, CSS, HTML
 - **Build Tool:** Vite
 - **Interaction Dependencies:** interact.js
-- **Testing Framework:** Jest
+- **Testing Framework:** ts-jest
 
 ## File Structure
 
