@@ -53,7 +53,8 @@ The app has been built to be very user friendly.
 - `/src`: Contains the source code
   - `/src/styles`: CSS styles
   - `/src/ts/classes`: TypeScript classes
-  - `/src/ts/main.ts`: Main functionality of the app with class usage and DOM manipulaton
+  - `/src/ts/main.ts`: Main functionality of the app with class usage and DOM manipulation
+  - `/src/ts/__tests__`: Jest tests for the `Player` and `Ship` class
 - `/docs`: Distribution files generated during the build, GitHub pages is reading the root of this directory
 
 - `/public`: Images, sprites and font
@@ -121,7 +122,7 @@ Represents each player.
 
 ### 3. `playerRenderer` Class:
 
-Serves as a bridge between `player` and the UI.
+Serves as a bridge between `Player` and the UI.
 
 **Properties**
 
@@ -141,7 +142,7 @@ Serves as a bridge between `player` and the UI.
 
 - `renderShip(ship)`: Renders a `ship` on the board with an HTML ship image
 
-- `addInteract(htmlShip)`: Adds drag-and-drop and click interaction to an HTML ship element using the `interact.js` library. It reads the result of the interaction and updates the data in `player`, ensuring it's always in sync with the UI
+- `addInteract(htmlShip)`: Adds drag-and-drop and click interaction to an HTML ship element using the `interact.js` library. It reads the result of the interaction and updates the data in `Player`, ensuring it's always in sync with the UI
 
 - `removeInteractToAll()`: Removes interaction from all HTML ship elements. Crucial for when the game starts
 
