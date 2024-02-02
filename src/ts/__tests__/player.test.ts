@@ -3,101 +3,106 @@ import { Player, Role } from "../classes/player";
 
 describe("Player", () => {
   let player: Player;
+  let carrier: Ship;
 
   beforeEach(() => {
     player = new Player(Role.Player);
+    carrier = new Ship(Name.Carrier, [0, 0], Orientation.Horizontal);
   });
 
-  it("placeShip should place a cloned ship in the player's fleet", () => {
-    const originalShip = new Ship(Name.Carrier, [0, 0], Orientation.Horizontal);
+  describe("placeShip", () => {
+    it("should place a cloned ship in the player's fleet", () => {
+      player.placeShip(carrier);
 
-    player.placeShip(originalShip);
+      expect(player.ships).toHaveLength(1);
 
-    expect(player.ships).toHaveLength(1);
-
-    const placedShip = player.ships[0];
-    expect(placedShip).not.toBe(originalShip); // Reference inequality
-    expect(placedShip).toEqual(originalShip); // Same properties
+      const placedShip = player.ships[0];
+      expect(placedShip).not.toBe(carrier); // Reference inequality
+      expect(placedShip).toEqual(carrier); // Same properties
+    });
   });
 
-  it("moveShip should update ship position correctly", () => {
+  describe("moveShip", () => {
     const initialPosition: [number, number] = [0, 0];
     const newPosition: [number, number] = [1, 1];
-    const ship = new Ship(Name.Carrier, initialPosition, Orientation.Horizontal);
 
-    player.moveShip(ship, newPosition);
+    it("should update ship position correctly", () => {
+      player.moveShip(carrier, newPosition);
 
-    expect(ship.position).toEqual(newPosition);
+      expect(carrier.position).toEqual(newPosition);
+    });
+
+    it("should revert ship position on invalid placement", () => {
+      // Mock isInvalidPlacement to always return true
+      jest.spyOn(player, "isInvalidPlacement").mockReturnValue(true);
+
+      player.moveShip(carrier, newPosition);
+
+      expect(carrier.position).toEqual(initialPosition);
+    });
   });
 
-  it("moveShip should revert ship position on invalid placement", () => {
-    const initialPosition: [number, number] = [0, 0];
-    const newPosition: [number, number] = [1, 1];
-    const ship = new Ship(Name.Carrier, initialPosition, Orientation.Horizontal);
+  describe("switchShipOrientation", () => {
+    it("should switch the ship orientation correctly", () => {
+      player.switchShipOrientation(carrier);
 
-    // Mock isInvalidPlacement to always return true for invalid placement
-    player.isInvalidPlacement = jest.fn(() => true);
+      expect(carrier.orientation).toEqual(Orientation.Vertical);
 
-    player.moveShip(ship, newPosition);
-    expect(ship.position).toEqual(initialPosition);
+      player.switchShipOrientation(carrier);
+
+      expect(carrier.orientation).toEqual(Orientation.Horizontal);
+    });
+
+    it("should not change orientation if smart move is false", () => {
+      player.moveToClosestValidPosition = jest.fn(() => false);
+
+      player.switchShipOrientation(carrier);
+
+      expect(carrier.orientation).toEqual(Orientation.Horizontal);
+    });
   });
 
-  it("switchShipOrientation should switch the ship orientation correctly", () => {
-    const ship = new Ship(Name.Carrier, [0, 0], Orientation.Horizontal);
+  describe("findShipByCoord", () => {
+    it("should find a ship by coordinates", () => {
+      player.placeShip(carrier);
+      player.syncShipsToBoard();
 
-    player.switchShipOrientation(ship);
+      var foundShip = player.findShipByCoord([0, 0]);
 
-    expect(ship.orientation).toEqual(Orientation.Vertical);
+      expect(foundShip).toEqual(carrier);
 
-    player.switchShipOrientation(ship);
+      foundShip = player.findShipByCoord([9, 9]);
 
-    expect(ship.orientation).toEqual(Orientation.Horizontal);
+      expect(foundShip).toBe(undefined);
+    });
   });
 
-  it("switchShipOrientation should not change orientation if smart move is false", () => {
-    const ship = new Ship(Name.Carrier, [0, 0], Orientation.Vertical);
+  describe("createAttack", () => {
+    it("should create an attack and update board and ships", () => {
+      player.ships.push(carrier);
+      player.syncShipsToBoard();
 
-    player.moveToClosestValidPosition = jest.fn(() => false);
+      player.createAttack([0, 0]); // Needs the data in board
 
-    player.switchShipOrientation(ship);
-
-    expect(ship.orientation).toEqual(Orientation.Vertical);
+      expect(player.board[0].hit).toBe(true);
+      expect(carrier.hits).toEqual(1);
+    });
   });
 
-  it("findShipByCoord should find a ship by coordinates", () => {
-    const carrier = new Ship(Name.Carrier, [0, 0], Orientation.Horizontal);
-    player.placeShip(carrier);
-    player.syncShipsToBoard();
+  describe("synchShipsToBoard", () => {
+    it("should sync ships to the board correctly", () => {
+      player.placeShip(carrier);
+      player.syncShipsToBoard();
 
-    const foundShip = player.findShipByCoord([0, 0]);
+      player.createAttack([0, 0]);
 
-    expect(foundShip).toEqual(carrier);
-  });
+      player.syncShipsToBoard();
 
-  it("createAttack should create an attack and update board and ships", () => {
-    const ship = new Ship(Name.Carrier, [0, 0], Orientation.Horizontal);
-    player.ships.push(ship);
-    player.syncShipsToBoard();
-
-    player.createAttack([0, 0]); // Needs the data in board
-
-    expect(player.board[0].hit).toBe(true);
-    expect(ship.hits).toBe(1);
-  });
-
-  it("should sync ships to the board correctly", () => {
-    const carrier = new Ship(Name.Carrier, [0, 0], Orientation.Vertical);
-    player.placeShip(carrier);
-    player.syncShipsToBoard();
-
-    player.createAttack([0, 0]);
-
-    player.syncShipsToBoard();
-
-    expect(player.board[0]).toEqual({ ship: Name.Carrier, hit: true });
-    expect(player.board[10]).toEqual({ ship: Name.Carrier, hit: false });
-    expect(player.board[20]).toEqual({ ship: Name.Carrier, hit: false });
-    expect(player.board[30]).toEqual({ ship: Name.Carrier, hit: false });
-    expect(player.board[40]).toEqual({ ship: Name.Carrier, hit: false });
+      expect(player.board[0]).toEqual({ ship: Name.Carrier, hit: true });
+      expect(player.board[1]).toEqual({ ship: Name.Carrier, hit: false });
+      expect(player.board[2]).toEqual({ ship: Name.Carrier, hit: false });
+      expect(player.board[3]).toEqual({ ship: Name.Carrier, hit: false });
+      expect(player.board[4]).toEqual({ ship: Name.Carrier, hit: false });
+    });
   });
 });
