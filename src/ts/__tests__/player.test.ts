@@ -54,7 +54,8 @@ describe("Player", () => {
     });
 
     it("should not change orientation if smart move is false", () => {
-      player.moveToClosestValidPosition = jest.fn(() => false);
+      // Mock moveToClosestValidPosition to always return false
+      jest.spyOn(player, "moveToClosestValidPosition").mockReturnValue(false);
 
       player.switchShipOrientation(carrier);
 
