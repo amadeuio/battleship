@@ -11,7 +11,7 @@ describe("Player", () => {
   });
 
   describe("placeShip", () => {
-    it("should place a cloned ship in the player's fleet", () => {
+    it("should place a cloned ship in player.ships", () => {
       player.placeShip(carrier);
 
       expect(player.ships).toHaveLength(1);
