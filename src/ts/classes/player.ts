@@ -157,7 +157,7 @@ export class Player {
     this.ships.forEach((ship) => {
       ship.coordinates.forEach(([x, y]) => {
         const index = x + y * 10;
-        this.board[index] = { ship: ship.name, hit: false };
+        this.board[index].ship = ship.name;
       });
     });
   }
@@ -176,7 +176,7 @@ export class Player {
     return this.ships.find((ship) => ship.name === name);
   }
 
-  private isInvalidPlacement(candidateShip: Ship): boolean {
+  isInvalidPlacement(candidateShip: Ship): boolean {
     // Flat array with coordinates of all ships except candidate
     const existingCoordinates = this.ships
       .filter((ship) => ship !== candidateShip)
