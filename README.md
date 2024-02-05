@@ -15,7 +15,7 @@ Battleship game web app.
   <img src="public/screenshots/screenshot2.png" width="650px" alt="screenshot">
 </p>
 <h2 align="center">
-  <a href="https://amadeu-io.github.io/battleship">👉 Demo</a>
+  <a href="https://amadeuio.github.io/battleship">👉 Demo</a>
 </h2>
 
 ## Features
@@ -153,7 +153,7 @@ Serves as a bridge between `Player` and the UI.
 Clone the project
 
 ```bash
-  git clone https://github.com/amadeu-io/battleship
+  git clone https://github.com/amadeuio/battleship
 ```
 
 Go to the project directory
