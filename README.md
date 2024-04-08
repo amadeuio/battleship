@@ -1,10 +1,10 @@
-![languages](https://img.shields.io/badge/languages-ts%2C%20html%2C%20css-blue)
-[![learned on](https://img.shields.io/badge/learned_on-the_odin_project-d19900)](https://www.theodinproject.com/lessons/node-path-javascript-battleship)
-![license](https://img.shields.io/badge/license-MIT-green)
+![Stack](https://img.shields.io/badge/Stack-Vanilla_TypeScript-blue)
+[![Learned On](https://img.shields.io/badge/Learned_On-The_Odin_Project-d19900)](https://www.theodinproject.com/lessons/node-path-javascript-battleship)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 # Battleship
 
-Battleship game web app.
+Battleship game web app with vanilla TypeScript.
 
 ## Demo
 
@@ -37,7 +37,7 @@ The app has been built to be very user friendly.
 
 - Animations and disctintive colors for the different events make the game easy to follow and understand
 
-**Responsiveness**
+**Responsive**
 
 - Adapts to various screen sizes: desktop, tablet and mobile.
 
@@ -45,21 +45,23 @@ The app has been built to be very user friendly.
 
 - **Languages:** TypeScript, CSS, HTML
 - **Build Tool:** Vite
-- **Interaction Dependencies:** interact.js
-- **Testing Framework:** ts-jest
+- **Interaction Dependency:** interact.js
+- **Testing:** ts-jest
 
-## File Structure
+## Main Directories
 
-- `/src`: Contains the source code
-  - `/src/styles`: CSS styles
-  - `/src/ts/classes`: TypeScript classes
-  - `/src/ts/main.ts`: Main functionality of the app with class usage and DOM manipulation
-  - `/src/ts/__tests__`: Jest tests for the `Player` and `Ship` class
-- `/docs`: Distribution files generated during the build, GitHub pages is reading the root of this directory
+Located in `src`:
 
-- `/public`: Images, sprites and font
+- `styles`: CSS styles
+- `ts/classes`: TypeScript classes
+- `ts/main.ts`: Main functionality of the app with class usage and DOM manipulation
+- `ts/__tests__`: Jest tests for the `Player` and `Ship` class
 
-- `index.html`: Entry point for the Vite app during development with dynamic injection of TypeScript and CSS
+Located in the root:
+
+- `docs`: Distribution files generated during the build, GitHub pages is reading the root of this directory
+- `public`: Images, font and screenshots
+- `index.html`: Entry point for the app with dynamic injection of TypeScript and CSS
 
 ## Classes
 
@@ -136,7 +138,7 @@ Serves as a bridge between `Player` and the UI.
 
 - `createBoard()`: Creates a 10x10 board of `htmlCells` appended to `htmlBoard`
 
-- `renderAttacks()`: Renders the state of `player.board` on `htmlBoard`, setting the right color for each cell based on its hit status
+- `renderAttacks()`: Renders the `player.board` data on `htmlBoard`, setting the right color for each cell based on its hit status
 
 - `renderAttackAnimation(position)`: Renders an attack animation at the specified position
 
@@ -153,25 +155,25 @@ Serves as a bridge between `Player` and the UI.
 Clone the project
 
 ```bash
-  git clone https://github.com/amadeuio/battleship
+git clone https://github.com/amadeuio/battleship
 ```
 
 Go to the project directory
 
 ```bash
-  cd battleship
+cd battleship
 ```
 
 Install dependencies
 
 ```bash
-  npm install
+npm install
 ```
 
 Start the server
 
 ```bash
-  npm run dev
+npm run dev
 ```
 
 ## Acknowledgements
