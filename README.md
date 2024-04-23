@@ -15,7 +15,7 @@ Battleship game web app with vanilla TypeScript.
   <img src="public/screenshots/screenshot2.png" width="650px" alt="screenshot">
 </p>
 <h2 align="center">
-  <a href="https://amadeuio.github.io/battleship">👉 Demo</a>
+  <a href="https://battleshipgameapp.netlify.app">👉 Demo</a>
 </h2>
 
 ## Features
@@ -45,6 +45,7 @@ The app has been built to be very user friendly.
 
 - **Languages:** TypeScript, CSS, HTML
 - **Build Tool:** Vite
+- **Deployment:** Netlify
 - **Interaction Dependency:** interact.js
 - **Testing:** ts-jest
 
@@ -59,7 +60,6 @@ Located in `src`:
 
 Located in the root:
 
-- `docs`: Distribution files generated during the build, GitHub pages is reading the root of this directory
 - `public`: Images, font and screenshots
 - `index.html`: Entry point for the app with dynamic injection of TypeScript and CSS
 
