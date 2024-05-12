@@ -4,7 +4,7 @@
 
 # Battleship
 
-Battleship game web app with vanilla TypeScript.
+Battleship game with vanilla TypeScript.
 
 ## Demo
 
